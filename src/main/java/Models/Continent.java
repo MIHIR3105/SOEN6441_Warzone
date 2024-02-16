@@ -34,7 +34,6 @@ public class Continent {
     public void setD_continentID(int p_continentID) {
         this.d_continentID = p_continentID;
     }
-
     public void setD_continentName(String p_continentName) {
         this.d_continentName = p_continentName;
     }
@@ -43,5 +42,22 @@ public class Continent {
     }
     public void setD_countries(List<Country> p_countries) {
         this.d_countries = p_countries;
+    }
+
+    public void addCountry(Country p_country) {
+        if (d_countries != null) {
+            d_countries.add(p_country);
+        } else {
+            d_countries = new ArrayList<Country>();
+            d_countries.add(p_country);
+        }
+    }
+
+    public void removeCountries(Country p_country) {
+        if (d_countries == null) {
+            System.out.println("There are no countries to remove");
+        } else {
+            d_countries.remove(p_country);
+        }
     }
 }

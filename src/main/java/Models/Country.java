@@ -53,4 +53,17 @@ public class Country {
     public void setD_neighbourCountryId(List<Integer> p_neighbourCountryId) {
         this.d_neighbourCountryId = p_neighbourCountryId;
     }
+
+    public void addNeighbourToCountry(int p_countryId){
+        if(!d_neighbourCountryId.contains(p_countryId))
+            d_neighbourCountryId.add(p_countryId);
+    }
+    public void removeNeighbourFromCountry(Integer p_countryId){
+        if(!d_neighbourCountryId.contains(p_countryId)){
+            System.out.println("Neighbour does not Exists");
+
+        }else{
+            d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
+        }
+    }
 }
