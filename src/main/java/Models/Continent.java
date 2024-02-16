@@ -1,5 +1,8 @@
 package Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Continent {
     Integer d_continentID;
     String d_continentName;
