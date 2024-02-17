@@ -145,10 +145,12 @@ public class Continent {
      * @param p_countryID country ID which is to be removed
      */
     public void removeCountryForAllNeighbours(Integer p_countryID) {
-        for (Country country : d_countries) {
-            if (country.d_neighbourCountryId != null) {
-                if (country.getD_neighbourCountryId().contains(p_countryID)) {
-                    country.removeNeighbourFromCountry(p_countryID);
+        if (d_countries != null && !d_countries.isEmpty()) {
+            for (Country country : d_countries) {
+                if (country.d_neighbourCountryId != null) {
+                    if (country.getD_neighbourCountryId().contains(p_countryID)) {
+                        country.removeNeighbourFromCountry(p_countryID);
+                    }
                 }
             }
         }
