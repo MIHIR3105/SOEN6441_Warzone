@@ -139,4 +139,18 @@ public class Continent {
             d_countries.remove(p_country);
         }
     }
+
+    /**
+     * Removes the country ID from the list of neighbours for all the countries in the continent
+     * @param p_countryID country ID which is to be removed
+     */
+    public void removeCountryForAllNeighbours(Integer p_countryID) {
+        for (Country country : d_countries) {
+            if (country.d_neighbourCountryId != null) {
+                if (country.getD_neighbourCountryId().contains(p_countryID)) {
+                    country.removeNeighbourFromCountry(p_countryID);
+                }
+            }
+        }
+    }
 }
