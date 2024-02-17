@@ -224,4 +224,68 @@ public class Map{
         }
         return !l_countriesInContinent.containsValue(false);
     }
+
+    /**
+     * DFS to check if countries in continents are connected
+     * @param p_country country to check
+     * @param p_countriesInContinent country ID with booleans if visited or not
+     * @param p_continent continent to check
+     */
+    private void dfsContinents(Country p_country, HashMap<Integer, Boolean> p_countriesInContinent, Continent p_continent) {
+        p_countriesInContinent.put(p_country.getD_countryId(), true);
+        for (Country country : p_continent.getD_countries()) {
+            if (p_country.getD_neighbourCountryId().contains(country.getD_countryId())) {
+                if (!p_countriesInContinent.get(country.getD_countryId())) {
+                    dfsContinents(country, p_countriesInContinent, p_continent);
+                }
+            }
+        }
+    }
+
+    /**
+     * Retrieve neighbour country list
+     * @param p_country country name to which neighbours to be found
+     * @return list of neighbour country objects
+     */
+    public List<Country> getNeighbourCountry(Country p_country) {
+        List<Country> l_neighbourCountries = new ArrayList<Country>();
+
+        if (p_country.getD_neighbourCountryId().size() > 0) {
+            for (int i : p_country.getD_neighbourCountryId()) {
+                l_neighbourCountries.add(retrieveCountry(i));
+            }
+        } else {
+            System.out.println(p_country.getD_countryName() + " doesn't contain any neighbour countries");
+        }
+        return l_neighbourCountries;
+    }
+
+    /**
+     * DFS applied to input
+     * @param p_country country to visit first
+     */
+    public void dfsCountry(Country p_country) {
+        d_countryConnectedStatus.put(p_country.getD_countryId(), true);
+        for (Country l_country : getNeighbourCountry(p_country)) {
+            if (!d_countryConnectedStatus.get(l_country.getD_countryId())) {
+                dfsCountry(l_country);
+            }
+        }
+    }
+
+    /**
+     * Finds a country object from a given country ID
+     * @param p_countryId country ID
+     * @return country Object
+     */
+    public Country retrieveCountry(Integer p_countryId) {
+        for (Country country : d_countries) {
+            if (p_countryId == country.getD_countryId()) {
+                return country;
+            }
+        }
+        return null;
+    }
+
+
 }
