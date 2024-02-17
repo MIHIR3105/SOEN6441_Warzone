@@ -158,8 +158,7 @@ public class Country {
     public void removeNeighbourFromCountry(Integer p_countryId){
         if(!d_neighbourCountryId.contains(p_countryId)){
             System.out.println("Neighbour does not Exists");
-
-        }else{
+        } else {
             d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
         }
     }
