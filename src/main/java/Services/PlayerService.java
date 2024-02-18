@@ -192,7 +192,7 @@ public class PlayerService {
                             l_player.setD_continentsOwned(new ArrayList<>());
 
                         l_player.getD_continentsOwned().add(l_continent);
-                        System.out.println("The continent : " + l_continent.getContinentNames() + " is assigned with player : "
+                        System.out.println("The continent : " + l_continent.getD_continentName() + " is assigned with player : "
                                 + l_player.getPlayerName());
                     }
                 }
@@ -288,5 +288,5 @@ public class PlayerService {
     public boolean isMapLoaded(GameState p_gameState) {
         return !(p_gameState.getD_map() == null);
     }
-    
+
 }
