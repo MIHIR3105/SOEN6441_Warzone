@@ -2,19 +2,20 @@ package Models;
 
 import java.util.List;
 import Services.MapService;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test class for Continent.java
  * @author Vaibhav Chauhan
  */
-class ContinentTest {
+public class ContinentTest {
     /**
      * Test to check if country ID is removed from the list of neighbours for all the countries in the continent
      */
     @Test
-    void removeCountryForAllNeighboursTest() {
+    public void removeCountryForAllNeighboursTest() {
         MapService l_serivce = new MapService();
         GameState l_game = new GameState();
         Map l_map = l_serivce.loadMap(l_game, l_serivce.getFilePath("canada.map"));
