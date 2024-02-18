@@ -21,7 +21,6 @@ public class MapService {
      *
      * @param p_gameState Present state of the game
      * @param p_editFile File name
-     * @throws IOException
      */
     public void editMap(GameState p_gameState, String p_editFile) throws IOException {
 
@@ -47,7 +46,6 @@ public class MapService {
      * @param p_gameState Current state of the game
      * @param p_argument Arguments in the command
      * @param p_operation Operation of the command
-     * @throws IOException
      */
     public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
         String l_fileName = p_gameState.getD_map().getD_mapFile();
@@ -178,7 +176,6 @@ public class MapService {
      * @param p_gameState Current Game State
      * @param p_fileName Name of the file
      * @return boolean true if map save was successful else false
-     * @throws IOException
      */
     public boolean saveMap(GameState p_gameState, String p_fileName){
         try {
@@ -224,7 +221,6 @@ public class MapService {
      *
      * @param p_gameState Current State of the Game
      * @param p_writer File Writer
-     * @throws IOException
      */
     private void writeCountryAndNeighbourData(GameState p_gameState, FileWriter p_writer) throws IOException {
         String l_countryData = new String();
@@ -263,7 +259,6 @@ public class MapService {
      *
      * @param p_gameState Current State of the Game
      * @param p_writer File Writer
-     * @throws IOException
      */
     private void writeContinentdata(GameState p_gameState, FileWriter p_writer) throws IOException {
         p_writer.write(System.lineSeparator() + "[continents]" + System.lineSeparator());
@@ -278,7 +273,7 @@ public class MapService {
      *
      * @param p_gameState Current State of the Game
      * @param p_filePath Path of the filename provided
-     * @return
+     * @return loaded map object
      */
     public Map loadMap(GameState p_gameState, String p_filePath) {
         Map l_map = new Map();

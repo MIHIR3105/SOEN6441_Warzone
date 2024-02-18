@@ -1,7 +1,7 @@
 package Models;
 
 /**
- * Class contains date members and methods for order
+ * This class has the data members and functions of order.
  * @author Yashesh Sorathia
  */
 public class Order {
