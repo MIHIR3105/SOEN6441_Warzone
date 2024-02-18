@@ -209,8 +209,6 @@ public class MapView {
     /**
      * Method to display the list of countries and continents along with the current
      * game state
-     *
-     * @throws Exception indicates map is invalid
      */
     public void showMap() {
         if (d_players != null) {
@@ -221,7 +219,7 @@ public class MapView {
                 renderContinentName(l_continent.getD_continentName());
                 List<Country> l_continentCountries = l_continent.getD_countries();
                 final int[] l_countryIndex = { 1 };
-                if (l_continentCountries.size() != 0) {
+                if (!l_continentCountries.isEmpty()) {
                     l_continentCountries.forEach(l_country -> {
                         String l_countryNameFormatted = getCountryNameFormatted(l_countryIndex[0]++, l_country.getD_countryName());
                         System.out.println(l_countryNameFormatted);

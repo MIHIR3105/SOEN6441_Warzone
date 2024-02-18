@@ -77,7 +77,7 @@ public class Continent {
 
     /**
      * To get the list of countries in the continent
-     * @return
+     * @return list of countries
      */
     public List<Country> getD_countries() {
         return d_countries;
