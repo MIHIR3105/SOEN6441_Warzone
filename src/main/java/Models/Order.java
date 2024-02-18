@@ -45,7 +45,8 @@ public class Order {
     }
 
     /**
-     * Method to get action of order
+     * Method to get action of order.
+     *
      * @return action of order
      */
     public String getD_ActionOfOrder() {
@@ -53,7 +54,8 @@ public class Order {
     }
 
     /**
-     * Method to set action of order
+     * Method to set action of order.
+     *
      * @param p_ActionOfOrder action of order
      */
     public void setD_ActionOfOrder(String p_ActionOfOrder) {
@@ -61,7 +63,8 @@ public class Order {
     }
 
     /**
-     * Method to get name of the targeted country
+     * Method to get name of the targeted country.
+     *
      * @return name of the targeted country
      */
     public String getD_CountryTargeted() {
@@ -69,7 +72,8 @@ public class Order {
     }
 
     /**
-     * Method to set name of the targeted country
+     * Method to set name of the targeted country.
+     *
      * @param p_CountryTargeted name of the targeted country
      */
     public void setD_CountryTargeted(String p_CountryTargeted) {
@@ -77,7 +81,8 @@ public class Order {
     }
 
     /**
-     * Method to get name of the source country
+     * Method to get name of the source country.
+     *
      * @return name of the source country
      */
     public String getD_CountryOfSource() {
@@ -85,7 +90,8 @@ public class Order {
     }
 
     /**
-     * Method to set name of the source country
+     * Method to set name of the source country.
+     *
      * @param p_CountryOfSource name of the source country
      */
     public void setD_CountryOfSource(String p_CountryOfSource) {
@@ -93,7 +99,8 @@ public class Order {
     }
 
     /**
-     * Mathod to get number of armies to be place
+     * Mathod to get number of armies to be place.
+     *
      * @return number of armies to be place
      */
     public Integer getD_ArmiesToPlace() {
@@ -101,7 +108,8 @@ public class Order {
     }
 
     /**
-     * Method to set number of armies to be place
+     * Method to set number of armies to be place.
+     *
      * @param p_ArmiesToPlace number of armies to be place
      */
     public void setD_ArmiesToPlace(Integer p_ArmiesToPlace) {
@@ -109,7 +117,8 @@ public class Order {
     }
 
     /**
-     * Enact the order object and change the state of game accordingly
+     * Enact the order object and change the state of game accordingly.
+     *
      * @param p_gameState current state of the game
      * @param p_player player whose order is being executed
      */
@@ -132,7 +141,7 @@ public class Order {
     }
 
     /**
-     * Method to check if the country armies are deployed belongs to player or not
+     * Method to check if the country armies are deployed belongs to player or not.
      *
      * @param p_player player whose order is being executed
      * @param p_order order given by the player to be executed
@@ -145,7 +154,7 @@ public class Order {
     }
 
     /**
-     * Method to execute the order and update the state of the game
+     * Method to execute the order and update the state of the game.
      *
      * @param p_order order given by the player to be executed
      * @param p_gameState current state of the game
