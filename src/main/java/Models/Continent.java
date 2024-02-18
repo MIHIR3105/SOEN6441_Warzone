@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * The methods to manage the continents are in this class
+ * @author Vaibhav Chauhan
  */
 public class Continent {
     /**

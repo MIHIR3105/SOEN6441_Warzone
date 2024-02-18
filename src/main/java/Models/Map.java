@@ -7,8 +7,9 @@ import java.util.Collections;
 
 /**
  * The methods to manipulate and validate map
+ * @author Vaibhav Chauhan
  */
-public class Map{
+public class Map {
     /**
      * Map file name
      */

@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Class handles input commands from User
+ * @author Vaibhav Chauhan
  */
 public class Command {
 
