@@ -52,7 +52,7 @@ public class Map{
 
     /**
      * To set list of continents
-     * @param d_continents
+     * @param d_continents list of continents
      */
     public void setD_continents(List<Continent> d_continents) {
         this.d_continents = d_continents;

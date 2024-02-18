@@ -136,7 +136,7 @@ public class Country {
 
     /**
      * To set neighbour list for the given country
-     * @param p_neighbourCountryId
+     * @param p_neighbourCountryId ID of neighbour country
      */
     public void setD_neighbourCountryId(List<Integer> p_neighbourCountryId) {
         this.d_neighbourCountryId = p_neighbourCountryId;
