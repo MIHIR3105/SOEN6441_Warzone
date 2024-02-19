@@ -211,7 +211,7 @@ public class PlayerService {
                 : p_player.getD_ordersToExecute();
         String l_countryName = p_commandEntered.split(" ")[1];
         String l_noOfArmies = p_commandEntered.split(" ")[2];
-        if (p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(l_noOfArmies)) {
+        if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
             System.out.println(
                     "Given [deploy] order cant be executed as armies in order exceeds player's unallocated armies");
         } else {
@@ -226,25 +226,45 @@ public class PlayerService {
     }
 
     /**
+     * Method to validate the armies that are deployed properly or not
+     *
+     * @param p_player     player object
+     * @param p_noOfArmies number of armies
+     * @return if the deployed armies are valid or invalid
+     */
+    public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
+        return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies);
+    }
+
+    /**
+     * Method calculates the army for a player who is currently available
+     *
+     * @param p_player player object
+     * @return the calculated number of armies to the player
+     */
+    public int calculateArmiesForPlayer(Player p_player) {
+        int l_armies = 0;
+        if (!p_player.getD_coutriesOwned().isEmpty()) {
+            l_armies = Math.max(3, Math.round((float) (p_player.getD_coutriesOwned().size()) / 3));
+        }
+        if (p_player.getD_continentsOwned() != null && !p_player.getD_continentsOwned().isEmpty()) {
+            int l_continentCtrlValue = 0;
+            for (Continent l_continent : p_player.getD_continentsOwned()) {
+                l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
+            }
+            l_armies = l_armies + l_continentCtrlValue;
+        }
+        return l_armies;
+    }
+
+    /**
      * Method to assign the armies in the game state and to the players.
      *
      * @param p_gameState game state or phase of the current game
      */
     public void assignArmies(GameState p_gameState) {
         for (Player l_player : p_gameState.getD_players()) {
-            int l_armies = 0;
-            if (!l_player.getD_coutriesOwned().isEmpty()) {
-                l_armies = Math.max(3, Math.round((float) (l_player.getD_coutriesOwned().size()) / 3));
-            }
-            //if the player owns the continent add the continent control bonus.
-            if (l_player.getD_continentsOwned() != null && !l_player.getD_continentsOwned().isEmpty()) {
-                int l_continentControlBonusValue = 0;
-                for (Continent l_continent : l_player.getD_continentsOwned()) {
-                    l_continentControlBonusValue = l_continentControlBonusValue + l_continent.getD_continentValue();
-                }
-                l_armies = l_armies + l_continentControlBonusValue;
-            }
-            System.out.println("Player : " + l_player.getPlayerName() + " has been assigned with " + l_armies + " armies");
+            Integer l_armies = this.calculateArmiesForPlayer(l_player);
 
             l_player.setD_noOfUnallocatedArmies(l_armies);
         }
@@ -268,6 +288,7 @@ public class PlayerService {
 
     /**
      * Method to check if there are any unassigned armies left or not
+     *
      * @param p_playersList list of players available
      * @return true if there are any unassigned armies left or false
      */
@@ -291,9 +312,10 @@ public class PlayerService {
 
     /**
      * Method to update the list of players.
-     * @param p_gameState  game state or phase of the current game
+     *
+     * @param p_gameState game state or phase of the current game
      * @param p_operation operation to update the list
-     * @param p_argument arguments which gives list of players
+     * @param p_argument  arguments which gives list of players
      */
     public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
         if (!isMapLoaded(p_gameState)) {
