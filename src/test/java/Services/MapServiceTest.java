@@ -2,14 +2,17 @@ package Services;
 
 import Controllers.GameEngine;
 import Models.GameState;
+
+import Models.Map;
 import Utils.Command;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test Class for MapService Class
- * @author Mihir Panchal
+ * 
+ * @author Aashvi Zala
  */
 class MapServiceTest {
 
@@ -24,8 +27,10 @@ class MapServiceTest {
         boolean l_isExcep = false;
         try {
             Command l_command = new Command("editmap canada.map");
-            l_gameEngine.doLoadMap(l_command);
+
+            l_gameEngine.doEditMap(l_command);
             l_initCount = l_gameEngine.getD_gameState().getD_map().getD_continents().size();
+            System.out.println("init count: "+l_initCount);
             Command l_command1 = new Command("editcontinent -add Asia 5");
             l_gameEngine.doEditContinent(l_command1);
             l_finalCount = l_gameEngine.getD_gameState().getD_map().getD_continents().size();
@@ -47,10 +52,10 @@ class MapServiceTest {
         boolean l_isExcep = false;
         try {
             Command l_command = new Command("editmap canada.map");
-            l_gameEngine.doLoadMap(l_command);
+            l_gameEngine.doEditMap(l_command);
             l_initCount = l_gameEngine.getD_gameState().getD_map().getD_countries().size();
             Command l_command1 = new Command("editcountry -remove New_Brunswick");
-            l_gameEngine.doEditCountry(l_command1);
+            l_gameEngine.doEditContinent(l_command1);
             l_finalCount = l_gameEngine.getD_gameState().getD_map().getD_countries().size();
         } catch (Exception l_e){
             l_isExcep=true;
