@@ -17,7 +17,7 @@ class OrderTest {
      */
     @Test
     void doesPlayerHaveDeployCountry() {
-        Player l_player = new Player("Harshil");
+        Player l_player = new Player("Prachi");
         Order l_order = new Order("deploy", "India", 5);
 
         Country India = new Country(1, "India", 1);
@@ -29,10 +29,10 @@ class OrderTest {
         l_countriesOwned.add(Canada);
         l_player.setD_coutriesOwned(l_countriesOwned);
 
-        boolean l_doesPlayerHaveDeployCountry = l_order.CountryBelongsToPlayerCheck(l_player, l_order);
+        boolean l_doesPlayerHaveDeployCountry = l_order.countryBelongsToPlayerCheck(l_player, l_order);
         assertEquals(true, l_doesPlayerHaveDeployCountry);
         l_order.setD_CountryTargeted("USA");
-        l_doesPlayerHaveDeployCountry = l_order.CountryBelongsToPlayerCheck(l_player, l_order);
+        l_doesPlayerHaveDeployCountry = l_order.countryBelongsToPlayerCheck(l_player, l_order);
         assertEquals(false, l_doesPlayerHaveDeployCountry);
     }
 
