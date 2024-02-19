@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test Class for MapService Class
+ * @author Mihir Panchal
  */
 class MapServiceTest {
 
