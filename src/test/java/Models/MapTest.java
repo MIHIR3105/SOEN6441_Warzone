@@ -21,7 +21,6 @@ class MapTest {
         MapService l_serivce = new MapService();
         GameState l_game = new GameState();
         Map l_map = l_serivce.loadMap(l_game, l_serivce.getFilePath("europe.map"));
-
         assertEquals(true,l_map.isCountriesConnected());
     }
 
