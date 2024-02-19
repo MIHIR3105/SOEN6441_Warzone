@@ -387,7 +387,7 @@ public class GameEngine {
             d_playerService.assignCountries(d_gameState);
 
             while (!d_gameState.getD_players().isEmpty()) {
-                System.out.println("\n********Starting Main Game***********\n");
+                System.out.println("\n========== Starting Main Game ============\n");
 
                 d_playerService.assignArmies(d_gameState);
 

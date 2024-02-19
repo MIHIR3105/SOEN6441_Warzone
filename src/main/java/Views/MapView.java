@@ -78,7 +78,7 @@ public class MapView {
      * Separator to separate the heading.
      */
     private void renderSeparator() {
-        System.out.format("+%s+%n", "-".repeat(GameConstants.CONSOLE_WIDTH - 2));
+        System.out.format("*%s*%n", "=".repeat(GameConstants.CONSOLE_WIDTH - 2));
     }
 
     /**
