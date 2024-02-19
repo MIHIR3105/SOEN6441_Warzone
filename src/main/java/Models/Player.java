@@ -1,5 +1,11 @@
 package Models;
 
+import Services.PlayerService;
+import Utils.Command;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +34,11 @@ public class Player {
      * List of orders given by the player.
      */
     List<Order> d_orderList;
+
+    /**
+     * List of orders given by the player.
+     */
+    List<Order> d_ordersToExecute;
 
     /**
      * Number of armies allocated to the player.
@@ -171,7 +182,7 @@ public class Player {
 
 
     /**
-     * Retrieves the list of continent names owned by the player.
+     * Method to retrieve the list of continent names owned by the player.
      *
      * @return list of continent names
      */
@@ -184,6 +195,42 @@ public class Player {
             return l_continentNames;
         }
         return null;
+    }
+
+    /**
+     * Method to issue order which takes order as an input and
+     * add it to players unassigned orders pool.
+     *
+     * @throws IOException exception in reading inputs from user
+     */
+    public void issue_order() throws IOException {
+        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+        PlayerService l_playerService = new PlayerService();
+        System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
+                + this.getPlayerName());
+        String l_commandEntered = l_reader.readLine();
+        Command l_command = new Command(l_commandEntered);
+
+        if (l_command.getMainCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
+            l_playerService.createAndDeployOrder(l_commandEntered, this);
+        } else {
+            System.out.println("Invalid command encountered");;
+        }
+    }
+
+    /**
+     * Gives the first order in the players list of orders, then removes it from the
+     * list.
+     *
+     * @return Order first order from the list of player's order
+     */
+    public Order next_order() {
+        if (this.d_ordersToExecute==null||this.d_ordersToExecute.isEmpty()) {
+            return null;
+        }
+        Order l_order = this.d_ordersToExecute.get(0);
+        this.d_ordersToExecute.remove(l_order);
+        return l_order;
     }
 
 
