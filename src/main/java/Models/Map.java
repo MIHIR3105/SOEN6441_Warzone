@@ -363,6 +363,7 @@ public class Map {
         if (d_continents != null) {
             l_continentID = d_continents.size() > 0 ? Collections.max(retrieveContinentID()) + 1 : 1;
             if (retrieveContinent(p_continentName) == null) {
+                System.out.println(l_continentID +" "+p_continentName);
                 d_continents.add(new Continent(l_continentID, p_continentName, p_continentControlBonus));
             } else {
                 System.out.println("Continent is already created");

@@ -123,15 +123,21 @@ public class Order {
      * @param p_player player whose order is being executed
      */
     public void execute(GameState p_gameState, Player p_player) {
-        if (this.d_ActionOfOrder.equals("deploy")) {
-            if (this.CountryBelongsToPlayerCheck(p_player, this)) {
-                this.executeDeployedOrder(this, p_gameState, p_player);
-                System.out.println("Order has successfully been executed. " + this.getD_ArmiesToPlace() + " numbers of armies are deployed to target country " + this.getD_CountryTargeted());
-            } else {
-                System.out.println("Target country does not belong to player: " + p_player.getPlayerName());
+
+        switch(this.d_ActionOfOrder) {
+            case "deploy": {
+                if (this.countryBelongsToPlayerCheck(p_player, this)) {
+                    this.executeDeployedOrder(this, p_gameState, p_player);
+                    System.out.println("Order has successfully been executed. " + this.getD_ArmiesToPlace() + " numbers of armies are deployed to target country " + this.getD_CountryTargeted());
+                }
+                else {
+                    System.out.println("Target country does not belong to player: " + p_player.getPlayerName());
+                }
+                break;
             }
-        } else {
-            System.out.println("Invalid order command");
+            default: {
+                System.out.println("Invalid order command");
+            }
         }
     }
 
@@ -142,7 +148,7 @@ public class Order {
      * @param p_order order given by the player to be executed
      * @return true if country belongs to player, else false
      */
-    public boolean CountryBelongsToPlayerCheck(Player p_player, Order p_order) {
+    public boolean countryBelongsToPlayerCheck(Player p_player, Order p_order) {
         Country l_country = p_player.getD_coutriesOwned().stream().filter(
                 l_pl -> l_pl.getD_countryName().equalsIgnoreCase(p_order.getD_CountryTargeted())).findFirst().orElse(null);
         return l_country != null;
