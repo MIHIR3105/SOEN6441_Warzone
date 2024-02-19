@@ -125,7 +125,7 @@ public class Order {
     public void execute(GameState p_gameState, Player p_player) {
         switch(this.d_ActionOfOrder) {
             case "deploy": {
-                if (this.doesPlayerHaveDeployCountry(p_player, this)) {
+                if (this.CountryBelongsToPlayerCheck(p_player, this)) {
                     this.executeDeployedOrder(this, p_gameState, p_player);
                     System.out.println("Order has successfully been executed. " + this.getD_ArmiesToPlace() + " numbers of armies are deployed to target country " + this.getD_CountryTargeted());
                 }
@@ -141,13 +141,13 @@ public class Order {
     }
 
     /**
-     * Method to check if the country armies are deployed belongs to player or not.
+     * Method to check if the country in which the armies are deployed, belongs to the player or not.
      *
      * @param p_player player whose order is being executed
      * @param p_order order given by the player to be executed
-     * @return true or false
+     * @return true if country belongs to player, else false
      */
-    public boolean doesPlayerHaveDeployCountry(Player p_player, Order p_order) {
+    public boolean CountryBelongsToPlayerCheck(Player p_player, Order p_order) {
         Country l_country = p_player.getD_coutriesOwned().stream().filter(
                 l_pl -> l_pl.getD_countryName().equalsIgnoreCase(p_order.getD_CountryTargeted())).findFirst().orElse(null);
         return l_country != null;
