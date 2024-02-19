@@ -16,9 +16,9 @@ public class ContinentTest {
      */
     @Test
     public void removeCountryForAllNeighboursTest() {
-        MapService l_serivce = new MapService();
+        MapService l_service = new MapService();
         GameState l_game = new GameState();
-        Map l_map = l_serivce.loadMap(l_game, l_serivce.getFilePath("canada.map"));
+        Map l_map = l_service.loadMap(l_game, l_service.getFilePath("europe.map"));
 
         List<Continent> l_continentList = l_map.getD_continents();
         List<Country> l_countriesList = l_continentList.get(0).getD_countries();
