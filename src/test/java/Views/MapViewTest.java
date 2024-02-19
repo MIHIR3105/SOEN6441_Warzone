@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MapViewTest {
 
     /**
-     * Test to check the method showmap
+     * Test to check the method showmap 
      */
     @Test
     void showMap() {
