@@ -289,4 +289,22 @@ public class PlayerService {
         return !(p_gameState.getD_map() == null);
     }
 
+    /**
+     * Method to update the list of players.
+     * @param p_gameState  game state or phase of the current game
+     * @param p_operation operation to update the list
+     * @param p_argument arguments which gives list of players
+     */
+    public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
+        if (!isMapLoaded(p_gameState)) {
+            System.out.println("Kindly load the map first to add player: " + p_argument);
+            return;
+        }
+        List<Player> l_updatedPlayers = this.addOrRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
+
+        if (l_updatedPlayers != null) {
+            p_gameState.setD_players(l_updatedPlayers);
+        }
+    }
+
 }

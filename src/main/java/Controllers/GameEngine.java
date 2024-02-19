@@ -2,6 +2,8 @@ package Controllers;
 
 
 import Models.GameState;
+import Models.Order;
+import Models.Player;
 import Services.MapService;
 import Services.PlayerService;
 import Utils.Command;
@@ -145,6 +147,21 @@ public class GameEngine {
                 l_mapView.showMap();
                 break;
             }
+
+            case "gameplayer": {
+                if (!l_isMapLoaded) {
+                    System.out.println("No map found, Please loadmap before adding game players");
+                    break;
+                }
+                createPlayers(l_command);
+                break;
+            }
+
+            case "assigncountries": {
+                assignCountries(l_command);
+                break;
+            }
+
             case "exit": {
                 System.out.println("Exit Command Entered");
                 System.exit(0);
@@ -268,7 +285,6 @@ public class GameEngine {
     }
 
     /**
-     *
      * Method to validate map: continent and country connectivity.
      *
      * @param p_command command by the user on the CLI
@@ -336,8 +352,72 @@ public class GameEngine {
     }
 
 
+    /**
+     * Method
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws Exception indicates Exception e
+     */
+    public void createPlayers(Command p_command) throws Exception {
+        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        if (null == l_operations_list || l_operations_list.isEmpty()) {
+            System.out.println(e.getMessage());
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (!l_map.isEmpty() && l_map.containsKey("arguments") && l_map.get("arguments") != null) {
+                    d_playerService.updatePlayers(d_gameState, l_map.get("operation"), l_map.get("arguments"));
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
 
+    /**
+     * Method to execute the logic in loop to play the
+     * actual game and track the execution of the army
+     * and assignment of the countries.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws Exception indicates Exception e
+     */
+    public void assignCountries(Command p_command) throws Exception {
+        List<Map<String, String>> l_operation_list = p_command.getTaskandArguments();
+        if (l_operation_list.isEmpty()) {
+            d_playerService.assignCountries(d_gameState);
 
+            while (!d_gameState.getD_players().isEmpty()) {
+                System.out.println("\n********Starting Main Game***********\n");
+
+                d_playerService.assignArmies(d_gameState);
+
+                while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
+                    for (Player l_player : d_gameState.getD_players()) {
+                        if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
+                            l_player.issue_order();
+                    }
+                }
+
+                while (d_playerService.ignoredOrdersExists(d_gameState.getD_players())) {
+                    for (Player l_player : d_gameState.getD_players()) {
+                        Order l_order = l_player.next_order();
+                        if (l_order != null)
+                            l_order.execute(d_gameState, l_player);
+                    }
+                }
+                MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+                l_map_view.showMap();
+
+                System.out.println("Press Y to move ahead for next turn or else press N");
+                BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+                String l_continue = l_reader.readLine();
+                if (l_continue.equalsIgnoreCase("N"))
+                    break;
+            }
+        } else {
+            System.out.println(e.getMessage());
+        }
+    }
 
 
 }
