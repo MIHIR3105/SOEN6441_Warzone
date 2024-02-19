@@ -170,6 +170,7 @@ public class PlayerService {
         if (!l_unassignedCountries.isEmpty()) {
             doRandomCountryAssignment(1, l_unassignedCountries, p_players);
         }
+
     }
 
     /**
@@ -181,13 +182,13 @@ public class PlayerService {
     private void doContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
         for (Player l_player : p_players) {
             List<String> l_countriesOwned = new ArrayList<>();
-            if (!l_player.getD_coutriesOwned().isEmpty()) {
+            if (l_player.getD_coutriesOwned().size() != 0) {
                 l_player.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
 
                 for (Continent l_continent : p_continents) {
                     List<String> l_countriesOfContinent = new ArrayList<>();
                     l_continent.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
-                    if (new HashSet<>(l_countriesOwned).containsAll(l_countriesOfContinent)) {
+                    if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
                         if (l_player.getD_continentsOwned() == null)
                             l_player.setD_continentsOwned(new ArrayList<>());
 
@@ -244,10 +245,10 @@ public class PlayerService {
      */
     public int calculateArmiesForPlayer(Player p_player) {
         int l_armies = 0;
-        if (!p_player.getD_coutriesOwned().isEmpty()) {
-            l_armies = Math.max(3, Math.round((float) (p_player.getD_coutriesOwned().size()) / 3));
+        if (p_player.getD_coutriesOwned().size() != 0) {
+            l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
         }
-        if (p_player.getD_continentsOwned() != null && !p_player.getD_continentsOwned().isEmpty()) {
+        if (p_player.getD_continentsOwned()!=null && p_player.getD_continentsOwned().size() != 0) {
             int l_continentCtrlValue = 0;
             for (Continent l_continent : p_player.getD_continentsOwned()) {
                 l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
@@ -265,6 +266,7 @@ public class PlayerService {
     public void assignArmies(GameState p_gameState) {
         for (Player l_player : p_gameState.getD_players()) {
             Integer l_armies = this.calculateArmiesForPlayer(l_player);
+            System.out.println("Player : " + l_player.getPlayerName() + " has been assigned with " + l_armies + " armies");
 
             l_player.setD_noOfUnallocatedArmies(l_armies);
         }

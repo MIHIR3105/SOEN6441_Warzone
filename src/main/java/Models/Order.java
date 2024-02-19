@@ -123,20 +123,15 @@ public class Order {
      * @param p_player player whose order is being executed
      */
     public void execute(GameState p_gameState, Player p_player) {
-        switch(this.d_ActionOfOrder) {
-            case "deploy": {
-                if (this.CountryBelongsToPlayerCheck(p_player, this)) {
-                    this.executeDeployedOrder(this, p_gameState, p_player);
-                    System.out.println("Order has successfully been executed. " + this.getD_ArmiesToPlace() + " numbers of armies are deployed to target country " + this.getD_CountryTargeted());
-                }
-                else {
-                    System.out.println("Target country does not belong to player: " + p_player.getPlayerName());
-                }
-                break;
+        if (this.d_ActionOfOrder.equals("deploy")) {
+            if (this.CountryBelongsToPlayerCheck(p_player, this)) {
+                this.executeDeployedOrder(this, p_gameState, p_player);
+                System.out.println("Order has successfully been executed. " + this.getD_ArmiesToPlace() + " numbers of armies are deployed to target country " + this.getD_CountryTargeted());
+            } else {
+                System.out.println("Target country does not belong to player: " + p_player.getPlayerName());
             }
-            default: {
-                System.out.println("Invalid order command");
-            }
+        } else {
+            System.out.println("Invalid order command");
         }
     }
 
