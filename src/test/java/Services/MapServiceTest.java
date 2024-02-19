@@ -2,6 +2,7 @@ package Services;
 
 import Controllers.GameEngine;
 import Models.GameState;
+
 import Models.Map;
 import Utils.Command;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test Class for MapService Class
+ * 
  * @author Aashvi Zala
  */
 class MapServiceTest {
@@ -25,6 +27,7 @@ class MapServiceTest {
         boolean l_isExcep = false;
         try {
             Command l_command = new Command("editmap canada.map");
+
             l_gameEngine.doEditMap(l_command);
             l_initCount = l_gameEngine.getD_gameState().getD_map().getD_continents().size();
             System.out.println("init count: "+l_initCount);
