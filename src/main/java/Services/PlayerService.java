@@ -3,10 +3,7 @@ package Services;
 
 import Models.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class has services for Player to find the specific methods to be used for players in the game.
@@ -208,18 +205,23 @@ public class PlayerService {
      * @param p_player         object of the player
      */
     public void createAndDeployOrder(String p_commandEntered, Player p_player) {
-        List<Order> l_orders = p_player.getD_ordersToExecute().isEmpty() ? new ArrayList<>()
-                : p_player.getD_ordersToExecute();
+        List<Order> l_orders = p_player.getD_orderList().isEmpty() ? new ArrayList<>()
+                : p_player.getD_orderList();
         String l_countryName = p_commandEntered.split(" ")[1];
         String l_noOfArmies = p_commandEntered.split(" ")[2];
-        if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
+        if (validateDeployOrderArmies(p_player, l_noOfArmies) ) {
             System.out.println(
-                    "Given [deploy] order cant be executed as armies in order exceeds player's unallocated armies");
-        } else {
+                    "Given [deploy] order can't be executed as armies in order exceeds player's unallocated armies");
+        }else if(validateOwnershipOfCountry(p_player,l_countryName)){
+            System.out.println(
+                    "Given [deploy] order can't be executed as country doesn't belong to the player.");
+
+        }
+        else {
             Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
                     Integer.parseInt(l_noOfArmies));
             l_orders.add(l_orderObject);
-            p_player.setD_ordersToExecute(l_orders);
+            p_player.setD_orderList(l_orders);
             Integer l_unallocatedArmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
             p_player.setD_noOfUnallocatedArmies(l_unallocatedArmies);
             System.out.println("Order has been added to queue for execution.");
@@ -235,6 +237,10 @@ public class PlayerService {
      */
     public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
         return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies);
+    }
+
+    public boolean validateOwnershipOfCountry(Player p_player, String p_country) {
+        return p_player.getD_coutriesOwned().stream().noneMatch(x-> Objects.equals(x.getD_countryName(), p_country));
     }
 
     /**
@@ -283,7 +289,7 @@ public class PlayerService {
     public boolean ignoredOrdersExists(List<Player> p_playerList) {
         int l_totalIgnoredOrders = 0;
         for (Player l_player : p_playerList) {
-            l_totalIgnoredOrders = l_totalIgnoredOrders + l_player.getD_ordersToExecute().size();
+            l_totalIgnoredOrders = l_totalIgnoredOrders + l_player.getD_orderList().size();
         }
         return l_totalIgnoredOrders != 0;
     }
