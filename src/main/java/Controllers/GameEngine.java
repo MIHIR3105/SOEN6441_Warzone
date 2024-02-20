@@ -383,11 +383,11 @@ public class GameEngine {
      */
     public void assignCountries(Command p_command) throws Exception {
         List<Map<String, String>> l_operation_list = p_command.getTaskandArguments();
-        if (l_operation_list.isEmpty()) {
+        if (l_operation_list.size()==0) {
             d_playerService.assignCountries(d_gameState);
 
-            while (!d_gameState.getD_players().isEmpty()) {
-                System.out.println("\n========== Starting Main Game ============\n");
+            while (d_gameState.getD_players().size() != 0) {
+                System.out.println("\n********Starting Main Game***********\n");
 
                 d_playerService.assignArmies(d_gameState);
 

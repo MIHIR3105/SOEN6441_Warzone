@@ -123,6 +123,7 @@ public class Order {
      * @param p_player player whose order is being executed
      */
     public void execute(GameState p_gameState, Player p_player) {
+
         switch(this.d_ActionOfOrder) {
             case "deploy": {
                 if (this.countryBelongsToPlayerCheck(p_player, this)) {

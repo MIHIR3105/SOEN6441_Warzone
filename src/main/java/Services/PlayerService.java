@@ -3,10 +3,7 @@ package Services;
 
 import Models.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class has services for Player to find the specific methods to be used for players in the game.
@@ -170,6 +167,7 @@ public class PlayerService {
         if (!l_unassignedCountries.isEmpty()) {
             doRandomCountryAssignment(1, l_unassignedCountries, p_players);
         }
+
     }
 
     /**
@@ -181,13 +179,13 @@ public class PlayerService {
     private void doContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
         for (Player l_player : p_players) {
             List<String> l_countriesOwned = new ArrayList<>();
-            if (!l_player.getD_coutriesOwned().isEmpty()) {
+            if (l_player.getD_coutriesOwned().size() != 0) {
                 l_player.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
 
                 for (Continent l_continent : p_continents) {
                     List<String> l_countriesOfContinent = new ArrayList<>();
                     l_continent.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
-                    if (new HashSet<>(l_countriesOwned).containsAll(l_countriesOfContinent)) {
+                    if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
                         if (l_player.getD_continentsOwned() == null)
                             l_player.setD_continentsOwned(new ArrayList<>());
 
@@ -207,18 +205,23 @@ public class PlayerService {
      * @param p_player         object of the player
      */
     public void createAndDeployOrder(String p_commandEntered, Player p_player) {
-        List<Order> l_orders = p_player.getD_ordersToExecute().isEmpty() ? new ArrayList<>()
-                : p_player.getD_ordersToExecute();
+        List<Order> l_orders = p_player.getD_orderList().isEmpty() ? new ArrayList<>()
+                : p_player.getD_orderList();
         String l_countryName = p_commandEntered.split(" ")[1];
         String l_noOfArmies = p_commandEntered.split(" ")[2];
-        if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
+        if (validateDeployOrderArmies(p_player, l_noOfArmies) ) {
             System.out.println(
-                    "Given [deploy] order cant be executed as armies in order exceeds player's unallocated armies");
-        } else {
+                    "Given [deploy] order can't be executed as armies in order exceeds player's unallocated armies");
+        }else if(validateOwnershipOfCountry(p_player,l_countryName)){
+            System.out.println(
+                    "Given [deploy] order can't be executed as country doesn't belong to the player.");
+
+        }
+        else {
             Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
                     Integer.parseInt(l_noOfArmies));
             l_orders.add(l_orderObject);
-            p_player.setD_ordersToExecute(l_orders);
+            p_player.setD_orderList(l_orders);
             Integer l_unallocatedArmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
             p_player.setD_noOfUnallocatedArmies(l_unallocatedArmies);
             System.out.println("Order has been added to queue for execution.");
@@ -236,6 +239,10 @@ public class PlayerService {
         return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies);
     }
 
+    public boolean validateOwnershipOfCountry(Player p_player, String p_country) {
+        return p_player.getD_coutriesOwned().stream().noneMatch(x-> Objects.equals(x.getD_countryName(), p_country));
+    }
+
     /**
      * Method calculates the army for a player who is currently available
      *
@@ -244,10 +251,10 @@ public class PlayerService {
      */
     public int calculateArmiesForPlayer(Player p_player) {
         int l_armies = 0;
-        if (!p_player.getD_coutriesOwned().isEmpty()) {
-            l_armies = Math.max(3, Math.round((float) (p_player.getD_coutriesOwned().size()) / 3));
+        if (p_player.getD_coutriesOwned().size() != 0) {
+            l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
         }
-        if (p_player.getD_continentsOwned() != null && !p_player.getD_continentsOwned().isEmpty()) {
+        if (p_player.getD_continentsOwned()!=null && p_player.getD_continentsOwned().size() != 0) {
             int l_continentCtrlValue = 0;
             for (Continent l_continent : p_player.getD_continentsOwned()) {
                 l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
@@ -265,6 +272,7 @@ public class PlayerService {
     public void assignArmies(GameState p_gameState) {
         for (Player l_player : p_gameState.getD_players()) {
             Integer l_armies = this.calculateArmiesForPlayer(l_player);
+            System.out.println("Player : " + l_player.getPlayerName() + " has been assigned with " + l_armies + " armies");
 
             l_player.setD_noOfUnallocatedArmies(l_armies);
         }
@@ -281,7 +289,7 @@ public class PlayerService {
     public boolean ignoredOrdersExists(List<Player> p_playerList) {
         int l_totalIgnoredOrders = 0;
         for (Player l_player : p_playerList) {
-            l_totalIgnoredOrders = l_totalIgnoredOrders + l_player.getD_ordersToExecute().size();
+            l_totalIgnoredOrders = l_totalIgnoredOrders + l_player.getD_orderList().size();
         }
         return l_totalIgnoredOrders != 0;
     }

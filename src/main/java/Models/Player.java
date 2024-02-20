@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * This class has the data members and functions of player.
+ *
  * @author Prachi Patel
  */
 public class Player {
@@ -30,15 +31,11 @@ public class Player {
      */
     List<Continent> d_continentList;
 
-    /**
-     * List of orders given by the player.
-     */
-    List<Order> d_orderList;
 
     /**
      * List of orders given by the player.
      */
-    List<Order> d_ordersToExecute;
+    List<Order> d_orderList;
 
     /**
      * Number of armies allocated to the player.
@@ -128,7 +125,7 @@ public class Player {
      *
      * @return return execute orders.
      */
-    public List<Order> getD_ordersToExecute() {
+    public List<Order> getD_orderList() {
         return d_orderList;
     }
 
@@ -138,7 +135,7 @@ public class Player {
      *
      * @param p_ordersToExecute set execute orders.
      */
-    public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
+    public void setD_orderList(List<Order> p_ordersToExecute) {
         this.d_orderList = p_ordersToExecute;
     }
 
@@ -154,7 +151,6 @@ public class Player {
     }
 
 
-
     /**
      * This setter is used to set number of allocated armies to player.
      *
@@ -165,20 +161,18 @@ public class Player {
     }
 
 
-
     /**
      * Extracts the list of names of countries owned by the player.
      *
      * @return list of country names
      */
-    public List<String> getCountryNames(){
-        List<String> l_countryNames=new ArrayList<String>();
-        for(Country c: d_countryList){
+    public List<String> getCountryNames() {
+        List<String> l_countryNames = new ArrayList<String>();
+        for (Country c : d_countryList) {
             l_countryNames.add(c.d_countryName);
         }
         return l_countryNames;
     }
-
 
 
     /**
@@ -186,10 +180,10 @@ public class Player {
      *
      * @return list of continent names
      */
-    public List<String> getContinentNames(){
+    public List<String> getContinentNames() {
         List<String> l_continentNames = new ArrayList<String>();
         if (d_continentList != null) {
-            for(Continent c: d_continentList){
+            for (Continent c : d_continentList) {
                 l_continentNames.add(c.d_continentName);
             }
             return l_continentNames;
@@ -206,15 +200,14 @@ public class Player {
     public void issue_order() throws IOException {
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
         PlayerService l_playerService = new PlayerService();
-        System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
-                + this.getPlayerName());
+        System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : " + this.getPlayerName());
         String l_commandEntered = l_reader.readLine();
         Command l_command = new Command(l_commandEntered);
 
         if (l_command.getMainCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
             l_playerService.createAndDeployOrder(l_commandEntered, this);
         } else {
-            System.out.println("Invalid command encountered");;
+            System.out.println("Invalid command encountered");
         }
     }
 
@@ -225,14 +218,11 @@ public class Player {
      * @return Order first order from the list of player's order
      */
     public Order next_order() {
-        if (this.d_ordersToExecute==null||this.d_ordersToExecute.isEmpty()) {
+        if (this.d_orderList == null || this.d_orderList.isEmpty()) {
             return null;
         }
-        Order l_order = this.d_ordersToExecute.get(0);
-        this.d_ordersToExecute.remove(l_order);
+        Order l_order = this.d_orderList.get(0);
+        this.d_orderList.remove(l_order);
         return l_order;
     }
-
-
-
 }
