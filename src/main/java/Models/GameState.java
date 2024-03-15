@@ -12,6 +12,8 @@ public class GameState {
      */
     Map d_map;
 
+
+
     /**
      * list of all players.
      */
@@ -97,5 +99,15 @@ public class GameState {
      */
     public void setError(String p_error) {
         this.d_error = p_error;
+    }
+
+    @Override
+    public String toString() {
+        return "GameState{" +
+                "d_map=" + d_map +
+                ", d_players=" + d_players +
+                ", d_pendingOrders=" + d_pendingOrders +
+                ", d_error='" + d_error + '\'' +
+                '}';
     }
 }
