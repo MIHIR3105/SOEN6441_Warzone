@@ -197,19 +197,19 @@ public class Player {
      *
      * @throws IOException exception in reading inputs from user
      */
-    public void issue_order() throws IOException {
-        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-        PlayerService l_playerService = new PlayerService();
-        System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : " + this.getPlayerName());
-        String l_commandEntered = l_reader.readLine();
-        Command l_command = new Command(l_commandEntered);
-
-        if (l_command.getMainCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
-            l_playerService.createAndDeployOrder(l_commandEntered, this);
-        } else {
-            System.out.println("Invalid command encountered");
-        }
-    }
+//    public void issue_order() throws IOException {
+//        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+//        PlayerService l_playerService = new PlayerService();
+//        System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : " + this.getPlayerName());
+//        String l_commandEntered = l_reader.readLine();
+//        Command l_command = new Command(l_commandEntered);
+//
+//        if (l_command.getMainCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
+//            l_playerService.createAndDeployOrder(l_commandEntered, this);
+//        } else {
+//            System.out.println("Invalid command encountered");
+//        }
+//    }
 
     /**
      * Gives the first order in the players list of orders, then removes it from the
