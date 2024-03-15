@@ -1,5 +1,6 @@
 package Models;
 
+import Constants.ApplicationConstants;
 import Services.PlayerService;
 import Utils.Command;
 
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class has the data members and functions of player.
@@ -20,6 +22,10 @@ public class Player {
      * Name of the player.
      */
     private String d_name;
+    /**
+     * String holding Log for individual Player methods.
+     */
+    String d_playerLog;
 
     /**
      * List of countries under the ownership of the player.
@@ -44,7 +50,10 @@ public class Player {
      * List of orders given by the player.
      */
     List<Order> d_orderList;
-
+    /**
+     * If the per turn card is assigned already.
+     */
+    boolean d_oneCardPerTurn = false;
     /**
      * Number of armies allocated to the player.
      */
@@ -197,6 +206,43 @@ public class Player {
             return l_continentNames;
         }
         return null;
+    }
+    /**
+     * Prints and writes the player log.
+     *
+     * @param p_playerLog String as log message
+     * @param p_typeLog Type of log : error, or log
+     */
+    public void setD_playerLog(String p_playerLog, String p_typeLog) {
+        this.d_playerLog = p_playerLog;
+        if(p_typeLog.equals("error"))
+            System.err.println(p_playerLog);
+        else if(p_typeLog.equals("log"))
+            System.out.println(p_playerLog);
+    }
+
+    /**
+     * Sets the Per Turn Card allocated bool.
+     *
+     * @param p_value Bool to Set.
+     */
+    public void setD_oneCardPerTurn(Boolean p_value){
+        this.d_oneCardPerTurn = p_value;
+    }
+    /**
+     * This method will assign any random card from the set of available cards to
+     * the player once he conquers a territory.
+     *
+     */
+    public void assignCard() {
+        if (!d_oneCardPerTurn) {
+            Random l_random = new Random();
+            this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+            this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
+            this.setD_oneCardPerTurn(true);
+        }else{
+            this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
+        }
     }
     /**
      * Remove the card which is used.
