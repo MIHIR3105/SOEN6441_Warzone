@@ -5,6 +5,7 @@ import java.util.Observable;
 
 /**
  * The class records the corresponding logs for various stages in game.
+ *
  * @author Aashvi Zala
  */
 public class LogEntryBuffer extends Observable {

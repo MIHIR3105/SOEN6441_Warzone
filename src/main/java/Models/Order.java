@@ -3,6 +3,8 @@ package Models;
 /**
  * Command of the Command pattern : This model class manages the orders given by
  * the players.
+ *
+ * @author Aashvi Zala
  */
 public interface Order {
 

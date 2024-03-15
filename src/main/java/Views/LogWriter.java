@@ -13,6 +13,7 @@ import java.util.Observer;
 
 /**
  * The class updates the Log File composed of logs derived from LogEntryBuffer Class.
+ *
  * @author Aashvi Zala
  */
 public class LogWriter implements Observer {

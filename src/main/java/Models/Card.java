@@ -2,6 +2,7 @@ package Models;
 
 /**
  * This model class manages all the cards owned by the player.
+ *
  * @author Aashvi Zala
  */
 public interface Card extends Order {

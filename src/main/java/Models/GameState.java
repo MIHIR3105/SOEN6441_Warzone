@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * This class is used to test functionality of GameState class functions.
+ *
+ * @author Aashvi Zala
  */
 public class GameState {
 
