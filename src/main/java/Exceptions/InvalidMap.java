@@ -2,6 +2,9 @@ package Exceptions;
 
 /**
  * Defined Map Exceptions are thrown by this class.
+ *
+ * @author Aashvi Zala
+ *
  */
 public class InvalidMap extends Exception {
 

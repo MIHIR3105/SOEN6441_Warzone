@@ -25,7 +25,15 @@ public class Player {
      * List of countries under the ownership of the player.
      */
     List<Country> d_countryList;
+    /**
+     * List of players to not attack if negotiated with.
+     */
+    List<Player> d_negotiatedWith = new ArrayList<Player>();
 
+    /**
+     * Name of the card Player owns.
+     */
+    List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
     /**
      * List of Continents under the ownership of the player.
      */
@@ -189,6 +197,29 @@ public class Player {
             return l_continentNames;
         }
         return null;
+    }
+    /**
+     * Remove the card which is used.
+     *
+     * @param p_cardName name of the card to remove.
+     */
+    public void removeCard(String p_cardName){
+        this.d_cardsOwnedByPlayer.remove(p_cardName);
+    }
+
+    /**
+     * Checks if the order issued on country is possible or not.
+     *
+     * @param p_targetCountryName country to attack
+     * @return bool if it can attack
+     */
+    public boolean negotiationValidation(String p_targetCountryName){
+        boolean l_canAttack = true;
+        for(Player p: d_negotiatedWith){
+            if (p.getCountryNames().contains(p_targetCountryName))
+                l_canAttack = false;
+        }
+        return l_canAttack;
     }
 
     /**
