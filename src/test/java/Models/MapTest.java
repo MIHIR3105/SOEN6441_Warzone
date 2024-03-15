@@ -1,5 +1,6 @@
 package Models;
 
+import Controllers.GameEngine;
 import Services.MapService;
 import Utils.Command;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,43 @@ import static org.junit.jupiter.api.Assertions.*;
  * @ Aashvi Zala
  */
 class MapTest {
+
+    /**
+     * Invalid Test to see if all elements of the map are connected
+     */
+    @Test
+    void invalidMapTest() {
+
+        GameEngine l_gameEngine = new GameEngine();
+        GameState d_gameState = new GameState();
+        boolean l_isExcep = false;
+        try {
+            Command l_command = new Command("loadmap TestInvalidMap.map");
+            l_gameEngine.doLoadMap(l_command);
+        } catch (Exception l_e){
+            l_isExcep=true;
+        }
+
+        assertTrue(l_isExcep);
+    }
+
+    /**
+     * Valid test to see if all elements of map are connectedS
+     */
+    @Test
+    void validMapTest() {
+
+        GameEngine l_gameEngine = new GameEngine();
+        GameState d_gameState = new GameState();
+        boolean l_isExcep = false;
+        try {
+            Command l_command = new Command("loadmap canada.map");
+            l_gameEngine.doLoadMap(l_command);
+        } catch (Exception l_e){
+            l_isExcep=true;
+        }
+        assertFalse(l_isExcep);
+    }
 
     /**
      * Test to see if the countries are connected or not

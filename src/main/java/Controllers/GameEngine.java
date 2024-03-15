@@ -224,6 +224,33 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Method to load map with file .map.
+     *
+     * @param p_command command by the user on the CLI
+     * @throws Exception indicates Exception e
+     */
+    public void doLoadMap(Command p_command) throws Exception {
+        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+
+        if (null == l_operations_list || l_operations_list.isEmpty()) {
+            System.out.println(e.getMessage());
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (!l_map.isEmpty() && l_map.containsKey("arguments") && l_map.get("arguments") != null) {
+                    Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState, d_mapService.getFilePath(l_map.get("arguments")));
+                    if (l_mapToLoad.Validate()) {
+                        System.out.println("Map is loaded successfully. \n");
+                    } else {
+                        d_mapService.resetState(d_gameState);
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
 
     /**
      * Method to save map to save the update to .map file.
@@ -256,33 +283,6 @@ public class GameEngine {
         }
     }
 
-
-    /**
-     * Method to load map with file .map.
-     *
-     * @param p_command command by the user on the CLI
-     * @throws Exception indicates Exception e
-     */
-    public void doLoadMap(Command p_command) throws Exception {
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
-
-        if (null == l_operations_list || l_operations_list.isEmpty()) {
-            System.out.println(e.getMessage());
-        } else {
-            for (Map<String, String> l_map : l_operations_list) {
-                if (!l_map.isEmpty() && l_map.containsKey("arguments") && l_map.get("arguments") != null) {
-                    Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState, d_mapService.getFilePath(l_map.get("arguments")));
-                    if (l_mapToLoad.Validate()) {
-                        System.out.println("Map is loaded successfully. \n");
-                    } else {
-                        d_mapService.resetState(d_gameState);
-                    }
-                } else {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-    }
 
     /**
      * Method to validate map: continent and country connectivity.
@@ -383,7 +383,7 @@ public class GameEngine {
      */
     public void assignCountries(Command p_command) throws Exception {
         List<Map<String, String>> l_operation_list = p_command.getTaskandArguments();
-        if (l_operation_list.size()==0) {
+        if (l_operation_list.size() == 0) {
             d_playerService.assignCountries(d_gameState);
 
             while (d_gameState.getD_players().size() != 0) {

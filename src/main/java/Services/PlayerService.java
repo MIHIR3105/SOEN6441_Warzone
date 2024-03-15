@@ -13,6 +13,17 @@ import java.util.*;
 public class PlayerService {
 
     /**
+     * Log of Player operations in player methods.
+     */
+    String d_playerLog;
+
+    /**
+     * Country Assignment Log.
+     */
+    String d_assignmentLog = "Country/Continent Assignment:";
+
+
+    /**
      * Method to check if the player is unique.
      *
      * @param p_playerList list of total players in the game.
@@ -42,11 +53,11 @@ public class PlayerService {
     private void addPlayer(List<Player> p_updatedPlayers, String p_playerNameToBeAdded,
                            boolean p_playerNameAlreadyExists) {
         if (p_playerNameAlreadyExists) {
-            System.out.print("Player with name : " + p_playerNameToBeAdded + "  exists already.");
+            setD_playerLog("Player with name : " + p_playerNameToBeAdded + " already Exists. Changes are not made.");
         } else {
             Player l_addNewPlayer = new Player(p_playerNameToBeAdded);
             p_updatedPlayers.add(l_addNewPlayer);
-            System.out.println("Player with name : " + p_playerNameToBeAdded + "  added successfully.");
+            setD_playerLog("Player with name : " + p_playerNameToBeAdded + " has been added successfully.");
         }
     }
 
@@ -64,11 +75,11 @@ public class PlayerService {
             for (Player l_player : p_existingPlayerList) {
                 if (l_player.getPlayerName().equalsIgnoreCase(p_playerNameToBeRemoved)) {
                     p_updatedPlayers.remove(l_player);
-                    System.out.println("Player with name : " + p_playerNameToBeRemoved + " is removed successfully.");
+                    setD_playerLog("Player with name : " + p_playerNameToBeRemoved + " has been removed successfully.");
                 }
             }
         } else {
-            System.out.print("Player with name : " + p_playerNameToBeRemoved + " does not Exist.");
+            setD_playerLog("Player with name : " + p_playerNameToBeRemoved + " does not Exist. Changes are not made.");
         }
     }
 
@@ -95,7 +106,7 @@ public class PlayerService {
                 removePlayer(p_playerList, l_updatedPlayers, l_enteredPlayerName, l_playerNameAlreadyExist);
                 break;
             default:
-                System.out.println("Invalid Operation on Player list");
+                setD_playerLog("Invalid Operation on Players list");
         }
         return l_updatedPlayers;
     }
@@ -108,7 +119,7 @@ public class PlayerService {
      */
     public boolean checkPlayersAvailability(GameState p_gameState) {
         if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
-            System.out.println("Please add players before assigning countries");
+            setD_playerLog("Please add players before assigning countries");
             return false;
         }
         return true;
@@ -198,35 +209,6 @@ public class PlayerService {
         }
     }
 
-    /**
-     * Method to create and deploy order of the game.
-     *
-     * @param p_commandEntered get the parameter of the command given by the user
-     * @param p_player         object of the player
-     */
-    public void createAndDeployOrder(String p_commandEntered, Player p_player) {
-        List<Order> l_orders = p_player.getD_orderList().isEmpty() ? new ArrayList<>()
-                : p_player.getD_orderList();
-        String l_countryName = p_commandEntered.split(" ")[1];
-        String l_noOfArmies = p_commandEntered.split(" ")[2];
-        if (validateDeployOrderArmies(p_player, l_noOfArmies) ) {
-            System.out.println(
-                    "Given [deploy] order can't be executed as armies in order exceeds player's unallocated armies");
-        }else if(validateOwnershipOfCountry(p_player,l_countryName)){
-            System.out.println(
-                    "Given [deploy] order can't be executed as country doesn't belong to the player.");
-
-        }
-        else {
-            Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-                    Integer.parseInt(l_noOfArmies));
-            l_orders.add(l_orderObject);
-            p_player.setD_orderList(l_orders);
-            Integer l_unallocatedArmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-            p_player.setD_noOfUnallocatedArmies(l_unallocatedArmies);
-            System.out.println("Order has been added to queue for execution.");
-        }
-    }
 
     /**
      * Method to validate the armies that are deployed properly or not
@@ -336,5 +318,16 @@ public class PlayerService {
             p_gameState.setD_players(l_updatedPlayers);
         }
     }
+
+    /**
+     * Sets the Player Log in player methods.
+     *
+     * @param p_playerLog Player Operation Log.
+     */
+    public void setD_playerLog(String p_playerLog) {
+        this.d_playerLog = p_playerLog;
+        System.out.println(p_playerLog);
+    }
+
 
 }

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * This class performs all the Map Operations.
+ *
  * @author Yashesh Sorathia
  */
 public class MapService {
@@ -23,7 +24,7 @@ public class MapService {
      * This method is used to modify the map.
      *
      * @param p_gameState Present state of the game
-     * @param p_editFile File name
+     * @param p_editFile  File name
      */
     public void editMap(GameState p_gameState, String p_editFile) throws IOException {
 
@@ -47,14 +48,14 @@ public class MapService {
      * This method is used to modify the continent.
      *
      * @param p_gameState Current state of the game
-     * @param p_argument Arguments in the command
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
     public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
         String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
-        if(l_map!=null) {
+        if (l_map != null) {
             Map l_updatedMap = continentsToMap(l_map, p_argument, p_operation);
             p_gameState.setD_map(l_updatedMap);
         }
@@ -63,16 +64,16 @@ public class MapService {
     /**
      * This method is used to link continents to map.
      *
-     * @param p_map Map object
-     * @param p_argument Arguments in the command
+     * @param p_map       Map object
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      * @return Map Object
      */
     public Map continentsToMap(Map p_map, String p_argument, String p_operation) {
         String[] l_arguments = p_argument.split(" ");
-        if (p_operation.equalsIgnoreCase("add") && l_arguments.length==2) {
+        if (p_operation.equalsIgnoreCase("add") && l_arguments.length == 2) {
             p_map.addContinent(l_arguments[0], Integer.parseInt(l_arguments[1]));
-        } else if (p_operation.equalsIgnoreCase("remove") && l_arguments.length==1) {
+        } else if (p_operation.equalsIgnoreCase("remove") && l_arguments.length == 1) {
             p_map.removeContinent(l_arguments[0]);
         } else {
             System.out.println("Continents cannot change!");
@@ -85,14 +86,14 @@ public class MapService {
      * This method is used to modify the countries.
      *
      * @param p_gameState Current state of the game
-     * @param p_argument Arguments in the command
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
     public void editCountry(GameState p_gameState, String p_argument, String p_operation) {
-        String l_fileName= p_gameState.getD_map().getD_mapFile();
+        String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
-        if(l_map!=null){
+        if (l_map != null) {
             Map l_updatedMap = countryToMap(l_map, p_argument, p_operation);
             p_gameState.setD_map(l_updatedMap);
         }
@@ -101,18 +102,18 @@ public class MapService {
     /**
      * This method is used to link countries to map.
      *
-     * @param p_map Map object
-     * @param p_argument Arguments in the command
+     * @param p_map       Map object
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      * @return Map Object
      */
     public Map countryToMap(Map p_map, String p_argument, String p_operation) {
         String[] l_arguments = p_argument.split(" ");
-        if (p_operation.equalsIgnoreCase("add") && l_arguments.length==2){
+        if (p_operation.equalsIgnoreCase("add") && l_arguments.length == 2) {
             p_map.addCountry(l_arguments[0], l_arguments[1]);
-        }else if(p_operation.equalsIgnoreCase("remove") && l_arguments.length==1){
+        } else if (p_operation.equalsIgnoreCase("remove") && l_arguments.length == 1) {
             p_map.removeCountry(l_arguments[0]);
-        }else{
+        } else {
             System.out.println("Countries cannot change!");
         }
         return p_map;
@@ -122,14 +123,14 @@ public class MapService {
      * This method is used to modify neighbouring countries.
      *
      * @param p_gameState Current state of the game
-     * @param p_argument Arguments in the command
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
     public void editNeighbour(GameState p_gameState, String p_argument, String p_operation) {
-        String l_fileName= p_gameState.getD_map().getD_mapFile();
+        String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
-        if(l_map!=null){
+        if (l_map != null) {
             Map l_updatedMap = neighbourToMap(l_map, p_argument, p_operation);
             p_gameState.setD_map(l_updatedMap);
         }
@@ -138,18 +139,18 @@ public class MapService {
     /**
      * This method is used to link neighbours to map.
      *
-     * @param p_map Map object
-     * @param p_argument Arguments in the command
+     * @param p_map       Map object
+     * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      * @return Map Object
      */
     public Map neighbourToMap(Map p_map, String p_argument, String p_operation) {
         String[] l_arguments = p_argument.split(" ");
-        if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
+        if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
             p_map.addCountryNeighbour(l_arguments[0], l_arguments[1]);
-        }else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
+        } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 2) {
             p_map.removeCountryNeighbour(l_arguments[0], l_arguments[1]);
-        }else{
+        } else {
             System.out.println("Neighbors cannot change!");
         }
 
@@ -159,7 +160,7 @@ public class MapService {
     /**
      * This method is used to link country to continents.
      *
-     * @param p_countries List of Countries
+     * @param p_countries  List of Countries
      * @param p_continents List of Continents
      * @return List of Continents
      */
@@ -176,13 +177,13 @@ public class MapService {
 
     /**
      * This method is used to save the map.
+     *
      * @param p_gameState Current Game State
-     * @param p_fileName Name of the file
+     * @param p_fileName  Name of the file
      * @return boolean true if map save was successful else false
      */
-    public boolean saveMap(GameState p_gameState, String p_fileName){
+    public boolean saveMap(GameState p_gameState, String p_fileName) {
         try {
-
             if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
                 p_gameState.setError("Name of the file does not match!");
                 return false;
@@ -223,7 +224,7 @@ public class MapService {
      * This method is used to write country and neighbour into file.
      *
      * @param p_gameState Current State of the Game
-     * @param p_writer File Writer
+     * @param p_writer    File Writer
      */
     private void writeCountryAndNeighbourData(GameState p_gameState, FileWriter p_writer) throws IOException {
         String l_countryData = new String();
@@ -261,7 +262,7 @@ public class MapService {
      * This method is used to write continents into file.
      *
      * @param p_gameState Current State of the Game
-     * @param p_writer File Writer
+     * @param p_writer    File Writer
      */
     private void writeContinentdata(GameState p_gameState, FileWriter p_writer) throws IOException {
         p_writer.write(System.lineSeparator() + "[continents]" + System.lineSeparator());
@@ -275,7 +276,7 @@ public class MapService {
      * This method is used to load existing map file.
      *
      * @param p_gameState Current State of the Game
-     * @param p_filePath Path of the filename provided
+     * @param p_filePath  Path of the filename provided
      * @return loaded map object
      */
     public Map loadMap(GameState p_gameState, String p_filePath) {
@@ -323,7 +324,7 @@ public class MapService {
      * This method is used to retrieve contents of the file lines.
      *
      * @param p_linesOfFile Line of File
-     * @param p_case Switch Case
+     * @param p_case        Switch Case
      * @return List of String with particular lines
      */
     public List<String> getFileData(List<String> p_linesOfFile, String p_case) {
@@ -423,6 +424,7 @@ public class MapService {
 
     /**
      * This method is used to reset the current state of the game.
+     *
      * @param p_gameState Current Game state
      */
     public void resetState(GameState p_gameState) {
