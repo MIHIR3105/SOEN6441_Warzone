@@ -347,6 +347,21 @@ public class PlayerService {
     }
 
     /**
+     * Check if unexecuted orders exists in the game.
+     *
+     * @param p_playersList players involved in game
+     * @return boolean true if unexecuted orders exists with any of the players or
+     *         else false
+     */
+    public boolean unexecutedOrdersExists(List<Player> p_playersList) {
+        int l_totalUnexecutedOrders = 0;
+        for (Player l_player : p_playersList) {
+            l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_orderList().size();
+        }
+        return l_totalUnexecutedOrders != 0;
+    }
+
+    /**
      * Method to check if there are any unassigned armies left or not
      *
      * @param p_playersList list of players available
@@ -384,6 +399,21 @@ public class PlayerService {
         }
         return false;
     }
+
+    /**
+     * Resets each players information for accepting further orders.
+     *
+     * @param p_playersList players involved in game
+     */
+    public void resetPlayersFlag(List<Player> p_playersList) {
+        for (Player l_player : p_playersList) {
+            if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
+                l_player.setD_moreOrders(true);
+            l_player.setD_oneCardPerTurn(false);
+            l_player.resetNegotiation();
+        }
+    }
+
 
     /**
      * Method to update the list of players.

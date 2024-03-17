@@ -150,7 +150,7 @@ public class IssueOrderPhase extends Phase{
      */
     @Override
     protected void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-        rintInvalidCommandInState();
+        printInvalidCommandInState();
         askForOrder(p_player);
     }
 

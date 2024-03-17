@@ -92,7 +92,7 @@ public class Country {
      * To get armies
      * @return armies
      */
-    public int getD_armies() {
+    public Integer getD_armies() {
         return d_armies;
     }
 
