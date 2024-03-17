@@ -21,9 +21,9 @@ class CountryTest {
         GameState l_game = new GameState();
         Map l_map = l_service.loadMap(l_game, l_service.getFilePath("europe.map"));
         List<Country> l_countries = l_map.getD_countries();
-        int l_initCount = l_countries.get(0).getD_neighbourCountryId().size();
+        int l_initCount = l_countries.get(0).getD_neighbourCountryIds().size();
         l_countries.get(0).removeNeighbourFromCountry(8);
-        int l_finalCount = l_countries.get(0).getD_neighbourCountryId().size();
+        int l_finalCount = l_countries.get(0).getD_neighbourCountryIds().size();
         assertEquals(l_initCount-1,l_finalCount);
     }
 }

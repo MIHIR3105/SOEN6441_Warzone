@@ -4,8 +4,11 @@ import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.Command;
+import Views.MapView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Issue Order Phase implementation for GamePlay using State Pattern.
@@ -26,72 +29,168 @@ public class IssueOrderPhase extends Phase{
 
     @Override
     protected void doCardHandle(String p_enteredCommand, Player p_player) throws IOException {
-
+        if(p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
+            p_player.handleCardCommands(p_enteredCommand, d_gameState);
+            d_gameEngine.setD_gameEngineLog(p_player.d_playerLog, "effect");
+        }
+        p_player.checkForMoreOrders();
     }
 
     @Override
     protected void doShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
+        MapView l_mapView = new MapView(d_gameState);
+        l_mapView.showMap();
 
+        askForOrder(p_player);
     }
 
     @Override
     protected void doAdvance(String p_command, Player p_player) throws IOException {
-
+        p_player.createAdvanceOrder(p_command, d_gameState);
+        d_gameState.updateLog(p_player.getD_playerLog(), "effect");
+        p_player.checkForMoreOrders();
     }
 
     @Override
     public void initPhase() {
-
+        while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
+            issueOrders();
+        }
     }
 
     @Override
     protected void doCreateDeploy(String p_command, Player p_player) throws IOException {
-
+        p_player.createDeployOrder(p_command);
+        d_gameState.updateLog(p_player.getD_playerLog(), "effect");
+        p_player.checkForMoreOrders();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void assignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-
+        printInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-
+        rintInvalidCommandInState();
+        askForOrder(p_player);
     }
 
+    /**
+     * Asks for order commands from user.
+     *
+     * @param p_player player for which commands are to be issued
+     * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+     */
+    public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
+        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
+                + " or give showmap command to view current state of the game.");
+        String l_commandEntered = l_reader.readLine();
+
+        d_gameState.updateLog("(Player: "+p_player.getPlayerName()+") "+ l_commandEntered, "order");
+
+        handleCommand(l_commandEntered, p_player);
+    }
+
+    /**
+     * Accepts orders from players.
+     *
+     */
+    protected void issueOrders(){
+        // issue orders for each player
+        do {
+            for (Player l_player : d_gameState.getD_players()) {
+                if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
+                    try {
+                        l_player.issue_order(this);
+                    } catch (InvalidCommand | IOException | InvalidMap l_exception) {
+                        d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
+                    }
+                }
+            }
+        } while (d_playerService.checkForMoreOrders(d_gameState.getD_players()));
+
+        d_gameEngine.setOrderExecutionPhase();
+    }
 }

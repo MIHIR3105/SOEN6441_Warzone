@@ -32,7 +32,7 @@ public class Country {
     /**
      * Neighbour list for the given country
      */
-    List<Integer> d_neighbourCountryId = new ArrayList<Integer>();
+    List<Integer> d_neighbourCountryIds = new ArrayList<Integer>();
 
     /**
      * Constructor with 3 parameters
@@ -100,8 +100,8 @@ public class Country {
      * To get neighbour list for the given country
      * @return neighbour Country IDs
      */
-    public List<Integer> getD_neighbourCountryId() {
-        return d_neighbourCountryId;
+    public List<Integer> getD_neighbourCountryIds() {
+        return d_neighbourCountryIds;
     }
 
     /**
@@ -140,8 +140,8 @@ public class Country {
      * To set neighbour list for the given country
      * @param p_neighbourCountryId ID of neighbour country
      */
-    public void setD_neighbourCountryId(List<Integer> p_neighbourCountryId) {
-        this.d_neighbourCountryId = p_neighbourCountryId;
+    public void setD_neighbourCountryIds(List<Integer> p_neighbourCountryId) {
+        this.d_neighbourCountryIds = p_neighbourCountryId;
     }
 
     /**
@@ -149,8 +149,8 @@ public class Country {
      * @param p_countryId country ID which is to be added
      */
     public void addNeighbourToCountry(int p_countryId){
-        if(!d_neighbourCountryId.contains(p_countryId))
-            d_neighbourCountryId.add(p_countryId);
+        if(!d_neighbourCountryIds.contains(p_countryId))
+            d_neighbourCountryIds.add(p_countryId);
     }
 
     /**
@@ -158,10 +158,10 @@ public class Country {
      * @param p_countryId country ID which is to be removed
      */
     public void removeNeighbourFromCountry(Integer p_countryId){
-        if(!d_neighbourCountryId.contains(p_countryId)){
+        if(!d_neighbourCountryIds.contains(p_countryId)){
             System.out.println("Neighbour does not Exists");
         } else {
-            d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
+            d_neighbourCountryIds.remove(d_neighbourCountryIds.indexOf(p_countryId));
         }
     }
 }

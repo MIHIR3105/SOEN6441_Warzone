@@ -148,8 +148,8 @@ public class Continent {
     public void removeCountryForAllNeighbours(Integer p_countryID) {
         if (d_countries != null && !d_countries.isEmpty()) {
             for (Country country : d_countries) {
-                if (country.d_neighbourCountryId != null) {
-                    if (country.getD_neighbourCountryId().contains(p_countryID)) {
+                if (country.d_neighbourCountryIds != null) {
+                    if (country.getD_neighbourCountryIds().contains(p_countryID)) {
                         country.removeNeighbourFromCountry(p_countryID);
                     }
                 }

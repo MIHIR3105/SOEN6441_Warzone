@@ -22,9 +22,9 @@ public class ContinentTest {
 
         List<Continent> l_continentList = l_map.getD_continents();
         List<Country> l_countriesList = l_continentList.get(0).getD_countries();
-        int l_initCount = l_countriesList.get(0).getD_neighbourCountryId().size();
+        int l_initCount = l_countriesList.get(0).getD_neighbourCountryIds().size();
         l_continentList.get(0).removeCountryForAllNeighbours(8);
-        int l_finalCount = l_countriesList.get(0).getD_neighbourCountryId().size();
+        int l_finalCount = l_countriesList.get(0).getD_neighbourCountryIds().size();
         assertEquals(l_initCount-1,l_finalCount);
     }
 }

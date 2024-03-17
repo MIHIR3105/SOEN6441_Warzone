@@ -366,10 +366,10 @@ public class MapService {
             l_countryData = ((Integer) l_country.getD_countryId()).toString() + " " + (l_country.getD_countryName()) + " " + (((Integer) l_country.getD_continentId()).toString());
             p_writer.write(l_countryData + System.lineSeparator());
 
-            if (null != l_country.getD_neighbourCountryId() && !l_country.getD_neighbourCountryId().isEmpty()) {
+            if (null != l_country.getD_neighbourCountryIds() && !l_country.getD_neighbourCountryIds().isEmpty()) {
                 l_bordersData = new String();
                 l_bordersData = ((Integer) l_country.getD_countryId()).toString();
-                for (Integer l_adjCountry : l_country.getD_neighbourCountryId()) {
+                for (Integer l_adjCountry : l_country.getD_neighbourCountryIds()) {
                     l_bordersData = l_bordersData + " " + (l_adjCountry.toString());
                 }
                 l_bordersList.add(l_bordersData);
@@ -533,7 +533,7 @@ public class MapService {
         }
         for (Country l_country : p_countriesList) {
             List<Integer> l_neighbourCountries = l_countryNeighbors.get(l_country.getD_countryId());
-            l_country.setD_neighbourCountryId(l_neighbourCountries);
+            l_country.setD_neighbourCountryIds(l_neighbourCountries);
         }
         return p_countriesList;
     }
