@@ -21,6 +21,7 @@ public class Command {
         this.d_command = p_input;
     }
 
+
     /**
      * Retrieves the Main Activity in the command
      * @return Main command as a String
@@ -72,4 +73,9 @@ public class Command {
 
         return l_taskMap;
     }
+
+    public String getD_command() {
+        return d_command;
+    }
+
 }

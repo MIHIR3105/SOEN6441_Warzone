@@ -1,9 +1,7 @@
 package Controllers;
 
 
-import Models.GameState;
-import Models.Order;
-import Models.Player;
+import Models.*;
 import Services.MapService;
 import Services.PlayerService;
 import Utils.Command;
@@ -28,6 +26,12 @@ public class GameEngine {
     public GameState d_gameState = new GameState();
 
     /**
+     *	d_currentPhase is the current game play phase as per state pattern.
+     */
+    Phase d_currentPhase = new StartUpPhase(this, d_gameState);
+
+
+    /**
      * d_mapService instance to handle load, read, parse, edit, and save map file.
      */
     public MapService d_mapService = new MapService();
@@ -49,6 +53,31 @@ public class GameEngine {
      */
     public GameState getD_gameState() {
         return d_gameState;
+    }
+
+
+    /**
+     * Method that is used to update context.
+     *
+     * @param p_phase new Phase to set in Game context
+     */
+    private void setD_CurrentPhase(Phase p_phase){
+        d_currentPhase = p_phase;
+    }
+
+
+    /**
+     * Method that Shows and Writes GameEngine Logs.
+     *
+     * @param p_gameEngineLog String of Log message.
+     * @param p_logType Type of Log.
+     */
+    public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
+        d_currentPhase.getD_gameState().updateLog(p_gameEngineLog, p_logType);
+        String l_consoleLogger = p_logType.toLowerCase().equals("phase")
+                ? "\n=+=+=+=+=+=+=+=+= " + p_gameEngineLog + " =+=+=+=+=+=+=+=+=\n"
+                : p_gameEngineLog;
+        System.out.println(l_consoleLogger);
     }
 
     /**
@@ -353,7 +382,7 @@ public class GameEngine {
 
 
     /**
-     * Method
+     * Method to add players in the game.
      *
      * @param p_command command entered by the user on CLI
      * @throws Exception indicates Exception e
