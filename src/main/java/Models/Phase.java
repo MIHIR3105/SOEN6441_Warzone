@@ -10,7 +10,9 @@ import Services.PlayerService;
 import Utils.Command;
 
 /**
- * This Interface enforces the method requirement for Each Game Phase.
+ * Interface that enforces the method requirement for Each Game Phase.
+ *
+ * @author Prachi Patel
  */
 public abstract class Phase {
     /**
