@@ -46,7 +46,7 @@ public class MapTest {
      *
      * @throws InvalidMap Exception
      */
-    @Test (expected = InvalidMap.class)
+    @Test
     public void testValidate() throws InvalidMap {
         d_map= d_ms.loadMap(d_gameState, "canada.map");
 
