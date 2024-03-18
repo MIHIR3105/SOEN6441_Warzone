@@ -1,5 +1,8 @@
 package Views;
 
+import java.util.List;
+
+import Constants.ApplicationConstants;
 import Models.Player;
 import Models.GameState;
 import Models.Map;
@@ -37,6 +40,12 @@ public class MapView {
     List<Continent> d_continents;
 
     /**
+     * Reset Color ANSI Code.
+     */
+    public static final String ANSI_RESET = "\u001B[0m";
+
+
+    /**
      * Parameterized constructor to initialize Mapview without players.
      *
      * @param p_gameState current state of game
@@ -61,6 +70,21 @@ public class MapView {
         d_countries = d_map.getD_countries();
         d_continents = d_map.getD_continents();
     }
+
+
+    /**
+     * Returns the Colored String.
+     *
+     * @param p_color Color to be changed to.
+     * @param p_s String to be changed color of.
+     * @return colored string.
+     */
+    private String getColorizedString(String p_color, String p_s) {
+        if(p_color == null) return p_s;
+
+        return p_color + p_s + ANSI_RESET;
+    }
+
 
     /**
      * Renders a centered string for heading.
@@ -91,6 +115,9 @@ public class MapView {
                 GameConstants.CONTROL_VALUE + " : " +
                 d_gameState.getD_map().retrieveContinent(p_continentName).getD_continentValue() + " ) ";
         renderSeparator();
+        if(d_players != null){
+            l_continentName = getColorizedString(getContinentColor(p_continentName), l_continentName);
+        }
         renderCenteredString(GameConstants.CONSOLE_WIDTH, l_continentName);
         renderSeparator();
     }
@@ -110,7 +137,7 @@ public class MapView {
                     getArmiesOfCountry(p_countryName) + " ) " + "Player : " + getPlayerWhoOwnsCountry(p_countryName).getPlayerName();
             l_indexedString = String.format("%02d. %s %s", p_index, p_countryName, l_armies);
         }
-        return String.format("%-30s", l_indexedString);
+        return getColorizedString(getCountryColor(p_countryName), String.format("%-30s", l_indexedString));
     }
 
     /**
@@ -121,6 +148,7 @@ public class MapView {
      */
     private void renderNeighbourCountryNameFormatted(String p_countryName, List<Country> p_neighbourCountries) {
         StringBuilder l_separatedCountries = new StringBuilder();
+
         for (int i = 0; i < p_neighbourCountries.size(); i++) {
             l_separatedCountries.append(p_neighbourCountries.get(i).getD_countryName());
             if (i < p_neighbourCountries.size() - 1) {
@@ -128,8 +156,55 @@ public class MapView {
             }
         }
         String l_neighbourCountry = GameConstants.CONNECTIVITY + " : " + l_separatedCountries.toString();
-        System.out.println(l_neighbourCountry);
+        System.out.println(getColorizedString(getCountryColor(p_countryName),l_neighbourCountry));
         System.out.println();
+    }
+
+    /**
+     * Method that renders the number of cards owned by the player.
+     *
+     * @param p_player Player Instance
+     */
+    private void renderCardsOwnedByPlayers(Player p_player){
+        StringBuilder l_cards = new StringBuilder();
+
+        for(int i=0; i<p_player.getD_cardsOwnedByPlayer().size(); i++) {
+            l_cards.append(p_player.getD_cardsOwnedByPlayer().get(i));
+            if(i<p_player.getD_cardsOwnedByPlayer().size()-1)
+                l_cards.append(", ");
+        }
+
+        String l_cardsOwnedByPlayer = "Cards Owned : "+ l_cards.toString();
+        System.out.println(getColorizedString(p_player.getD_color(),l_cardsOwnedByPlayer));
+        System.out.println();
+    }
+
+    /**
+     * Gets the Color of Country based on Player.
+     *
+     * @param p_countryName Country Name to be rendered.
+     * @return Color of Country.
+     */
+    private String getCountryColor(String p_countryName){
+        if(getPlayerWhoOwnsCountry(p_countryName) != null){
+            return getPlayerWhoOwnsCountry(p_countryName).getD_color();
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * Gets the Color of continent based on Player.
+     *
+     * @param p_continentName Continent Name to be rendered.
+     * @return Color of continent.
+     */
+    private String getContinentColor(String p_continentName){
+        if(getPlayerWhoOwnsContinent(p_continentName) != null){
+            return getPlayerWhoOwnsContinent(p_continentName).getD_color();
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -156,7 +231,7 @@ public class MapView {
      * @param p_player player object
      */
     private void renderPlayerInformation(Integer p_index, Player p_player) {
-        String l_playerInformation = String.format("%02d. %-8s", p_index, p_player.getPlayerName());
+        String l_playerInformation = String.format("%02d. %s %-10s %s", p_index,p_player.getPlayerName(), getPlayerArmies(p_player), " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
         System.out.print(l_playerInformation);
     }
 
@@ -171,6 +246,7 @@ public class MapView {
         for (Player p : d_players) {
             l_count++;
             renderPlayerInformation(l_count, p);
+            renderCardsOwnedByPlayers(p);
         }
         System.out.println();
     }
@@ -204,6 +280,16 @@ public class MapView {
             return 0;
         }
         return l_armies;
+    }
+
+    /**
+     * Returns Unallocated Player Armies.
+     *
+     * @param p_player Player Object.
+     * @return String to fit with Player.
+     */
+    private String getPlayerArmies(Player p_player){
+        return "(Unallocated Armies: "+p_player.getD_noOfUnallocatedArmies()+")";
     }
 
     /**
