@@ -1,5 +1,6 @@
 package Models;
 
+import Exceptions.InvalidMap;
 import Services.MapService;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class CountryTest {
      * Test to check if country ID is removed from the list of neighbours
      */
     @Test
-    void removeNeighbourFromCountryTest() {
+    void removeNeighbourFromCountryTest() throws InvalidMap {
         MapService l_service = new MapService();
         GameState l_game = new GameState();
         Map l_map = l_service.loadMap(l_game, l_service.getFilePath("europe.map"));

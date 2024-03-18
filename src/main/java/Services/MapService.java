@@ -24,12 +24,44 @@ import java.util.stream.Collectors;
 public class MapService {
 
     /**
+     * The loadmap method process map file.
+     *
+     * @param p_gameState current state of game.
+     * @param p_loadFileName map file name.
+     * @return Map object after processing map file.
+     * @throws InvalidMap indicates Map Object Validation failure
+     */
+    public Map loadMap(GameState p_gameState, String p_loadFileName) throws InvalidMap {
+        Map l_map = new Map();
+        List<String> l_linesOfFile = loadFile(p_loadFileName);
+
+        if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
+
+            // Parses the file and stores information in objects
+            List<String> l_continentData = getFileData(l_linesOfFile, "continent");
+            List<Continent> l_continentObjects = parseContinentsData(l_continentData);
+            List<String> l_countryData = getFileData(l_linesOfFile, "country");
+            List<String> l_bordersMetaData = getFileData(l_linesOfFile, "border");
+            List<Country> l_countryObjects = parseCountriesData(l_countryData);
+
+            // Updates the neighbour of countries in Objects
+            l_countryObjects = parseNeighbourData(l_countryObjects, l_bordersMetaData);
+            l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
+            l_map.setD_continents(l_continentObjects);
+            l_map.setD_countries(l_countryObjects);
+            p_gameState.setD_map(l_map);
+        }
+        return l_map;
+    }
+
+
+    /**
      * This method is used to modify the map.
      *
      * @param p_gameState Present state of the game
      * @param p_editFile  File name
      */
-    public void editMap(GameState p_gameState, String p_editFile) throws IOException {
+    public void editMap(GameState p_gameState, String p_editFile) throws IOException, InvalidMap {
 
         String l_filePath = getFilePath(p_editFile);
         File l_fileToBeEdited = new File(l_filePath);
@@ -398,34 +430,6 @@ public class MapService {
         }
     }
 
-    /**
-     * This method is used to load existing map file.
-     *
-     * @param p_gameState Current State of the Game
-     * @param p_filePath  Path of the filename provided
-     * @return loaded map object
-     */
-    public Map loadMap(GameState p_gameState, String p_filePath) {
-        Map l_map = new Map();
-        List<String> l_linesOfFile = loadFile(p_filePath);
-
-        if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
-
-            List<String> l_continentData = getFileData(l_linesOfFile, "continent");
-            List<Continent> l_continentObjects = parseContinentsData(l_continentData);
-            List<String> l_countryData = getFileData(l_linesOfFile, "country");
-            List<String> l_neighbourData = getFileData(l_linesOfFile, "neighbour");
-            List<Country> l_countryObjects = parseCountriesData(l_countryData);
-
-            l_countryObjects = parseNeighbourData(l_countryObjects, l_neighbourData);
-            l_continentObjects = countryToContinents(l_countryObjects, l_continentObjects);
-            l_map.setD_continents(l_continentObjects);
-            l_map.setD_countries(l_countryObjects);
-            p_gameState.setD_map(l_map);
-        }
-
-        return l_map;
-    }
 
     /**
      * This method is used to extract contents of the file.
@@ -537,6 +541,26 @@ public class MapService {
         }
         return p_countriesList;
     }
+
+    /**
+     * Links countries to corresponding continents and sets them in object of
+     * continent.
+     *
+     * @param p_countries Total Country Objects
+     * @param p_continents Total Continent Objects
+     * @return List of updated continents
+     */
+    public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
+        for (Country c : p_countries) {
+            for (Continent cont : p_continents) {
+                if (cont.getD_continentID().equals(c.getD_continentId())) {
+                    cont.addCountry(c);
+                }
+            }
+        }
+        return p_continents;
+    }
+
 
     /**
      * This method is used to fetch the file path.

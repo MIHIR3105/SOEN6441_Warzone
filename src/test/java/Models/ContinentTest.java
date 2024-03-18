@@ -1,6 +1,8 @@
 package Models;
 
 import java.util.List;
+
+import Exceptions.InvalidMap;
 import Services.MapService;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ public class ContinentTest {
      * Test to check if country ID is removed from the list of neighbours for all the countries in the continent
      */
     @Test
-    public void removeCountryForAllNeighboursTest() {
+    public void removeCountryForAllNeighboursTest() throws InvalidMap {
         MapService l_service = new MapService();
         GameState l_game = new GameState();
         Map l_map = l_service.loadMap(l_game, l_service.getFilePath("europe.map"));
