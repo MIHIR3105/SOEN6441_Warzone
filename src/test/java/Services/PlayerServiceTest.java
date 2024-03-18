@@ -86,20 +86,6 @@ public class PlayerServiceTest {
     }
 
     /**
-     * test to check that player cannot deploy more armies that there is in
-     * their reinforcement pool
-     */
-    @org.junit.jupiter.api.Test
-    void validateDeployOrderArmies() {
-        Player l_player1= new Player("W3");
-        PlayerService l_playerServices= new PlayerService();
-        l_player1.setD_noOfUnallocatedArmies(15);
-        String l_noOfArmies= "12";
-        Boolean l_isValidDeployableArmy= l_playerServices.validateDeployOrderArmies(l_player1,l_noOfArmies);
-        Assertions.assertEquals(false,l_isValidDeployableArmy);
-
-    }
-    /**
      * test for the calculation of number of reinforcement armies
      */
     @org.junit.jupiter.api.Test

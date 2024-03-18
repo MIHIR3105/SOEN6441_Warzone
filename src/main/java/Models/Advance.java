@@ -353,7 +353,7 @@ public class Advance implements Order {
         l_playesList.add(p_playerOfTargetCountry);
 
         PlayerService l_playerService = new PlayerService();
-        l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
+        l_playerService.doContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
     }
 
     /**

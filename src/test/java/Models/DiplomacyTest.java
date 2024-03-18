@@ -60,8 +60,8 @@ public class DiplomacyTest {
         l_countryList.add(l_country);
 
         Country l_countryNeighbour = new Country(1, "Belgium", 1);
-        l_countryNeighbour.addNeighbour(0);
-        l_country.addNeighbour(1);
+        l_countryNeighbour.addNeighbourToCountry(0);
+        l_country.addNeighbourToCountry(1);
         l_countryNeighbour.setD_armies(10);
         l_countryList.add(l_countryNeighbour);
 
@@ -91,5 +91,15 @@ public class DiplomacyTest {
     public void testDiplomacyExecution(){
         d_diplomacyOrder.execute(d_gameState);
         assertEquals(d_player1.d_negotiatedWith.get(0), d_player2);
+    }
+
+    /**
+     * Tests the next orders after negotiation if they work.
+     */
+    @Test
+    public void NegotiationWorking(){
+        d_diplomacyOrder.execute(d_gameState);
+        d_bombOrder.execute(d_gameState);
+        assertEquals(d_gameState.getRecentLog().trim(), "Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!");
     }
 }

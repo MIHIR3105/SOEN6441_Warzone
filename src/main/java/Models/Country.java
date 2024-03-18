@@ -68,7 +68,7 @@ public class Country {
      * To get country ID
      * @return country ID
      */
-    public int getD_countryId() {
+    public Integer getD_countryId() {
         return d_countryId;
     }
 

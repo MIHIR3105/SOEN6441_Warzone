@@ -48,7 +48,7 @@ public class PlayerService {
      * Find Player By Name.
      *
      * @param p_playerName player name to be found
-     * @param p_gameState GameState Instance.
+     * @param p_gameState  GameState Instance.
      * @return p_player object
      */
     public Player findPlayerByName(String p_playerName, GameState p_gameState) {
@@ -149,24 +149,25 @@ public class PlayerService {
         List<Country> l_countries = p_gameState.getD_map().getD_countries();
         int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
 
-        this.doRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
+        this.doRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(),p_gameState);
         this.doContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
         System.out.println("Countries have been assigned to Players.");
 
     }
+
+
     /**
-     * Performs random country assignment to all players.
+     * Method to randomly assign countries to the list of players.
      *
-     * @param p_countriesPerPlayer countries which are to be assigned to each player
-     * @param p_countries          list of all countries present in map
-     * @param p_players            list of all available players
-     * @param p_gameState		   current game state with map and player information
+     * @param p_countriesPerPlayer number of countries per player to be assigned
+     * @param p_countries          list of countries to be assigned
+     * @param p_players            list of players
      */
-    private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
-                                                List<Player> p_players, GameState p_gameState) {
+    private void doRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
+                                           List<Player> p_players, GameState p_gameState) {
         List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
         for (Player l_pl : p_players) {
-            if(!l_pl.getPlayerName().equalsIgnoreCase("Neutral")) {
+            if (!l_pl.getPlayerName().equalsIgnoreCase("Neutral")) {
                 if (l_unassignedCountries.isEmpty())
                     break;
                 // Based on number of countries to be assigned to player, it generates random
@@ -190,18 +191,18 @@ public class PlayerService {
         // If any countries are still left for assignment, it will redistribute those
         // among players
         if (!l_unassignedCountries.isEmpty()) {
-            performRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
+            doRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
         }
+
     }
 
     /**
-     * Checks if player is having any continent as a result of random country
-     * assignment.
+     * Method to assign the continent to the player.
      *
-     * @param p_players    list of all available players
-     * @param p_continents list of all available continents
+     * @param p_players    list of players
+     * @param p_continents list of continents
      */
-    public void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
+    public void doContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
         for (Player l_pl : p_players) {
             List<String> l_countriesOwned = new ArrayList<>();
             if (!CommonUtil.isCollectionEmpty(l_pl.getD_coutriesOwned())) {
@@ -224,87 +225,7 @@ public class PlayerService {
             }
         }
     }
-    /**
-     * Method to randomly assign countries to the list of players.
-     *
-     * @param p_countriesPerPlayer number of countries per player to be assigned
-     * @param p_countries          list of countries to be assigned
-     * @param p_players            list of players
-     */
-    private void doRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
-                                           List<Player> p_players) {
-        List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
-        for (Player l_player : p_players) {
-            if (l_unassignedCountries.isEmpty())
-                break;
-            // Based on number of countries to be assigned to player, it generates random
-            // country and assigns to player
-            for (int i = 0; i < p_countriesPerPlayer; i++) {
-                Random l_random = new Random();
-                int l_randomIndex = l_random.nextInt(l_unassignedCountries.size());
-                Country l_randomCountry = l_unassignedCountries.get(l_randomIndex);
 
-                if (l_player.getD_coutriesOwned() == null)
-                    l_player.setD_coutriesOwned(new ArrayList<>());
-                l_player.getD_coutriesOwned().add(l_randomCountry);
-                System.out.println("Country : " + l_randomCountry.getD_countryName() + " is assigned to the player : "
-                        + l_player.getPlayerName());
-                //after assigning the country to the player
-                //it is removed from the unassigned list.
-                l_unassignedCountries.remove(l_randomCountry);
-            }
-        }
-        // If any countries are still left for assignment, it will redistribute those
-        // among players
-        if (!l_unassignedCountries.isEmpty()) {
-            doRandomCountryAssignment(1, l_unassignedCountries, p_players);
-        }
-
-    }
-
-    /**
-     * Method to assign the continent to the player.
-     *
-     * @param p_players    list of players
-     * @param p_continents list of continents
-     */
-    private void doContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
-        for (Player l_player : p_players) {
-            List<String> l_countriesOwned = new ArrayList<>();
-            if (l_player.getD_coutriesOwned().size() != 0) {
-                l_player.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
-
-                for (Continent l_continent : p_continents) {
-                    List<String> l_countriesOfContinent = new ArrayList<>();
-                    l_continent.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
-                    if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
-                        if (l_player.getD_continentsOwned() == null)
-                            l_player.setD_continentsOwned(new ArrayList<>());
-
-                        l_player.getD_continentsOwned().add(l_continent);
-                        System.out.println("The continent : " + l_continent.getD_continentName() + " is assigned with player : "
-                                + l_player.getPlayerName());
-                    }
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Method to validate the armies that are deployed properly or not
-     *
-     * @param p_player     player object
-     * @param p_noOfArmies number of armies
-     * @return if the deployed armies are valid or invalid
-     */
-    public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
-        return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies);
-    }
-
-    public boolean validateOwnershipOfCountry(Player p_player, String p_country) {
-        return p_player.getD_coutriesOwned().stream().noneMatch(x-> Objects.equals(x.getD_countryName(), p_country));
-    }
 
     /**
      * Method calculates the army for a player who is currently available
@@ -317,7 +238,7 @@ public class PlayerService {
         if (p_player.getD_coutriesOwned().size() != 0) {
             l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
         }
-        if (p_player.getD_continentsOwned()!=null && p_player.getD_continentsOwned().size() != 0) {
+        if (p_player.getD_continentsOwned() != null && p_player.getD_continentsOwned().size() != 0) {
             int l_continentCtrlValue = 0;
             for (Continent l_continent : p_player.getD_continentsOwned()) {
                 l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
@@ -333,38 +254,24 @@ public class PlayerService {
      * @param p_gameState game state or phase of the current game
      */
     public void assignArmies(GameState p_gameState) {
-        for (Player l_player : p_gameState.getD_players()) {
-            Integer l_armies = this.calculateArmiesForPlayer(l_player);
-            System.out.println("Player : " + l_player.getPlayerName() + " has been assigned with " + l_armies + " armies");
+        for (Player l_pl : p_gameState.getD_players()) {
+            Integer l_armies = this.calculateArmiesForPlayer(l_pl);
+            this.setD_playerLog("Player : " + l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
+            p_gameState.updateLog(this.d_playerLog, "effect");
 
-            l_player.setD_noOfUnallocatedArmies(l_armies);
+            l_pl.setD_noOfUnallocatedArmies(l_armies);
         }
     }
 
-
-    /**
-     * Method to check if ignored orders exists in the game.
-     *
-     * @param p_playerList players involved in game
-     * @return boolean true if ignored orders exists with any of
-     * the players or else false
-     */
-    public boolean ignoredOrdersExists(List<Player> p_playerList) {
-        int l_totalIgnoredOrders = 0;
-        for (Player l_player : p_playerList) {
-            l_totalIgnoredOrders = l_totalIgnoredOrders + l_player.getD_orderList().size();
-        }
-        return l_totalIgnoredOrders != 0;
-    }
 
     /**
      * Check if unexecuted orders exists in the game.
      *
      * @param p_playersList players involved in game
      * @return boolean true if unexecuted orders exists with any of the players or
-     *         else false
+     * else false
      */
-    public boolean unexecutedOrdersExists(List<Player> p_playersList) {
+    public boolean ignoredOrdersExists(List<Player> p_playersList) {
         int l_totalUnexecutedOrders = 0;
         for (Player l_player : p_playersList) {
             l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_orderList().size();
@@ -405,7 +312,7 @@ public class PlayerService {
      */
     public boolean checkForMoreOrders(List<Player> p_playersList) {
         for (Player l_player : p_playersList) {
-            if(l_player.getD_moreOrders())
+            if (l_player.getD_moreOrders())
                 return true;
         }
         return false;
@@ -435,13 +342,15 @@ public class PlayerService {
      */
     public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
         if (!isMapLoaded(p_gameState)) {
-            System.out.println("Kindly load the map first to add player: " + p_argument);
+            this.setD_playerLog("Kindly load the map first to add player: " + p_argument);
+            p_gameState.updateLog(this.d_playerLog, "effect");
             return;
         }
         List<Player> l_updatedPlayers = this.addOrRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 
-        if (l_updatedPlayers != null) {
+        if (!CommonUtil.isNull(l_updatedPlayers)) {
             p_gameState.setD_players(l_updatedPlayers);
+            p_gameState.updateLog(d_playerLog, "effect");
         }
     }
 

@@ -67,7 +67,7 @@ public class OrderExecutionPhase extends Phase  {
         addNeutralPlayer(d_gameState);
         // Executing orders
         d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Orders.....", "start");
-        while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
+        while (d_playerService.ignoredOrdersExists(d_gameState.getD_players())) {
             for (Player l_player : d_gameState.getD_players()) {
                 Order l_order = l_player.next_order();
                 if (l_order != null) {
