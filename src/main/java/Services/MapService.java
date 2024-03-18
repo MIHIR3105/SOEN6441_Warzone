@@ -1,5 +1,6 @@
 package Services;
 
+import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Continent;
@@ -41,14 +42,17 @@ public class MapService {
             List<String> l_continentData = getFileData(l_linesOfFile, "continent");
             List<Continent> l_continentObjects = parseContinentsData(l_continentData);
             List<String> l_countryData = getFileData(l_linesOfFile, "country");
-            List<String> l_bordersMetaData = getFileData(l_linesOfFile, "border");
-            List<Country> l_countryObjects = parseCountriesData(l_countryData);
+            List<String> l_bordersMetaData = getFileData(l_linesOfFile, "neighbour");
 
+            List<Country> l_countryObjects = parseCountriesData(l_countryData);
             // Updates the neighbour of countries in Objects
             l_countryObjects = parseNeighbourData(l_countryObjects, l_bordersMetaData);
+
             l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
+
             l_map.setD_continents(l_continentObjects);
             l_map.setD_countries(l_countryObjects);
+
             p_gameState.setD_map(l_map);
         }
         return l_map;
@@ -444,10 +448,11 @@ public class MapService {
      * @return Lines of file
      */
     public List<String> loadFile(String p_filePath) {
+        String l_filePath = CommonUtil.getMapFilePath(p_filePath);
         List<String> l_fileLines = new ArrayList<>();
         BufferedReader l_reader;
         try {
-            l_reader = new BufferedReader(new FileReader(p_filePath));
+            l_reader = new BufferedReader(new FileReader(l_filePath));
             l_fileLines = l_reader.lines().collect(Collectors.toList());
             l_reader.close();
         } catch (IOException l_e1) {
@@ -466,18 +471,15 @@ public class MapService {
     public List<String> getFileData(List<String> p_linesOfFile, String p_case) {
         switch (p_case) {
             case "continent":
-                List<String> l_continentLines = p_linesOfFile.subList(
-                        p_linesOfFile.indexOf("[continents]") + 1,
-                        p_linesOfFile.indexOf("[countries]") - 1);
-                return l_continentLines;
+                return p_linesOfFile.subList(
+                        p_linesOfFile.indexOf(ApplicationConstants.CONTINENTS) + 1,
+                        p_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) - 1);
             case "country":
-                List<String> l_countryLines = p_linesOfFile.subList(p_linesOfFile.indexOf("[countries]") + 1,
-                        p_linesOfFile.indexOf("[borders]") - 1);
-                return l_countryLines;
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) + 1,
+                        p_linesOfFile.indexOf(ApplicationConstants.BORDERS) - 1);
             case "neighbour":
-                List<String> l_neightboursLines = p_linesOfFile.subList(p_linesOfFile.indexOf("[borders]") + 1,
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(ApplicationConstants.BORDERS) + 1,
                         p_linesOfFile.size());
-                return l_neightboursLines;
             default:
                 return null;
         }
@@ -516,7 +518,6 @@ public class MapService {
             l_countriesList.add(new Country(Integer.parseInt(l_data[0]), l_data[1],
                     Integer.parseInt(l_data[2])));
         }
-
         return l_countriesList;
     }
 
@@ -528,7 +529,6 @@ public class MapService {
      * @return Formatted Countries data with Neighbour
      */
     public List<Country> parseNeighbourData(List<Country> p_countriesList, List<String> p_neighbourList) {
-
         LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
 
         for (String l_neighbour : p_neighbourList) {
@@ -545,6 +545,7 @@ public class MapService {
             List<Integer> l_neighbourCountries = l_countryNeighbors.get(l_country.getD_countryId());
             l_country.setD_neighbourCountryIds(l_neighbourCountries);
         }
+
         return p_countriesList;
     }
 

@@ -178,7 +178,7 @@ public class Map {
             throw new InvalidMap("Map must possess atleast one country!");
         }
         for (Country c : d_countries) {
-            if (c.getD_neighbourCountryIds().size() < 1) {
+            if (c.getD_neighbourCountryIds().isEmpty()) {
                 throw new InvalidMap(c.getD_countryName() + " does not possess any neighbour, hence isn't reachable!");
             }
         }
