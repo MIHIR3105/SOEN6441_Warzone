@@ -133,7 +133,7 @@ public class Continent {
      * Removes a country from the continent
      * @param p_country country to be removed
      */
-    public void removeCountries(Country p_country) {
+    public void removeCountry(Country p_country) {
         if (d_countries == null) {
             System.out.println("There are no countries to remove");
         } else {

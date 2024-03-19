@@ -52,8 +52,8 @@ public class AirliftTest {
         l_countryList.add(l_country);
 
         Country l_countryNeighbour = new Country(1, "Belgium", 1);
-        l_countryNeighbour.addNeighbour(0);
-        l_country.addNeighbour(1);
+        l_countryNeighbour.addNeighbourToCountry(0);
+        l_country.addNeighbourToCountry(1);
         l_countryNeighbour.setD_armies(10);
         l_countryList.add(l_countryNeighbour);
 

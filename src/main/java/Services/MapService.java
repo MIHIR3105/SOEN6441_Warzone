@@ -1,5 +1,6 @@
 package Services;
 
+import Constants.GameConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Continent;
@@ -24,12 +25,47 @@ import java.util.stream.Collectors;
 public class MapService {
 
     /**
+     * The loadmap method process map file.
+     *
+     * @param p_gameState    current state of game.
+     * @param p_loadFileName map file name.
+     * @return Map object after processing map file.
+     * @throws InvalidMap indicates Map Object Validation failure
+     */
+    public Map loadMap(GameState p_gameState, String p_loadFileName) throws InvalidMap {
+        Map l_map = new Map();
+        List<String> l_linesOfFile = loadFile(p_loadFileName);
+
+        if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
+
+            // Parses the file and stores information in objects
+            List<String> l_continentData = getFileData(l_linesOfFile, "continent");
+            List<Continent> l_continentObjects = parseContinentsData(l_continentData);
+            List<String> l_countryData = getFileData(l_linesOfFile, "country");
+            List<String> l_bordersMetaData = getFileData(l_linesOfFile, "neighbour");
+
+            List<Country> l_countryObjects = parseCountriesData(l_countryData);
+            // Updates the neighbour of countries in Objects
+            l_countryObjects = parseNeighbourData(l_countryObjects, l_bordersMetaData);
+
+            l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
+
+            l_map.setD_continents(l_continentObjects);
+            l_map.setD_countries(l_countryObjects);
+
+            p_gameState.setD_map(l_map);
+        }
+        return l_map;
+    }
+
+
+    /**
      * This method is used to modify the map.
      *
      * @param p_gameState Present state of the game
      * @param p_editFile  File name
      */
-    public void editMap(GameState p_gameState, String p_editFile) throws IOException {
+    public void editMap(GameState p_gameState, String p_editFile) throws IOException, InvalidMap {
 
         String l_filePath = getFilePath(p_editFile);
         File l_fileToBeEdited = new File(l_filePath);
@@ -54,7 +90,7 @@ public class MapService {
      * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
-    public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
+    public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap {
         String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
@@ -72,7 +108,7 @@ public class MapService {
      * @param p_operation Operation of the command
      * @return Map Object
      */
-    public Map continentsToMap(Map p_map, String p_argument, String p_operation) {
+    public Map continentsToMap(Map p_map, String p_argument, String p_operation) throws InvalidMap {
         String[] l_arguments = p_argument.split(" ");
         if (p_operation.equalsIgnoreCase("add") && l_arguments.length == 2) {
             p_map.addContinent(l_arguments[0], Integer.parseInt(l_arguments[1]));
@@ -92,7 +128,7 @@ public class MapService {
      * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
-    public void editCountry(GameState p_gameState, String p_argument, String p_operation) {
+    public void editCountry(GameState p_gameState, String p_argument, String p_operation) throws InvalidMap {
         String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
@@ -110,7 +146,7 @@ public class MapService {
      * @param p_operation Operation of the command
      * @return Map Object
      */
-    public Map countryToMap(Map p_map, String p_argument, String p_operation) {
+    public Map countryToMap(Map p_map, String p_argument, String p_operation) throws InvalidMap {
         String[] l_arguments = p_argument.split(" ");
         if (p_operation.equalsIgnoreCase("add") && l_arguments.length == 2) {
             p_map.addCountry(l_arguments[0], l_arguments[1]);
@@ -129,7 +165,7 @@ public class MapService {
      * @param p_argument  Arguments in the command
      * @param p_operation Operation of the command
      */
-    public void editNeighbour(GameState p_gameState, String p_argument, String p_operation) {
+    public void editNeighbour(GameState p_gameState, String p_argument, String p_operation) throws InvalidMap {
         String l_fileName = p_gameState.getD_map().getD_mapFile();
         Map l_map = p_gameState.getD_map();
 
@@ -147,7 +183,7 @@ public class MapService {
      * @param p_operation Operation of the command
      * @return Map Object
      */
-    public Map neighbourToMap(Map p_map, String p_argument, String p_operation) {
+    public Map neighbourToMap(Map p_map, String p_argument, String p_operation) throws InvalidMap {
         String[] l_arguments = p_argument.split(" ");
         if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
             p_map.addCountryNeighbour(l_arguments[0], l_arguments[1]);
@@ -182,24 +218,24 @@ public class MapService {
      * Method to construct updated Continents list based on passed operations - Add/Remove
      * and Arguments.
      *
-     * @param p_gameState Current GameState Object
+     * @param p_gameState      Current GameState Object
      * @param p_mapToBeUpdated Map Object to be Updated
-     * @param p_operation Operation to perform on Continents
-     * @param p_argument Arguments pertaining to the operations
+     * @param p_operation      Operation to perform on Continents
+     * @param p_argument       Arguments pertaining to the operations
      * @return List of updated continents
      * @throws InvalidMap invalidmap exception
      */
     public Map addOrRemoveContinents(GameState p_gameState, Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
 
         try {
-            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
+            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
                 p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
-                this.setD_MapServiceLog("Continent "+ p_argument.split(" ")[0]+ " added successfully!", p_gameState);
-            } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
+                this.setD_MapServiceLog("Continent " + p_argument.split(" ")[0] + " added successfully!", p_gameState);
+            } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 1) {
                 p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
-                this.setD_MapServiceLog("Continent "+ p_argument.split(" ")[0]+ " removed successfully!", p_gameState);
+                this.setD_MapServiceLog("Continent " + p_argument.split(" ")[0] + " removed successfully!", p_gameState);
             } else {
-                throw new InvalidMap("Continent "+p_argument.split(" ")[0]+" couldn't be added/removed. Changes are not made due to Invalid Command Passed.");
+                throw new InvalidMap("Continent " + p_argument.split(" ")[0] + " couldn't be added/removed. Changes are not made due to Invalid Command Passed.");
             }
         } catch (InvalidMap | NumberFormatException l_e) {
             this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
@@ -210,24 +246,24 @@ public class MapService {
     /**
      * Method to perform the add/remove operation on the countries in map.
      *
-     * @param p_gameState Current GameState Object
+     * @param p_gameState      Current GameState Object
      * @param p_mapToBeUpdated The Map to be updated
-     * @param p_operation Operation to be performed
-     * @param p_argument Arguments for the pertaining command operation
+     * @param p_operation      Operation to be performed
+     * @param p_argument       Arguments for the pertaining command operation
      * @return Updated Map Object
      * @throws InvalidMap invalidmap exception
      */
-    public Map addOrRemoveCountry(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
+    public Map addOrRemoveCountry(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap {
 
         try {
-            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
+            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
                 p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-                this.setD_MapServiceLog("Country "+ p_argument.split(" ")[0]+ " added successfully!", p_gameState);
-            }else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
+                this.setD_MapServiceLog("Country " + p_argument.split(" ")[0] + " added successfully!", p_gameState);
+            } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 1) {
                 p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
-                this.setD_MapServiceLog("Country "+ p_argument.split(" ")[0]+ " removed successfully!", p_gameState);
-            }else{
-                throw new InvalidMap("Country "+p_argument.split(" ")[0]+" could not be "+ p_operation +"ed!");
+                this.setD_MapServiceLog("Country " + p_argument.split(" ")[0] + " removed successfully!", p_gameState);
+            } else {
+                throw new InvalidMap("Country " + p_argument.split(" ")[0] + " could not be " + p_operation + "ed!");
             }
         } catch (InvalidMap l_e) {
             this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
@@ -238,24 +274,24 @@ public class MapService {
     /**
      * Method to perform the add/remove operation on Map Object.
      *
-     * @param p_gameState Current GameState Object
+     * @param p_gameState      Current GameState Object
      * @param p_mapToBeUpdated The Map to be updated
-     * @param p_operation Add/Remove operation to be performed
-     * @param p_argument Arguments for the pertaining command operation
+     * @param p_operation      Add/Remove operation to be performed
+     * @param p_argument       Arguments for the pertaining command operation
      * @return map to be updated
      * @throws InvalidMap invalidmap exception
      */
-    public Map addOrRemoveNeighbour(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
+    public Map addOrRemoveNeighbour(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap {
 
         try {
-            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
+            if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
                 p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-                this.setD_MapServiceLog("Neighbour Pair "+p_argument.split(" ")[0]+" "+p_argument.split(" ")[1]+" added successfully!", p_gameState);
-            }else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
+                this.setD_MapServiceLog("Neighbour Pair " + p_argument.split(" ")[0] + " " + p_argument.split(" ")[1] + " added successfully!", p_gameState);
+            } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 2) {
                 p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-                this.setD_MapServiceLog("Neighbour Pair "+p_argument.split(" ")[0]+" "+p_argument.split(" ")[1]+" removed successfully!", p_gameState);
-            }else{
-                throw new InvalidMap("Neighbour could not be "+ p_operation +"ed!");
+                this.setD_MapServiceLog("Neighbour Pair " + p_argument.split(" ")[0] + " " + p_argument.split(" ")[1] + " removed successfully!", p_gameState);
+            } else {
+                throw new InvalidMap("Neighbour could not be " + p_operation + "ed!");
             }
         } catch (InvalidMap l_e) {
             this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
@@ -264,26 +300,25 @@ public class MapService {
     }
 
 
-
     /**
      * Controls the Flow of Edit Operations: editcontinent, editcountry, editneighbor.
      *
-     * @param p_gameState Current GameState Object.
-     * @param p_argument Arguments for the pertaining command operation.
-     * @param p_operation Add/Remove operation to be performed.
+     * @param p_gameState       Current GameState Object.
+     * @param p_argument        Arguments for the pertaining command operation.
+     * @param p_operation       Add/Remove operation to be performed.
      * @param p_switchParameter Type of Edit Operation to be performed.
-     * @throws IOException Exception.
-     * @throws InvalidMap invalidmap exception.
+     * @throws IOException    Exception.
+     * @throws InvalidMap     invalidmap exception.
      * @throws InvalidCommand invalid command exception
      */
-    public void editFunctions(GameState p_gameState, String p_argument, String p_operation, Integer p_switchParameter) throws IOException, InvalidMap, InvalidCommand{
+    public void editFunctions(GameState p_gameState, String p_argument, String p_operation, Integer p_switchParameter) throws IOException, InvalidMap, InvalidCommand {
         Map l_updatedMap;
         String l_mapFileName = p_gameState.getD_map().getD_mapFile();
         Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents()) && CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName) : p_gameState.getD_map();
 
         // Edit Control Logic for Continent, Country & Neighbor
-        if(!CommonUtil.isNull(l_mapToBeUpdated)){
-            switch(p_switchParameter){
+        if (!CommonUtil.isNull(l_mapToBeUpdated)) {
+            switch (p_switchParameter) {
                 case 1:
                     l_updatedMap = addOrRemoveContinents(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
                     break;
@@ -309,19 +344,23 @@ public class MapService {
      * @return boolean true if map save was successful else false
      */
     public boolean saveMap(GameState p_gameState, String p_fileName) {
+        boolean l_flagValidate = false;
         try {
+
+            // Verifies if the file linked to savemap and edited by user are same
             if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
-                p_gameState.setError("Name of the file does not match!");
+                p_gameState.setError("Kindly provide same file name to save which you have given for edit");
                 return false;
             } else {
                 if (null != p_gameState.getD_map()) {
                     Models.Map l_currentMap = p_gameState.getD_map();
 
-                    System.out.println("Running Map Validation...");
-                    boolean l_mapValidationStatus = l_currentMap.Validate();
-                    if (l_mapValidationStatus) {
-                        Files.deleteIfExists(Paths.get(getFilePath(p_fileName)));
-                        FileWriter l_writer = new FileWriter(getFilePath(p_fileName));
+                    // Proceeds to save the map if it passes the validation check
+                    this.setD_MapServiceLog("Validating Map......", p_gameState);
+                    //boolean l_mapValidationStatus = l_currentMap.Validate();
+                    if (l_currentMap.Validate()) {
+                        Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
+                        FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
 
                         if (null != p_gameState.getD_map().getD_continents()
                                 && !p_gameState.getD_map().getD_continents().isEmpty()) {
@@ -331,16 +370,19 @@ public class MapService {
                                 && !p_gameState.getD_map().getD_countries().isEmpty()) {
                             writeCountryAndNeighbourData(p_gameState, l_writer);
                         }
+                        p_gameState.updateLog("Map Saved Successfully", "effect");
                         l_writer.close();
                     }
                 } else {
+                    p_gameState.updateLog("Validation failed! Cannot Save the Map file!", "effect");
                     p_gameState.setError("Validation Failed");
                     return false;
                 }
             }
             return true;
-        } catch (IOException l_e) {
-            l_e.printStackTrace();
+        } catch (IOException | InvalidMap l_e) {
+            this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
+            p_gameState.updateLog("Couldn't save the changes in map file!", "effect");
             p_gameState.setError("Error in saving map file");
             return false;
         }
@@ -398,34 +440,6 @@ public class MapService {
         }
     }
 
-    /**
-     * This method is used to load existing map file.
-     *
-     * @param p_gameState Current State of the Game
-     * @param p_filePath  Path of the filename provided
-     * @return loaded map object
-     */
-    public Map loadMap(GameState p_gameState, String p_filePath) {
-        Map l_map = new Map();
-        List<String> l_linesOfFile = loadFile(p_filePath);
-
-        if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
-
-            List<String> l_continentData = getFileData(l_linesOfFile, "continent");
-            List<Continent> l_continentObjects = parseContinentsData(l_continentData);
-            List<String> l_countryData = getFileData(l_linesOfFile, "country");
-            List<String> l_neighbourData = getFileData(l_linesOfFile, "neighbour");
-            List<Country> l_countryObjects = parseCountriesData(l_countryData);
-
-            l_countryObjects = parseNeighbourData(l_countryObjects, l_neighbourData);
-            l_continentObjects = countryToContinents(l_countryObjects, l_continentObjects);
-            l_map.setD_continents(l_continentObjects);
-            l_map.setD_countries(l_countryObjects);
-            p_gameState.setD_map(l_map);
-        }
-
-        return l_map;
-    }
 
     /**
      * This method is used to extract contents of the file.
@@ -434,10 +448,11 @@ public class MapService {
      * @return Lines of file
      */
     public List<String> loadFile(String p_filePath) {
+        String l_filePath = CommonUtil.getMapFilePath(p_filePath);
         List<String> l_fileLines = new ArrayList<>();
         BufferedReader l_reader;
         try {
-            l_reader = new BufferedReader(new FileReader(p_filePath));
+            l_reader = new BufferedReader(new FileReader(l_filePath));
             l_fileLines = l_reader.lines().collect(Collectors.toList());
             l_reader.close();
         } catch (IOException l_e1) {
@@ -456,18 +471,15 @@ public class MapService {
     public List<String> getFileData(List<String> p_linesOfFile, String p_case) {
         switch (p_case) {
             case "continent":
-                List<String> l_continentLines = p_linesOfFile.subList(
-                        p_linesOfFile.indexOf("[continents]") + 1,
-                        p_linesOfFile.indexOf("[countries]") - 1);
-                return l_continentLines;
+                return p_linesOfFile.subList(
+                        p_linesOfFile.indexOf(GameConstants.CONTINENTS) + 1,
+                        p_linesOfFile.indexOf(GameConstants.COUNTRIES) - 1);
             case "country":
-                List<String> l_countryLines = p_linesOfFile.subList(p_linesOfFile.indexOf("[countries]") + 1,
-                        p_linesOfFile.indexOf("[borders]") - 1);
-                return l_countryLines;
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(GameConstants.COUNTRIES) + 1,
+                        p_linesOfFile.indexOf(GameConstants.BORDERS) - 1);
             case "neighbour":
-                List<String> l_neightboursLines = p_linesOfFile.subList(p_linesOfFile.indexOf("[borders]") + 1,
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(GameConstants.BORDERS) + 1,
                         p_linesOfFile.size());
-                return l_neightboursLines;
             default:
                 return null;
         }
@@ -506,7 +518,6 @@ public class MapService {
             l_countriesList.add(new Country(Integer.parseInt(l_data[0]), l_data[1],
                     Integer.parseInt(l_data[2])));
         }
-
         return l_countriesList;
     }
 
@@ -518,7 +529,6 @@ public class MapService {
      * @return Formatted Countries data with Neighbour
      */
     public List<Country> parseNeighbourData(List<Country> p_countriesList, List<String> p_neighbourList) {
-
         LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
 
         for (String l_neighbour : p_neighbourList) {
@@ -535,8 +545,29 @@ public class MapService {
             List<Integer> l_neighbourCountries = l_countryNeighbors.get(l_country.getD_countryId());
             l_country.setD_neighbourCountryIds(l_neighbourCountries);
         }
+
         return p_countriesList;
     }
+
+    /**
+     * Links countries to corresponding continents and sets them in object of
+     * continent.
+     *
+     * @param p_countries  Total Country Objects
+     * @param p_continents Total Continent Objects
+     * @return List of updated continents
+     */
+    public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
+        for (Country c : p_countries) {
+            for (Continent cont : p_continents) {
+                if (cont.getD_continentID().equals(c.getD_continentId())) {
+                    cont.addCountry(c);
+                }
+            }
+        }
+        return p_continents;
+    }
+
 
     /**
      * This method is used to fetch the file path.
@@ -553,9 +584,9 @@ public class MapService {
      *
      * @param p_gameState Current Game state
      */
-    public void resetState(GameState p_gameState,String p_fileToLoad) {
+    public void resetState(GameState p_gameState, String p_fileToLoad) {
         System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
-        p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!", "effect");
+        p_gameState.updateLog(p_fileToLoad + " map could not be loaded as it is invalid!", "effect");
         p_gameState.setD_map(new Models.Map());
     }
 
@@ -563,9 +594,9 @@ public class MapService {
      * Method to set the log of map editor methods.
      *
      * @param p_MapServiceLog String containing log
-     * @param p_gameState current gamestate instance
+     * @param p_gameState     current gamestate instance
      */
-    public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState){
+    public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState) {
         System.out.println(p_MapServiceLog);
         p_gameState.updateLog(p_MapServiceLog, "effect");
     }
