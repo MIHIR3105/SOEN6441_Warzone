@@ -46,12 +46,12 @@ public class MapTest {
      *
      * @throws InvalidMap Exception
      */
-    @Test
+    @Test(expected = InvalidMap.class)
     public void testValidate() throws InvalidMap {
         d_map= d_ms.loadMap(d_gameState, "canada.map");
 
         assertEquals(d_map.Validate(), true);
-        d_map= d_ms.loadMap(d_gameState, "europe.map");
+        d_map= d_ms.loadMap(d_gameState, "TestInvalidMap.map");
         d_map.Validate();
     }
 

@@ -162,7 +162,7 @@ public class Map {
      * @return true if map is validated
      */
     public Boolean Validate() throws InvalidMap {
-        return (!checkNullObjects() && isContinentsConnected() && isCountriesConnected());
+        return (checkNullObjects() && isContinentsConnected() && isCountriesConnected());
     }
 
     /**
@@ -182,7 +182,7 @@ public class Map {
                 throw new InvalidMap(c.getD_countryName() + " does not possess any neighbour, hence isn't reachable!");
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -190,11 +190,11 @@ public class Map {
      *
      * @return true if all continents are connected otherwise false
      */
-    public boolean isContinentsConnected() {
+    public boolean isContinentsConnected() throws InvalidMap {
         boolean l_flagConnected = true;
         for (Continent continent : d_continents) {
             if (continent.getD_countries() == null || continent.getD_countries().isEmpty()) {
-                System.out.println("Continent " + continent.getD_continentName() + " has no countries");
+                throw new InvalidMap(continent.getD_continentName() + " has no countries, it must possess atleast 1 country");
             }
             if (!continentsGraphConnected(continent)) {
                 l_flagConnected = false;
@@ -209,14 +209,16 @@ public class Map {
      * @return true if all countries are connected otherwise false
      */
     public boolean isCountriesConnected() throws InvalidMap {
-        for (Country country : d_countries) {
-            d_countryConnectedStatus.put(country.getD_countryId(), false);
+        for (Country c : d_countries) {
+            d_countryConnectedStatus.put(c.getD_countryId(), false);
         }
         dfsCountry(d_countries.get(0));
 
+        // Iterates over entries to locate the unreachable country
         for (java.util.Map.Entry<Integer, Boolean> entry : d_countryConnectedStatus.entrySet()) {
             if (!entry.getValue()) {
-                System.out.println(retrieveCountry(entry.getKey()).getD_countryName() + " country is not accessible");
+                String l_exceptionMessage = retrieveCountry(entry.getKey()).getD_countryName() + " country is not reachable";
+                throw new InvalidMap(l_exceptionMessage);
             }
         }
         return !d_countryConnectedStatus.containsValue(false);
@@ -228,7 +230,7 @@ public class Map {
      * @param p_continent continent to check
      * @return true if all countries within the continent are connected otherwise false
      */
-    private boolean continentsGraphConnected(Continent p_continent) {
+    private boolean continentsGraphConnected(Continent p_continent) throws InvalidMap {
         HashMap<Integer, Boolean> l_countriesInContinent = new HashMap<>();
 
         for (Country country : p_continent.getD_countries()) {
@@ -239,7 +241,8 @@ public class Map {
         for (java.util.Map.Entry<Integer, Boolean> entry : l_countriesInContinent.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = retrieveCountry(entry.getKey());
-                System.out.println(l_country.getD_countryName() + " is not connected");
+                String l_messageException = l_country.getD_countryName() + " in Continent " + p_continent.getD_continentName() + " is not reachable";
+                throw new InvalidMap(l_messageException);
             }
         }
         return !l_countriesInContinent.containsValue(false);
