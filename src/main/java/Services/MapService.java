@@ -343,7 +343,7 @@ public class MapService {
      * @param p_fileName  Name of the file
      * @return boolean true if map save was successful else false
      */
-    public boolean saveMap(GameState p_gameState, String p_fileName) {
+    public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap{
         boolean l_flagValidate = false;
         try {
 
@@ -395,31 +395,31 @@ public class MapService {
      * @param p_writer    File Writer
      */
     private void writeCountryAndNeighbourData(GameState p_gameState, FileWriter p_writer) throws IOException {
-        String l_countryData = new String();
-        String l_bordersData = new String();
+        String l_countryMetaData = new String();
+        String l_bordersMetaData = new String();
         List<String> l_bordersList = new ArrayList<>();
 
         // Writes Country Objects to File And Organizes Border Data for each of them
-        p_writer.write(System.lineSeparator() + "[countries]" + System.lineSeparator());
+        p_writer.write(System.lineSeparator() + GameConstants.COUNTRIES + System.lineSeparator());
         for (Country l_country : p_gameState.getD_map().getD_countries()) {
-            l_countryData = new String();
-
-            l_countryData = ((Integer) l_country.getD_countryId()).toString() + " " + (l_country.getD_countryName()) + " " + (((Integer) l_country.getD_continentId()).toString());
-            l_countryData = ((Integer) l_country.getD_countryId()).toString() + " " + (l_country.getD_countryName()) + " " + (((Integer) l_country.getD_continentId()).toString());
-            p_writer.write(l_countryData + System.lineSeparator());
+            l_countryMetaData = new String();
+            l_countryMetaData = l_country.getD_countryId().toString().concat(" ").concat(l_country.getD_countryName())
+                    .concat(" ").concat(String.valueOf(l_country.getD_continentId()));
+            p_writer.write(l_countryMetaData + System.lineSeparator());
 
             if (null != l_country.getD_neighbourCountryIds() && !l_country.getD_neighbourCountryIds().isEmpty()) {
-                l_bordersData = new String();
-                l_bordersData = ((Integer) l_country.getD_countryId()).toString();
+                l_bordersMetaData = new String();
+                l_bordersMetaData = l_country.getD_countryId().toString();
                 for (Integer l_adjCountry : l_country.getD_neighbourCountryIds()) {
-                    l_bordersData = l_bordersData + " " + (l_adjCountry.toString());
+                    l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
                 }
-                l_bordersList.add(l_bordersData);
+                l_bordersList.add(l_bordersMetaData);
             }
         }
 
-        if (!l_bordersList.isEmpty() && null != l_bordersList) {
-            p_writer.write(System.lineSeparator() + "[borders]" + System.lineSeparator());
+        // Writes Border data to the File
+        if (null != l_bordersList && !l_bordersList.isEmpty()) {
+            p_writer.write(System.lineSeparator() + GameConstants.BORDERS + System.lineSeparator());
             for (String l_borderStr : l_bordersList) {
                 p_writer.write(l_borderStr + System.lineSeparator());
             }
@@ -433,10 +433,11 @@ public class MapService {
      * @param p_writer    File Writer
      */
     private void writeContinentdata(GameState p_gameState, FileWriter p_writer) throws IOException {
-        p_writer.write(System.lineSeparator() + "[continents]" + System.lineSeparator());
+        p_writer.write(System.lineSeparator() + GameConstants.CONTINENTS + System.lineSeparator());
         for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
             p_writer.write(
-                    l_continent.getD_continentName() + " " + (l_continent.getD_continentValue().toString()) + System.lineSeparator());
+                    l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
+                            + System.lineSeparator());
         }
     }
 
