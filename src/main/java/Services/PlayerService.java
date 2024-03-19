@@ -45,6 +45,17 @@ public class PlayerService {
     }
 
     /**
+     * Find Player By Name.
+     *
+     * @param p_playerName player name to be found
+     * @param p_gameState GameState Instance.
+     * @return p_player object
+     */
+    public Player findPlayerByName(String p_playerName, GameState p_gameState) {
+        return p_gameState.getD_players().stream().filter(l_player -> l_player.getPlayerName().equals(p_playerName)).findFirst().orElse(null);
+    }
+
+    /**
      * Method to add a player to the Game.
      *
      * @param p_updatedPlayers          updated player list with newly added player
@@ -347,6 +358,21 @@ public class PlayerService {
     }
 
     /**
+     * Check if unexecuted orders exists in the game.
+     *
+     * @param p_playersList players involved in game
+     * @return boolean true if unexecuted orders exists with any of the players or
+     *         else false
+     */
+    public boolean unexecutedOrdersExists(List<Player> p_playersList) {
+        int l_totalUnexecutedOrders = 0;
+        for (Player l_player : p_playersList) {
+            l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_orderList().size();
+        }
+        return l_totalUnexecutedOrders != 0;
+    }
+
+    /**
      * Method to check if there are any unassigned armies left or not
      *
      * @param p_playersList list of players available
@@ -369,6 +395,36 @@ public class PlayerService {
     public boolean isMapLoaded(GameState p_gameState) {
         return !(p_gameState.getD_map() == null);
     }
+
+
+    /**
+     * Checks if any of the player in game wants to give further order or not.
+     *
+     * @param p_playersList players involved in game
+     * @return boolean whether there are more orders to give or not
+     */
+    public boolean checkForMoreOrders(List<Player> p_playersList) {
+        for (Player l_player : p_playersList) {
+            if(l_player.getD_moreOrders())
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Resets each players information for accepting further orders.
+     *
+     * @param p_playersList players involved in game
+     */
+    public void resetPlayersFlag(List<Player> p_playersList) {
+        for (Player l_player : p_playersList) {
+            if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
+                l_player.setD_moreOrders(true);
+            l_player.setD_oneCardPerTurn(false);
+            l_player.resetNegotiation();
+        }
+    }
+
 
     /**
      * Method to update the list of players.

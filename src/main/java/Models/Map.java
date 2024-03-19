@@ -105,7 +105,7 @@ public class Map {
             System.out.println("Country Id " + country.getD_countryId());
             System.out.println("Continent Id " + country.getD_continentId());
             System.out.println("Neighbours:");
-            for (int i : country.getD_neighbourCountryId()) {
+            for (int i : country.getD_neighbourCountryIds()) {
                 System.out.println(i);
             }
         }
@@ -162,7 +162,7 @@ public class Map {
             System.out.println("Map must contain at least one country!");
         }
         for (Country c : d_countries) {
-            if (c.getD_neighbourCountryId().isEmpty()) {
+            if (c.getD_neighbourCountryIds().isEmpty()) {
                 System.out.println(c.getD_countryName() + " does not possess any neighbour, hence isn't reachable!");
             }
         }
@@ -235,7 +235,7 @@ public class Map {
     private void dfsContinents(Country p_country, HashMap<Integer, Boolean> p_countriesInContinent, Continent p_continent) {
         p_countriesInContinent.put(p_country.getD_countryId(), true);
         for (Country country : p_continent.getD_countries()) {
-            if (p_country.getD_neighbourCountryId().contains(country.getD_countryId())) {
+            if (p_country.getD_neighbourCountryIds().contains(country.getD_countryId())) {
                 if (!p_countriesInContinent.get(country.getD_countryId())) {
                     dfsContinents(country, p_countriesInContinent, p_continent);
                 }
@@ -251,8 +251,8 @@ public class Map {
     public List<Country> getNeighbourCountry(Country p_country) {
         List<Country> l_neighbourCountries = new ArrayList<Country>();
 
-        if (p_country.getD_neighbourCountryId().size() > 0) {
-            for (int i : p_country.getD_neighbourCountryId()) {
+        if (p_country.getD_neighbourCountryIds().size() > 0) {
+            for (int i : p_country.getD_neighbourCountryIds()) {
                 l_neighbourCountries.add(retrieveCountry(i));
             }
         } else {
@@ -427,8 +427,8 @@ public class Map {
      */
     private void removeAllNeighbours(int p_countryID) {
         for (Country l_country : d_countries) {
-            if (l_country.getD_neighbourCountryId() != null) {
-                if (l_country.getD_neighbourCountryId().contains(p_countryID)) {
+            if (l_country.getD_neighbourCountryIds() != null) {
+                if (l_country.getD_neighbourCountryIds().contains(p_countryID)) {
                     l_country.removeNeighbourFromCountry(p_countryID);
                 }
             }

@@ -21,6 +21,7 @@ public class Command {
         this.d_command = p_input;
     }
 
+
     /**
      * Retrieves the Main Activity in the command
      * @return Main command as a String
@@ -72,4 +73,23 @@ public class Command {
 
         return l_taskMap;
     }
+
+    /**
+     * Method that checks if the map chosen by the user consists of the specified keys or not.
+     *
+     * @param p_key keys given by the player
+     * @param p_inputMap the input map selected by the player
+     * @return boolean true if the required keys are present and false if not
+     */
+    public boolean checkRequiredKeysPresent(String p_key, Map<String, String> p_inputMap) {
+        if(p_inputMap.containsKey(p_key) && null != p_inputMap.get(p_key)
+                && !p_inputMap.get(p_key).isEmpty())
+            return true;
+        return false;
+    }
+
+    public String getD_command() {
+        return d_command;
+    }
+
 }

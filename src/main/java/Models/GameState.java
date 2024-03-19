@@ -95,6 +95,7 @@ public class GameState {
     public void setD_unexecutedOrders(List<Order> p_unexecutedOrders) {
         this.d_unexecutedOrders = p_unexecutedOrders;
     }
+
     /**
      * getter method to get the list of pending orders.
      *
@@ -135,7 +136,7 @@ public class GameState {
      * Message to be added in the log.
      *
      * @param p_logMessage Log Message to be set in the Object
-     * @param p_logType Type of Log Message to be Added
+     * @param p_logType    Type of Log Message to be Added
      */
     public void updateLog(String p_logMessage, String p_logType) {
         d_logEntryBuffer.currentLog(p_logMessage, p_logType);
@@ -146,7 +147,7 @@ public class GameState {
      *
      * @return recent Log Message
      */
-    public String getRecentLog(){
+    public String getRecentLog() {
         return d_logEntryBuffer.getD_logMessage();
     }
 
@@ -162,18 +163,9 @@ public class GameState {
      *
      * @return bool value if map is loaded
      */
-    public boolean getD_loadCommand(){
+    public boolean getD_loadCommand() {
         return this.d_loadCommand;
     }
 
 
-//    @Override
-//    public String toString() {
-//        return "GameState{" +
-//                "d_map=" + d_map +
-//                ", d_players=" + d_players +
-//                ", d_pendingOrders=" + d_pendingOrders +
-//                ", d_error='" + d_error + '\'' +
-//                '}';
-//    }
 }
