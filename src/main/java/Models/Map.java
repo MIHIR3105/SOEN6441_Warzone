@@ -208,7 +208,7 @@ public class Map {
      *
      * @return true if all countries are connected otherwise false
      */
-    public boolean isCountriesConnected() {
+    public boolean isCountriesConnected() throws InvalidMap {
         for (Country country : d_countries) {
             d_countryConnectedStatus.put(country.getD_countryId(), false);
         }
@@ -269,7 +269,7 @@ public class Map {
      * @param p_country country name to which neighbours to be found
      * @return list of neighbour country objects
      */
-    public List<Country> getNeighbourCountry(Country p_country) {
+    public List<Country> getNeighbourCountry(Country p_country) throws InvalidMap {
         List<Country> l_neighbourCountries = new ArrayList<Country>();
 
         if (p_country.getD_neighbourCountryIds().size() > 0) {
@@ -277,7 +277,7 @@ public class Map {
                 l_neighbourCountries.add(retrieveCountry(i));
             }
         } else {
-            System.out.println(p_country.getD_countryName() + " doesn't contain any neighbour countries");
+            throw new InvalidMap(p_country.getD_countryName() + " doesn't have any adjacent countries");
         }
         return l_neighbourCountries;
     }
@@ -287,7 +287,7 @@ public class Map {
      *
      * @param p_country country to visit first
      */
-    public void dfsCountry(Country p_country) {
+    public void dfsCountry(Country p_country) throws InvalidMap {
         d_countryConnectedStatus.put(p_country.getD_countryId(), true);
         for (Country l_country : getNeighbourCountry(p_country)) {
             if (!d_countryConnectedStatus.get(l_country.getD_countryId())) {

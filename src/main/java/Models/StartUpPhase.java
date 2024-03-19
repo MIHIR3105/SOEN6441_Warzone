@@ -1,6 +1,6 @@
 package Models;
 
-import Constants.ApplicationConstants;
+import Constants.GameConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -91,7 +91,7 @@ public class StartUpPhase extends Phase {
             d_playerService.assignArmies(d_gameState);
             d_gameEngine.setIssueOrderPhase();
         } else {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
         }
     }
 
@@ -109,16 +109,16 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
         } else {
             if (d_gameState.getD_loadCommand()) {
                 for (Map<String, String> l_map : l_operations_list) {
-                    if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-                            && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-                        d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-                                l_map.get(ApplicationConstants.ARGUMENTS));
+                    if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
+                            && p_command.checkRequiredKeysPresent(GameConstants.OPERATION, l_map)) {
+                        d_playerService.updatePlayers(d_gameState, l_map.get(GameConstants.OPERATION),
+                                l_map.get(GameConstants.ARGUMENTS));
                     } else {
-                        throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+                        throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
                     }
                 }
             } else {
@@ -142,15 +142,15 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-                    d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-                            l_map.get(ApplicationConstants.ARGUMENTS), 3);
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(GameConstants.OPERATION, l_map)) {
+                    d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.OPERATION),
+                            l_map.get(GameConstants.ARGUMENTS), 3);
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
                 }
             }
         }
@@ -171,15 +171,15 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-                    d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-                            l_map.get(ApplicationConstants.ARGUMENTS), 2);
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(GameConstants.OPERATION, l_map)) {
+                    d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.OPERATION),
+                            l_map.get(GameConstants.ARGUMENTS), 2);
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
                 }
             }
         }
@@ -201,16 +201,16 @@ public class StartUpPhase extends Phase {
         if (null == l_operations_list || l_operations_list.isEmpty()) {
             Models.Map l_currentMap = d_gameState.getD_map();
             if (l_currentMap == null) {
-                throw new InvalidMap(ApplicationConstants.INVALID_MAP_ERROR_EMPTY);
+                throw new InvalidMap(GameConstants.INVALID_MAP_ERROR_EMPTY);
             } else {
                 if (l_currentMap.Validate()) {
-                    d_gameEngine.setD_gameEngineLog(ApplicationConstants.VALID_MAP, "effect");
+                    d_gameEngine.setD_gameEngineLog(GameConstants.VALID_MAP, "effect");
                 } else {
                     throw new InvalidMap("Failed to Validate map!");
                 }
             }
         } else {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
         }
     }
 
@@ -224,25 +224,25 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_LOADMAP);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
                     // Loads the map if it is valid or resets the game state
                     Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
-                            l_map.get(ApplicationConstants.ARGUMENTS));
+                            l_map.get(GameConstants.ARGUMENTS));
                     if (l_mapToLoad.Validate()) {
                         l_flagValidate = true;
                         d_gameState.setD_loadCommand();
-                        d_gameEngine.setD_gameEngineLog(l_map.get(ApplicationConstants.ARGUMENTS) + " has been loaded to start the game", "effect");
+                        d_gameEngine.setD_gameEngineLog(l_map.get(GameConstants.ARGUMENTS) + " has been loaded to start the game", "effect");
                     } else {
-                        d_mapService.resetState(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+                        d_mapService.resetState(d_gameState, l_map.get(GameConstants.ARGUMENTS));
                     }
                     if (!l_flagValidate) {
-                        d_mapService.resetState(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+                        d_mapService.resetState(d_gameState, l_map.get(GameConstants.ARGUMENTS));
                     }
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_LOADMAP);
                 }
             }
         }
@@ -262,18 +262,18 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_SAVEMAP);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
                     boolean l_fileUpdateStatus = d_mapService.saveMap(d_gameState,
-                            l_map.get(ApplicationConstants.ARGUMENTS));
+                            l_map.get(GameConstants.ARGUMENTS));
                     if (l_fileUpdateStatus) {
                         d_gameEngine.setD_gameEngineLog("Required changes have been made in map file", "effect");
                     } else
                         System.out.println(d_gameState.getError());
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_SAVEMAP);
                 }
             }
         }
@@ -294,15 +294,15 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-                    d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
-                            l_map.get(ApplicationConstants.OPERATION), 1);
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(GameConstants.OPERATION, l_map)) {
+                    d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.ARGUMENTS),
+                            l_map.get(GameConstants.OPERATION), 1);
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
                 }
             }
         }
@@ -318,13 +318,13 @@ public class StartUpPhase extends Phase {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+            throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITMAP);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
-                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-                    d_mapService.editMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+                if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
+                    d_mapService.editMap(d_gameState, l_map.get(GameConstants.ARGUMENTS));
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+                    throw new InvalidCommand(GameConstants.INVALID_COMMAND_ERROR_EDITMAP);
                 }
             }
         }

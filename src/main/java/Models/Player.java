@@ -1,6 +1,6 @@
 package Models;
 
-import Constants.ApplicationConstants;
+import Constants.GameConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
@@ -470,7 +470,7 @@ public class Player {
     public void assignCard() {
         if (!d_oneCardPerTurn) {
             Random l_random = new Random();
-            this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+            this.d_cardsOwnedByPlayer.add(GameConstants.CARDS.get(l_random.nextInt(GameConstants.SIZE)));
             this.setD_playerLog("Player: " + this.d_name + " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size() - 1), "log");
             this.setD_oneCardPerTurn(true);
         } else {

@@ -1,6 +1,6 @@
 package Services;
 
-import Constants.ApplicationConstants;
+import Constants.GameConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Continent;
@@ -472,13 +472,13 @@ public class MapService {
         switch (p_case) {
             case "continent":
                 return p_linesOfFile.subList(
-                        p_linesOfFile.indexOf(ApplicationConstants.CONTINENTS) + 1,
-                        p_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) - 1);
+                        p_linesOfFile.indexOf(GameConstants.CONTINENTS) + 1,
+                        p_linesOfFile.indexOf(GameConstants.COUNTRIES) - 1);
             case "country":
-                return p_linesOfFile.subList(p_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) + 1,
-                        p_linesOfFile.indexOf(ApplicationConstants.BORDERS) - 1);
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(GameConstants.COUNTRIES) + 1,
+                        p_linesOfFile.indexOf(GameConstants.BORDERS) - 1);
             case "neighbour":
-                return p_linesOfFile.subList(p_linesOfFile.indexOf(ApplicationConstants.BORDERS) + 1,
+                return p_linesOfFile.subList(p_linesOfFile.indexOf(GameConstants.BORDERS) + 1,
                         p_linesOfFile.size());
             default:
                 return null;
