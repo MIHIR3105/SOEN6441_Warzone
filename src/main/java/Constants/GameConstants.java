@@ -1,52 +1,56 @@
 package Constants;
+
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class initializes all the constants that are going to be used throughout the application.
+ * This class contains all the constants that are going to be used in the application
  *
- * @author Asshvi Zala
- *
+ * @author Aashvi Zala
  */
 public final class GameConstants {
-    public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
-    public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";
-    public static final String INVALID_COMMAND_ERROR_EDITCOUNTRY = "Invalid command. Kindly provide command in Format of : editcountry -add countrytID continentID -remove countryID";
-    public static final String INVALID_COMMAND_ERROR_EDITNEIGHBOUR = "Invalid command. Kindly provide command in Format of : editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID";
-    public static final String INVALID_COMMAND_ERROR_SAVEMAP = "Invalid command. Kindly provide command in Format of : savemap filename";
-    public static final String INVALID_MAP_ERROR_EMPTY = "No Map found! Please load a valid map to check!";
-    public static final String INVALID_COMMAND_ERROR_LOADMAP = "Invalid command. Kindly provide command in Format of : loadmap filename";
-    public static final String INVALID_COMMAND_ERROR_VALIDATEMAP = "Invalid command! validatemap is not supposed to have any arguments";
-    public static final String INVALID_COMMAND_ERROR_GAMEPLAYER = "Invalid command. Kindly provide command in Format of : gameplayer -add playername -remove playername";
-    public static final String INVALID_MAP_LOADED = "Map cannot be loaded, as it is invalid. Kindly provide valid map";
-    public static final String INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES = "Invalid command. Kindly provide command in Format of : assigncountries";
-    public static final String INVALID_COMMAND_ERROR_DEPLOY_ORDER = "Invalid command. Kindly provide command in Format of : deploy countryID <CountryName> <num> (until all reinforcements have been placed)";
-    public static final String VALID_MAP = "The loaded map is valid!";
-
-    public static final String ARGUMENTS = "arguments";
-    public static final String OPERATION = "operation";
-
-    public static final String MAPFILEEXTENSION = ".map";
-
-    public static final String RED = "\033[0;31m";
-    public static final String GREEN = "\033[0;32m";
-    public static final String YELLOW = "\033[0;33m";
-    public static final String BLUE = "\033[0;34m";
-    public static final String PURPLE = "\033[0;35m";
-    public static final String CYAN = "\033[0;36m";
-    public static final String WHITE = "\u001B[47m";
-
-    public static final String CONTINENTS = "[continents]";
-    public static final String COUNTRIES = "[countries]";
-    public static final String BORDERS = "[borders]";
+    public static final int CONSOLE_WIDTH = 100;
+    public static final String CONTROL_VALUE = "Control Value";
     public static final String ARMIES = "Armies";
-    public static final String CONTROL_VALUE = "Control Bonus Value";
     public static final String CONNECTIVITY = "Connections";
-    public static final String SRC_MAIN_RESOURCES = "src/main/resources";
-    public static final int CONSOLE_WIDTH = 80;
+    public static final String COMMAND = "command";
+    public static final String ORDER = "order";
+    public static final String PHASE = "phase";
+    public static final String OUTCOME = "outcome";
+    public static final String ERROR = "error";
+    public static final String STARTLOG = "start";
+    public static final String ENDLOG = "end";
+    public static final String COMMANDLOG = " Command: ";
+    public static final String ORDERLOG = " Order Issued: ";
+    public static final String SEP = "============";
+    public static final String LOG = "Log: ";
+    public static final String ERRORLOG = "Error: ";
+    public static final String GAMESTART = "---------- Starting the game the Game ----------";
+    public static final String LOGFILENAME = "LogRecord.txt";
+    public static final String INVALIDCOMMAND = "Invalid Command!!";
+    public static final String INVALIDCOMMANDERRORSAVEGAME = "Invalid command. Kindly provide command in Format of : savegame filename";
+    public static final String INVALIDCOMMANDERRORLOADGAME = "Invalid command. Kindly provide command in Format of : loadgame filename";
+    public static final String INVALIDCOMMANDERRORASSIGNCOUNTRIES = "Invalid command. Kindly provide command in Format of : assigncountries";
+    public static final String INVALIDCOMMANDTOURNAMENTMODE = "Invalid Command Tournament Mode!!";
+    public static final String ARGUMENTS = "arguments";
+    public static final String OPERATIONS = "operation";
 
-    public static final List<String> BLOCKADEVALIDATION = Arrays.asList("bomb", "advance", "airlift", "negotiate");
+    public static final List<String> TOURNAMENT_BEHAVIORS = Arrays.asList("Aggressive", "Random", "Benevolent", "Cheater");
 
-    public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
-    public static final int SIZE = CARDS.size();
+    public static final String AVAILABLECOMMANDS = "------------AVAILABLE COMMANDS------------\n"+
+            "editmap filename\n" +
+            "editcontinent -add continentName continentvalue -remove continentName\n" +
+            "editcountry -add countryName continentName -remove countryName\n" +
+            "editneighbor -add countryName neighborcountryName -remove countryName neighborcountryName showmap\n" +
+            "savemap filename\n" +
+            "loadmap filename\n" +
+            "validatemap\n" +
+            "gameplayer -add playername -remove playername\n" +
+            "assigncountries\n" +
+            "deploy countryName num \n" +
+            "advance countrynamefrom countynameto numarmies\n" +
+            "bomb countryName\n" +
+            "bloackade countryName \n" +
+            "------------------------------------";
+
 }
