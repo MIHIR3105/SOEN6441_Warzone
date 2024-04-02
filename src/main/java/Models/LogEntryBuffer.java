@@ -1,62 +1,63 @@
 package Models;
 
 import Views.LogWriter;
+import Constants.GameConstants;
+
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
- * The class records the corresponding logs for various stages in game.
+ * Class used for logging of the game.
  *
  * @author Aashvi Zala
+ *
  */
-public class LogEntryBuffer extends Observable {
+public class LogEntryBuffer extends Observable implements Serializable {
+
+    String d_logInput;
 
     /**
-     * Log Message to be recorded.
-     */
-    String d_logMessage;
-
-    /**
-     * Initialises the Class Instance by adding LogWriter Observer object.
+     * Constructor
      */
     public LogEntryBuffer(){
-        //d_logMessages = new ArrayList<String>();
         LogWriter l_logWriter = new LogWriter();
         this.addObserver(l_logWriter);
     }
 
     /**
-     * Getter for the Log Message.
-     *
-     * @return Log Message
+     * Getter for the Log Input.
+     * @return Log Input.
      */
-    public String getD_logMessage(){
-        return d_logMessage;
+    public String getCurrentLog(){
+        return d_logInput;
     }
 
     /**
-     * Sets the Log Message and Notifies the Observer Objects.
-     *
-     * @param p_messageToUpdate Log Message to Set
-     * @param p_logType Type of Log : Command, Order, Effect or Phase
+     * Sets the log value and category and Notify observer
+     * @param p_log Log Input Value
+     * @param p_category Category of the log.
      */
-    public void currentLog(String p_messageToUpdate, String p_logType){
+    public void currentLog(String p_log, String p_category){
 
-        switch(p_logType.toLowerCase()){
-            case "command":
-                d_logMessage = System.lineSeparator()+ "Command Entered: "+ p_messageToUpdate + System.lineSeparator();
+        switch(p_category.toLowerCase()){
+            case GameConstants.COMMAND:
+                d_logInput = System.lineSeparator()+ GameConstants.COMMANDLOG + p_log + System.lineSeparator();
                 break;
-            case "order":
-                d_logMessage = System.lineSeparator()+ " Order Issued: "+p_messageToUpdate+System.lineSeparator();
+            case GameConstants.ORDER:
+                d_logInput = System.lineSeparator()+ GameConstants.ORDERLOG + p_log +System.lineSeparator();
                 break;
-            case "phase":
-                d_logMessage = System.lineSeparator()+ "======="+ p_messageToUpdate + "======="+System.lineSeparator()+System.lineSeparator();
+            case GameConstants.PHASE:
+                d_logInput = System.lineSeparator()+ GameConstants.SEP + p_log + GameConstants.SEP + System.lineSeparator();
                 break;
-            case "effect":
-                d_logMessage = "Log: "+ p_messageToUpdate + System.lineSeparator();
+            case GameConstants.OUTCOME:
+                d_logInput = GameConstants.LOG + p_log + System.lineSeparator();
                 break;
-            case "start":
-            case "end":
-                d_logMessage = p_messageToUpdate + System.lineSeparator();
+            case GameConstants.ERROR:
+                d_logInput = GameConstants.ERRORLOG + p_log + System.lineSeparator();
+                break;
+            case GameConstants.STARTLOG:
+            case GameConstants.ENDLOG:
+                d_logInput = p_log + System.lineSeparator();
                 break;
         }
         setChanged();

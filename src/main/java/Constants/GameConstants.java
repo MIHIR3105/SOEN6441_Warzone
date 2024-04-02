@@ -7,6 +7,7 @@ import java.util.List;
  * This class contains all the constants that are going to be used in the application
  *
  * @author Aashvi Zala
+ *
  */
 public final class GameConstants {
     public static final int CONSOLE_WIDTH = 100;
