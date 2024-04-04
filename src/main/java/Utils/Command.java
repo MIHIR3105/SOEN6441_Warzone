@@ -3,28 +3,26 @@ package Utils;
 import java.util.*;
 
 /**
- * Class handles input commands from User
- * @author Vaibhav Chauhan
+ * Class to handle input command from End User
  */
 public class Command {
 
     /**
-     * Player input command
+     * Stores the Player input command.
      */
     public String d_command;
 
     /**
-     * Constructor to set d_command with the input
-     * @param p_input User input
+     * Constructor to set d_command with the input.
+     * @param p_input User input.
      */
     public Command(String p_input){
-        this.d_command = p_input;
+        this.d_command = p_input.trim().replaceAll(" +", " ");
     }
 
-
     /**
-     * Retrieves the Main Activity in the command
-     * @return Main command as a String
+     * Retrieves the Main Activity in the command.
+     * @return String of Main command
      */
     public String getMainCommand() {
         String[] l_baseCommand = this.d_command.split(" ");
@@ -32,7 +30,7 @@ public class Command {
     }
 
     /**
-     * Retrieves the Tasks to be performed under the Main Activity
+     * Retrieves the Tasks to be performed under the Main Activity.
      * @return List of Map of Operations and Arguments for the command
      */
     public List<Map<String , String>>  getTaskandArguments(){
@@ -75,21 +73,20 @@ public class Command {
     }
 
     /**
-     * Method that checks if the map chosen by the user consists of the specified keys or not.
-     *
+     * Checks if required keys are present in the command
      * @param p_key keys given by the player
      * @param p_inputMap the input map selected by the player
      * @return boolean true if the required keys are present and false if not
      */
     public boolean checkRequiredKeysPresent(String p_key, Map<String, String> p_inputMap) {
-        if(p_inputMap.containsKey(p_key) && null != p_inputMap.get(p_key)
-                && !p_inputMap.get(p_key).isEmpty())
-            return true;
-        return false;
+        return p_inputMap.containsKey(p_key) && p_inputMap.get(p_key) != null && !p_inputMap.get(p_key).isEmpty();
     }
 
-    public String getD_command() {
+    /**
+     * Getter for the command.
+     * @return command in string
+     */
+    public String getcommand() {
         return d_command;
     }
-
 }
