@@ -141,15 +141,15 @@ public class GameState {
     public void updateLog(String p_logMessage, String p_logType) {
         d_logEntryBuffer.currentLog(p_logMessage, p_logType);
     }
-
-    /**
-     * Fetches the most recent Log in current GameState.
-     *
-     * @return recent Log Message
-     */
-    public String getRecentLog() {
-        return d_logEntryBuffer.getD_logMessage();
-    }
+//
+//    /**
+//     * Fetches the most recent Log in current GameState.
+//     *
+//     * @return recent Log Message
+//     */
+//    public String getRecentLog() {
+//        return d_logEntryBuffer.getD_logMessage();
+//    }
 
     /**
      * Sets the Boolean load map variable.
