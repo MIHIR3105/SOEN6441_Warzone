@@ -1,52 +1,45 @@
 package Models;
 
 /**
- * Command of the Command pattern : This model class manages the orders given by
- * the players.
+ * Class contains date members and methods for order given by a player
  *
  * @author Aashvi Zala
  */
 public interface Order {
-
     /**
-     * Method that will be called by the Receiver to execute the Order.
-     *
-     * @param p_gameState current state of the game.
+     * Method called by receiver to execute the order
+     * @param p_gameState current game state
      */
     public void execute(GameState p_gameState);
 
     /**
-     * Validates order.
-     *
-     * @return boolean true or false
-     * @param p_gameState GameState Instance
+     * Method to validate order
+     * @param p_gameState current game state
+     * @return instance of current game state
      */
     public boolean valid(GameState p_gameState);
 
     /**
-     * Print order information.
+     * Method to print order Information
      */
     public void printOrder();
 
     /**
-     * Returns the Log to GameState with Execution Log.
-     *
-     * @return String containing log message
+     * Method to return log to game state with execution log
+     * @return string which contains log message
      */
     public String orderExecutionLog();
 
     /**
-     * Prints and Sets the order execution log.
-     *
-     * @param p_orderExecutionLog String to be set as log
-     * @param p_logType           type of log : error, default
+     * Method to print and set the order execution log
+     * @param p_orderExecutionLog string to set as log
+     * @param p_logType type of log : error, default
      */
     public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType);
 
     /**
-     * Return order name.
-     *
-     * @return String
+     * Method to return order name
+     * @return string which contains order name
      */
     public String getOrderName();
 }
