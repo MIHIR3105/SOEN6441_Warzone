@@ -264,20 +264,20 @@ public class PlayerService {
     }
 
 
-    /**
-     * Check if unexecuted orders exists in the game.
-     *
-     * @param p_playersList players involved in game
-     * @return boolean true if unexecuted orders exists with any of the players or
-     * else false
-     */
-    public boolean ignoredOrdersExists(List<Player> p_playersList) {
-        int l_totalUnexecutedOrders = 0;
-        for (Player l_player : p_playersList) {
-            l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_orderList().size();
-        }
-        return l_totalUnexecutedOrders != 0;
-    }
+//    /**
+//     * Check if unexecuted orders exists in the game.
+//     *
+//     * @param p_playersList players involved in game
+//     * @return boolean true if unexecuted orders exists with any of the players or
+//     * else false
+//     */
+//    public boolean ignoredOrdersExists(List<Player> p_playersList) {
+//        int l_totalUnexecutedOrders = 0;
+//        for (Player l_player : p_playersList) {
+//            l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_orderList().size();
+//        }
+//        return l_totalUnexecutedOrders != 0;
+//    }
 
     /**
      * Method to check if there are any unassigned armies left or not

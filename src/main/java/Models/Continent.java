@@ -1,29 +1,46 @@
 package Models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
- * The methods to manage the continents are in this class
- * @author Vaibhav Chauhan
+ * This class contains the functions for managing continents
  */
-public class Continent {
+public class Continent implements Serializable {
+
     /**
-     * continent ID
+     * Continent ID
      */
     Integer d_continentID;
+
     /**
-     * continent Name
+     * Continent name
      */
     String d_continentName;
+
     /**
-     * continent Value
+     * Continent value
      */
     Integer d_continentValue;
+
     /**
-     * List of Countries in a Continent
+     * List of countries
      */
     List<Country> d_countries;
+
+    /**
+     * Constructor
+     *
+     * @param d_continentID    Continent ID
+     * @param d_continentName  Continent name
+     * @param d_continentValue Continent value
+     */
+    public Continent(Integer d_continentID, String d_continentName, Integer d_continentValue) {
+        this.d_continentID = d_continentID;
+        this.d_continentName = d_continentName;
+        this.d_continentValue = d_continentValue;
+    }
 
     /**
      * Default constructor
@@ -33,92 +50,91 @@ public class Continent {
     }
 
     /**
-     * Constructor with 3 parameters
-     * @param d_continentID continent ID
-     * @param d_continentName continent Name
-     * @param d_continentValue continent Value
-     */
-    public Continent(Integer d_continentID, String d_continentName, Integer d_continentValue) {
-        this.d_continentID = d_continentID;
-        this.d_continentName = d_continentName;
-        this.d_continentValue = d_continentValue;
-    }
-
-    /**
-     * Constructor with 1 parameter
-     * @param d_continentName continent Name
+     * Constructor
+     *
+     * @param d_continentName Continent name
      */
     public Continent(String d_continentName) {
         this.d_continentName = d_continentName;
     }
 
     /**
-     * To get continent ID
-     * @return continent ID
+     * Getter method to get continent ID
+     *
+     * @return Continent ID
      */
     public Integer getD_continentID() {
         return d_continentID;
     }
 
     /**
-     * To get continent Name
-     * @return continent Name
-     */
-    public String getD_continentName() {
-        return d_continentName;
-    }
-
-    /**
-     * To get continent Value
-     * @return continent Value
-     */
-    public Integer getD_continentValue() {
-        return d_continentValue;
-    }
-
-    /**
-     * To get the list of countries in the continent
-     * @return list of countries
-     */
-    public List<Country> getD_countries() {
-        return d_countries;
-    }
-
-    /**
-     * To set continent ID
-     * @param p_continentID continent ID
+     * Setter method to set continent ID
+     *
+     * @param p_continentID Continent ID
      */
     public void setD_continentID(int p_continentID) {
         this.d_continentID = p_continentID;
     }
 
     /**
-     * To set continent Name
-     * @param p_continentName continent Name
+     * Getter method to get continent name
+     *
+     * @return Continent Name
+     */
+    public String getD_continentName() {
+        return d_continentName;
+    }
+
+    /**
+     * Setter method to set continent name
+     *
+     * @param p_continentName Continent name
      */
     public void setD_continentName(String p_continentName) {
         this.d_continentName = p_continentName;
     }
 
     /**
-     * To set continent Value
-     * @param p_continentValue continent Value
+     * Getter method to get the continent value
+     *
+     * @return Continent value
+     */
+    public Integer getD_continentValue() {
+        return d_continentValue;
+    }
+
+    /**
+     * Setter method to set the continent value
+     *
+     * @param p_continentValue Continent value
      */
     public void setD_continentValue(int p_continentValue) {
         this.d_continentValue = p_continentValue;
     }
 
     /**
-     * To set the list of countries in the continent
-     * @param p_countries list of the countries in the continent
+     * Getter method to get the list of countries in the continent
+     *
+     * @return List of Countries
+     */
+    public List<Country> getD_countries() {
+        return d_countries;
+    }
+
+    /**
+     * Setter method to set the List of countries in the continent
+     *
+     * @param p_countries List of Countries
      */
     public void setD_countries(List<Country> p_countries) {
         this.d_countries = p_countries;
     }
 
+
     /**
-     * Adds a country to the continent
-     * @param p_country country to be added
+     * Adds a country
+     *
+     * @param p_country Country to be added
      */
     public void addCountry(Country p_country) {
         if (d_countries != null) {
@@ -130,8 +146,9 @@ public class Continent {
     }
 
     /**
-     * Removes a country from the continent
-     * @param p_country country to be removed
+     * Removes the country
+     *
+     * @param p_country Country to be removed
      */
     public void removeCountry(Country p_country) {
         if (d_countries == null) {
@@ -143,13 +160,14 @@ public class Continent {
 
     /**
      * Removes the country ID from the list of neighbours for all the countries in the continent
-     * @param p_countryID country ID which is to be removed
+     *
+     * @param p_countryID ID of the country to remove
      */
     public void removeCountryForAllNeighbours(Integer p_countryID) {
         if (d_countries != null && !d_countries.isEmpty()) {
             for (Country country : d_countries) {
-                if (country.d_neighbourCountryIds != null) {
-                    if (country.getD_neighbourCountryIds().contains(p_countryID)) {
+                if (country.d_neighbourCountryId != null) {
+                    if (country.getD_neighbourCountryId().contains(p_countryID)) {
                         country.removeNeighbourFromCountry(p_countryID);
                     }
                 }
