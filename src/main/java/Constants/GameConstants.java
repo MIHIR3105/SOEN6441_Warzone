@@ -49,4 +49,6 @@ public final class GameConstants {
 
     public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
     public static final int SIZE = CARDS.size();
+    public static final String OUTCOME = "outcome";
+
 }

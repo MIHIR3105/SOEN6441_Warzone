@@ -3,6 +3,7 @@ package Models;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constants.GameConstants;
 import Services.PlayerService;
 import Utils.CommonUtil;
 
@@ -10,7 +11,6 @@ import Utils.CommonUtil;
  * Concrete Command of Command pattern.
  *
  * @author Aashvi Zala
- *
  */
 public class Advance implements Order {
     /**
@@ -98,12 +98,9 @@ public class Advance implements Order {
                 ? this.d_numberOfArmiesToPlace
                 : p_targetCountry.getD_armies();
 
-        List<Integer> l_attackerArmies = generateRandomArmyUnits(l_armiesInAttack, "attacker");
-        List<Integer> l_defenderArmies = generateRandomArmyUnits(l_armiesInAttack, "defender");
-        this.produceBattleResult(p_sourceCountry, p_targetCountry, l_attackerArmies, l_defenderArmies,
-                p_playerOfTargetCountry);
+        this.produceBattleResult(p_gameState, p_playerOfTargetCountry, p_targetCountry, p_sourceCountry, this.d_numberOfArmiesToPlace, p_targetCountry.getD_armies());
 
-        p_gameState.updateLog(orderExecutionLog(), "effect");
+        p_gameState.updateLog(orderExecutionLog(), GameConstants.OUTCOME);
         this.updateContinents(this.d_playerInitiator, p_playerOfTargetCountry, p_gameState);
     }
 
@@ -160,27 +157,23 @@ public class Advance implements Order {
      *
      * @param p_sourceCountry         country from which armies have to be moved
      * @param p_targetCountry         country to which armies have to be moved
-     * @param p_attackerArmies        random army numbers of attacker
-     * @param p_defenderArmies        random army numbers of defender
+     * @param p_attackerArmies        Army numbers of attacker
+     * @param p_defenderArmies        Army numbers of defender
      * @param p_playerOfTargetCountry player owning the target country
      */
-    private void produceBattleResult(Country p_sourceCountry, Country p_targetCountry, List<Integer> p_attackerArmies,
-                                     List<Integer> p_defenderArmies, Player p_playerOfTargetCountry) {
-        Integer l_attackerArmiesLeft = this.d_numberOfArmiesToPlace > p_targetCountry.getD_armies()
-                ? this.d_numberOfArmiesToPlace - p_targetCountry.getD_armies()
-                : 0;
-        Integer l_defenderArmiesLeft = this.d_numberOfArmiesToPlace < p_targetCountry.getD_armies()
-                ? p_targetCountry.getD_armies() - this.d_numberOfArmiesToPlace
-                : 0;
-        for (int l_i = 0; l_i < p_attackerArmies.size(); l_i++) {
-            if (p_attackerArmies.get(l_i) > p_defenderArmies.get(l_i)) {
-                l_attackerArmiesLeft++;
-            } else {
-                l_defenderArmiesLeft++;
-            }
+    private void produceBattleResult(GameState p_gameState, Player p_playerOfTargetCountry, Country p_targetCountry,
+                                     Country p_sourceCountry, int p_attackerArmies, int p_defenderArmies) {
+
+        int l_attackableArmies = (int) Math.round(0.6 * p_attackerArmies);
+        int l_defendableArmies = (int) Math.round(0.7 * p_defenderArmies);
+
+        if (p_defenderArmies > l_attackableArmies) {
+            this.handleSurvivingArmies(0, p_defenderArmies - l_attackableArmies, p_sourceCountry, p_targetCountry,
+                    p_playerOfTargetCountry);
+        } else {
+            this.handleSurvivingArmies(p_attackerArmies - l_defendableArmies, 0, p_sourceCountry, p_targetCountry,
+                    p_playerOfTargetCountry);
         }
-        this.handleSurvivingArmies(l_attackerArmiesLeft, l_defenderArmiesLeft, p_sourceCountry, p_targetCountry,
-                p_playerOfTargetCountry);
     }
 
     /**
@@ -254,8 +247,8 @@ public class Advance implements Order {
             p_gameState.updateLog(orderExecutionLog(), "effect");
             return false;
         }
-        if(!d_playerInitiator.negotiationValidation(this.d_targetCountryName)){
-            this.setD_orderExecutionLog(this.currentOrder() + " is not executed as "+ d_playerInitiator.getPlayerName()+ " has negotiation pact with the target country's player!", "error");
+        if (!d_playerInitiator.negotiationValidation(this.d_targetCountryName)) {
+            this.setD_orderExecutionLog(this.currentOrder() + " is not executed as " + d_playerInitiator.getPlayerName() + " has negotiation pact with the target country's player!", "error");
             p_gameState.updateLog(orderExecutionLog(), "effect");
             return false;
         }
