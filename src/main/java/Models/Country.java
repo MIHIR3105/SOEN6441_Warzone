@@ -1,55 +1,59 @@
 package Models;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The methods to manage the countries are in this class
- * @author Vaibhav Chauhan
+ * This class contains functions which manages the country
  */
-public class Country {
+public class Country implements Serializable {
 
     /**
      * country ID
      */
     int d_countryId;
-
     /**
      * country Name
      */
     String d_countryName;
-
     /**
      * continent ID
      */
     int d_continentId;
-
     /**
-     * number of armies for a country
+     * How much armies it contains
      */
     int d_armies;
 
     /**
-     * Neighbour list for the given country
+     * How many armies it currently contains
      */
-    List<Integer> d_neighbourCountryIds = new ArrayList<Integer>();
+    int d_currentArmies;
+    /**
+     * list of countries neighbour to the given country
+     */
+    List<Integer> d_neighbourCountryId = new ArrayList<Integer>();
 
     /**
-     * Constructor with 3 parameters
-     * @param p_countryId country ID
+     * parameterised constructor contains 3 parameters
+     *
+     * @param p_countryId   country ID
      * @param p_countryName country Name
-     * @param p_continentId continent ID
+     * @param p_continentId continent Id
      */
     public Country(int p_countryId, String p_countryName, int p_continentId) {
         this.d_countryId = p_countryId;
         this.d_countryName = p_countryName;
         this.d_continentId = p_continentId;
+        d_neighbourCountryId = new ArrayList<>();
+        d_armies = 0;
     }
 
     /**
-     * Constructor with 2 parameters
-     * @param p_countryId country ID
-     * @param p_continentId continent ID
+     * parameterised constructor contains 2 parameters
+     *
+     * @param p_countryId   country ID
+     * @param p_continentId continent Id
      */
     public Country(int p_countryId, int p_continentId) {
         this.d_countryId = p_countryId;
@@ -57,115 +61,124 @@ public class Country {
     }
 
     /**
-     * Constructor with 1 parameter
+     * parameterised constructor contains 1 parameter
+     *
      * @param p_countryName country Name
      */
     public Country(String p_countryName) {
         this.d_countryName = p_countryName;
     }
-
     /**
-     * To get country ID
+     * getter method to get the armies.
+     * @return armies
+     */
+    public int getD_armies() {
+        return d_armies;
+    }
+    /**
+     * setter method to set armies
+     * @param p_armies armies
+     */
+    public void setD_armies(int p_armies) {
+        this.d_armies = p_armies;
+        this.d_currentArmies = p_armies;
+    }
+    /**
+     * getter method to get the armies.
+     * @return armies
+     */
+    public int getD_currentArmies() {
+        return d_currentArmies;
+    }
+    /**
+     * setter method to set armies
+     * @param p_armies armies
+     */
+    public void setD_currentArmies(int p_armies) {
+        this.d_currentArmies = p_armies;
+
+    }
+    /**
+     * getter method to get country ID
      * @return country ID
      */
-    public Integer getD_countryId() {
+    public int getD_countryId() {
         return d_countryId;
     }
-
     /**
-     * To get country Name
+     * getter method which gives us country Name
      * @return country Name
      */
     public String getD_countryName() {
         return d_countryName;
     }
-
     /**
-     * To get continent ID
-     * @return continent ID
+     * getter method to get the continent Id.
+     * @return continent Id
      */
     public int getD_continentId() {
         return d_continentId;
     }
-
     /**
-     * To get armies
-     * @return armies
+     * getter method which gives us neighbour country Ids
+     * @return  neighbour Country Id
      */
-    public Integer getD_armies() {
-        return d_armies;
-    }
-
-    /**
-     * To get neighbour list for the given country
-     * @return neighbour Country IDs
-     */
-    public List<Integer> getD_neighbourCountryIds() {
-        if(d_neighbourCountryIds==null){
-            d_neighbourCountryIds=new ArrayList<Integer>();
+    public List<Integer> getD_neighbourCountryId() {
+        if(d_neighbourCountryId==null){
+            d_neighbourCountryId=new ArrayList<Integer>();
         }
-
-        return d_neighbourCountryIds;
+        return d_neighbourCountryId;
     }
-
     /**
-     * To set country ID
-     * @param p_countryId country ID
+     * setter which sets neighbour country Id.
+     * @param p_neighbourCountryId all neighbour country Id
+     */
+    public void setD_neighbourCountryId(List<Integer> p_neighbourCountryId) {
+        this.d_neighbourCountryId = p_neighbourCountryId;
+    }
+    /**
+     * setter method to set country Id
+     * @param p_countryId country Id
      */
     public void setD_countryId(int p_countryId) {
         this.d_countryId = p_countryId;
     }
-
     /**
-     * To set country Name
+     * setter method to set country Name
      * @param p_countryName country Name
      */
     public void setD_countryName(String p_countryName) {
         this.d_countryName = p_countryName;
     }
-
     /**
-     * To set continent ID
-     * @param p_continentId continent ID
+     * setter method to set continent Id
+     * @param p_continentId continent Id
      */
     public void setD_continentId(int p_continentId) {
         this.d_continentId = p_continentId;
     }
-
     /**
-     * To set armies
-     * @param p_armies armies
+     * remove Neighbour method removes country Id from  neighbour Country Id list.
+     *
+     * @param p_countryId country Id which is to be removed
      */
-    public void setD_armies(int p_armies) {
-        this.d_armies = p_armies;
-    }
+    public void removeNeighbourFromCountry(Integer p_countryId){
+        if(!d_neighbourCountryId.contains(p_countryId)){
+            System.out.println("Neighbour does not Exists");
 
-    /**
-     * To set neighbour list for the given country
-     * @param p_neighbourCountryId ID of neighbour country
-     */
-    public void setD_neighbourCountryIds(List<Integer> p_neighbourCountryId) {
-        this.d_neighbourCountryIds = p_neighbourCountryId;
+        }else{
+            d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
+        }
     }
-
     /**
-     * Adds country ID to neighbour country list
+     * addNeighbourToCountry method adds neighbour to already present country ID
+     *
      * @param p_countryId country ID which is to be added
      */
     public void addNeighbourToCountry(int p_countryId){
-        if(!d_neighbourCountryIds.contains(p_countryId))
-            d_neighbourCountryIds.add(p_countryId);
+        if(!d_neighbourCountryId.contains(p_countryId))
+            d_neighbourCountryId.add(p_countryId);
     }
 
-    /**
-     * Removes country ID from neighbour country list
-     * @param p_countryId country ID which is to be removed
-     */
-    public void removeNeighbourFromCountry(Integer p_countryId){
-        if(!d_neighbourCountryIds.contains(p_countryId)){
-            System.out.println("Neighbour does not Exists");
-        } else {
-            d_neighbourCountryIds.remove(d_neighbourCountryIds.indexOf(p_countryId));
-        }
-    }
 }
+

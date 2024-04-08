@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import Utils.CommonUtil;
  *
  * @author Aashvi Zala
  */
-public class Advance implements Order {
+public class Advance implements Order, Serializable {
     /**
      * name of the target country.
      */

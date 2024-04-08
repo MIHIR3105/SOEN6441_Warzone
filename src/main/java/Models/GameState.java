@@ -1,14 +1,13 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class is used to test functionality of GameState class functions.
- *
- * @author Aashvi Zala
- *
  */
-public class GameState {
+public class GameState implements Serializable {
 
     /**
      * map object.
@@ -16,31 +15,49 @@ public class GameState {
     Map d_map;
 
     /**
-     * Log Entries for existing game state.
-     */
-    LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
-
-    /**
-     * list of all players.
+     * list of players.
      */
     List<Player> d_players;
-    /**
-     * list of unexecuted orders.
-     */
-    List<Order> d_unexecutedOrders;
+
     /**
      * list of pending orders.
      */
     List<Order> d_pendingOrders;
 
     /**
-     * Checks if user has used load command.
-     */
-    Boolean d_loadCommand = false;
-    /**
      * error message.
      */
     String d_error;
+
+    /**
+     * Checks if user has used load command.
+     */
+    Boolean d_loadCommand = false;
+
+    /**
+     * Log Entry object
+     */
+    LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
+
+    /**
+     * Number of turns in tournament.
+     */
+    int d_maxNumberOfTurns = 0;
+
+    /**
+     * Number of remaining turns in tournament.
+     */
+    int d_numberOfTurnsLeft = 0;
+
+    /**
+     * Maintains list of players lost in the game.
+     */
+    List<Player> d_playersFailed = new ArrayList<Player>();
+
+    /**
+     * Winner Player.
+     */
+    Player d_winner;
 
     /**
      * getter method to get the map.
@@ -79,25 +96,7 @@ public class GameState {
     }
 
     /**
-     * getter method to get the list of orders which are yet to be executed.
-     *
-     * @return list of orders
-     */
-    public List<Order> getD_unexecutedOrders() {
-        return d_unexecutedOrders;
-    }
-
-    /**
-     * setter method to set the unexecuted orders.
-     *
-     * @param p_unexecutedOrders list of unexecuted orders
-     */
-    public void setD_unexecutedOrders(List<Order> p_unexecutedOrders) {
-        this.d_unexecutedOrders = p_unexecutedOrders;
-    }
-
-    /**
-     * getter method to get the list of pending orders.
+     * getter method to get the list of orders which are pending.
      *
      * @return list of orders
      */
@@ -133,24 +132,28 @@ public class GameState {
     }
 
     /**
-     * Message to be added in the log.
-     *
-     * @param p_logMessage Log Message to be set in the Object
-     * @param p_logType    Type of Log Message to be Added
+     * Adding logs to log file.
+     * @param p_log Log Input Value
+     * @param p_category Category of Log.
      */
-    public void updateLog(String p_logMessage, String p_logType) {
-        d_logEntryBuffer.currentLog(p_logMessage, p_logType);
+    public void updateLog(String p_log, String p_category) {
+        d_logEntryBuffer.currentLog(p_log, p_category);
     }
 
     /**
-     * Fetches the most recent Log in current GameState.
-     *
-     * @return recent Log Message
+     * Gets the current log.
+     * @return Current Log
      */
-    public String getRecentLog() {
-        return d_logEntryBuffer.getD_logMessage();
-    }
+    public String getRecentLog(){return d_logEntryBuffer.getCurrentLog();}
 
+    /**
+     * Returns if load command is used.
+     *
+     * @return bool value if map is loaded
+     */
+    public boolean getD_loadCommand(){
+        return this.d_loadCommand;
+    }
     /**
      * Sets the Boolean load map variable.
      */
@@ -159,13 +162,66 @@ public class GameState {
     }
 
     /**
-     * Returns if load command is used.
+     * Returns max number of turns allowed in tournament.
      *
-     * @return bool value if map is loaded
+     * @return int number of turns
      */
-    public boolean getD_loadCommand() {
-        return this.d_loadCommand;
+    public int getD_maxNumberOfTurns() {
+        return d_maxNumberOfTurns;
     }
 
+    /**
+     * Sets max number of turns allowed in tournament.
+     *
+     * @param d_maxNumberOfTurns number of turns
+     */
+    public void setD_maxNumberOfTurns(int d_maxNumberOfTurns) {
+        this.d_maxNumberOfTurns = d_maxNumberOfTurns;
+    }
 
+    /**
+     * Gets number of turns left at any stage of tournament.
+     *
+     * @return number of remaining turns
+     */
+    public int getD_numberOfTurnsLeft() {
+        return d_numberOfTurnsLeft;
+    }
+
+    /**
+     * Sets number of turns left at any stage of tournament.
+     *
+     * @param d_numberOfTurnsLeft number of remaining turns
+     */
+    public void setD_numberOfTurnsLeft(int d_numberOfTurnsLeft) {
+        this.d_numberOfTurnsLeft = d_numberOfTurnsLeft;
+    }
+
+    /**
+     * Adds the Failed Player in GameState.
+     *
+     * @param p_player Player instance to be removed
+     */
+    public void removePlayer(Player p_player){d_playersFailed.add(p_player);}
+
+    /**
+     * Retrieves the list of failed players.
+     *
+     * @return List of Players that lost the game.
+     */
+    public List<Player> getD_playersFailed() {return d_playersFailed;}
+
+    /**
+     * Returns the winner player object.
+     *
+     * @return returns winning player
+     */
+    public Player getD_winner(){return d_winner;}
+
+    /**
+     * Sets the winner player object.
+     *
+     * @param p_player winner player object
+     */
+    public void setD_winner(Player p_player){d_winner = p_player;}
 }
