@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Services class for Player to fetch the specific methods to be used for players in the game
- * @author Darshan Kansara
+ * Services class for Player to fetch the specific methods to be used for players in the game.
  */
 public class PlayerService implements Serializable {
 
@@ -27,6 +26,8 @@ public class PlayerService implements Serializable {
     String d_assignmentLog = "Country/Continent Assignment:";
 
     /**
+     * Method to check if player name exists in given existing
+     * player list.
      *
      * @param p_existingPlayerList check if it is existing or not
      * @param p_playerName         input the player name who is playing
@@ -47,6 +48,7 @@ public class PlayerService implements Serializable {
 
     /**
      * The method can add and remove players at the same time
+     *
      * @param p_existingPlayerList list of existing players
      * @param p_operation          type of operation to be performed
      * @param p_argument           arguments which gives list of players
@@ -74,9 +76,10 @@ public class PlayerService implements Serializable {
 
     /**
      * the method removes the existing game player or shows the Player does not exist in the console
-     * @param p_existingPlayerList list of existing players
-     * @param p_updatedPlayers updated player list with newly added player
-     * @param p_enteredPlayerName new player name to be removed
+     *
+     * @param p_existingPlayerList     list of existing players
+     * @param p_updatedPlayers         updated player list with newly added player
+     * @param p_enteredPlayerName      new player name to be removed
      * @param p_playerNameAlreadyExist false if player to be removed does not exist
      */
     private void removeGamePlayer(List<Player> p_existingPlayerList, List<Player> p_updatedPlayers,
@@ -111,7 +114,7 @@ public class PlayerService implements Serializable {
             //String l_playerStrategy = "Benevolent";
             String l_playerStrategy = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater").get(l_random.nextInt(Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater").size()));
             // use the above code to randomly assign behaviour of the player
-            switch(l_playerStrategy) {
+            switch (l_playerStrategy) {
                 case "Human":
                     l_addNewPlayer.setStrategy(new HumanPlayer());
                     break;
@@ -132,7 +135,7 @@ public class PlayerService implements Serializable {
                     break;
             }
             p_updatedPlayers.add(l_addNewPlayer);
-            setD_playerLog("Player with name : " + p_enteredPlayerName +" and strategy: "+l_playerStrategy+ " has been added successfully.");
+            setD_playerLog("Player with name : " + p_enteredPlayerName + " and strategy: " + l_playerStrategy + " has been added successfully.");
         }
     }
 
@@ -145,7 +148,7 @@ public class PlayerService implements Serializable {
         for (Player l_player : p_playersList) {
             if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
                 l_player.setD_moreOrders(true);
-            if(l_player.getD_oneCardPerTurn()) {
+            if (l_player.getD_oneCardPerTurn()) {
                 l_player.assignCard();
                 l_player.setD_oneCardPerTurn(false);
             }
@@ -155,6 +158,7 @@ public class PlayerService implements Serializable {
 
     /**
      * The method checks the player availability
+     *
      * @param p_gameState game state or phase of the current game
      * @return boolean if the player is available or not
      */
@@ -171,8 +175,8 @@ public class PlayerService implements Serializable {
      * @param p_gameState game state or phase of the current game
      */
     public void assignCountries(GameState p_gameState) {
-        if (!checkPlayersAvailability(p_gameState)){
-            p_gameState.updateLog("Kindly add players before assigning countries",  GameConstants.OUTCOME);
+        if (!checkPlayersAvailability(p_gameState)) {
+            p_gameState.updateLog("Kindly add players before assigning countries", GameConstants.OUTCOME);
             return;
         }
 
@@ -184,8 +188,8 @@ public class PlayerService implements Serializable {
             l_playerSize = l_playerSize - 1;
         int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), l_playerSize);
 
-        this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(), p_gameState);
-        this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
+        this.doRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(), p_gameState);
+        this.doContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
         p_gameState.updateLog(d_assignmentLog, "effect");
         System.out.println("Countries have been assigned to Players.");
 
@@ -198,11 +202,11 @@ public class PlayerService implements Serializable {
      * @param p_countries          list of countries to be assigned
      * @param p_players            list of players
      */
-    private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
-                                                List<Player> p_players, GameState p_gameState) {
+    private void doRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
+                                           List<Player> p_players, GameState p_gameState) {
         List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
         for (Player l_pl : p_players) {
-            if(!l_pl.getPlayerName().equalsIgnoreCase("Neutral")) {
+            if (!l_pl.getPlayerName().equalsIgnoreCase("Neutral")) {
                 if (l_unassignedCountries.isEmpty())
                     break;
                 // Based on number of countries to be assigned to player, it generates random
@@ -226,7 +230,7 @@ public class PlayerService implements Serializable {
         // If any countries are still left for assignment, it will redistribute those
         // among players
         if (!l_unassignedCountries.isEmpty()) {
-            performRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
+            doRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
         }
     }
 
@@ -246,7 +250,7 @@ public class PlayerService implements Serializable {
      * @param p_players    list of players
      * @param p_continents list of continents
      */
-    public void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
+    public void doContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
         for (Player l_pl : p_players) {
             List<String> l_countriesOwned = new ArrayList<>();
             if (l_pl.getD_coutriesOwned().size() != 0) {
@@ -284,6 +288,7 @@ public class PlayerService implements Serializable {
 
     /**
      * This method calculates the army for a player who is currently available
+     *
      * @param p_player player object
      * @return the calculated number of armies to the player
      */
@@ -292,7 +297,7 @@ public class PlayerService implements Serializable {
         if (p_player.getD_coutriesOwned().size() != 0) {
             l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
         }
-        if (p_player.getD_continentsOwned()!=null && p_player.getD_continentsOwned().size() != 0) {
+        if (p_player.getD_continentsOwned() != null && p_player.getD_continentsOwned().size() != 0) {
             int l_continentCtrlValue = 0;
             for (Continent l_continent : p_player.getD_continentsOwned()) {
                 l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
@@ -305,6 +310,7 @@ public class PlayerService implements Serializable {
 
     /**
      * This function assign the armies in the game state and to the players
+     *
      * @param p_gameState game state or phase of the current game
      */
     public void assignArmies(GameState p_gameState) {
@@ -321,7 +327,7 @@ public class PlayerService implements Serializable {
      *
      * @param p_playersList players involved in game
      * @return boolean true if unexecuted orders exists with any of the players or
-     *         else false
+     * else false
      */
     public boolean unexecutedOrdersExists(List<Player> p_playersList) {
         int l_totalUnexecutedOrders = 0;
@@ -340,7 +346,7 @@ public class PlayerService implements Serializable {
      */
     public boolean checkForMoreOrders(List<Player> p_playersList) {
         for (Player l_player : p_playersList) {
-            if(l_player.getD_moreOrders())
+            if (l_player.getD_moreOrders())
                 return true;
         }
         return false;
@@ -349,6 +355,7 @@ public class PlayerService implements Serializable {
 
     /**
      * The method checks if there are any unassigned armies left or not
+     *
      * @param p_playersList list of players available
      * @return true or false f there are any unassigned armies left or not
      */
@@ -362,14 +369,15 @@ public class PlayerService implements Serializable {
 
     /**
      * The method updates the list of players
-     * @param p_gameState  game state or phase of the current game
+     *
+     * @param p_gameState game state or phase of the current game
      * @param p_operation operation to update the list
-     * @param p_argument arguments which gives list of players
+     * @param p_argument  arguments which gives list of players
      */
     public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
         List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 
-        if (l_updatedPlayers!=null) {
+        if (l_updatedPlayers != null) {
             p_gameState.setD_players(l_updatedPlayers);
             p_gameState.updateLog(d_playerLog, GameConstants.OUTCOME);
         }
@@ -380,10 +388,10 @@ public class PlayerService implements Serializable {
      *
      * @param p_gameState gamestate object.
      */
-    public void updatePlayersInGame(GameState p_gameState){
-        for(Player l_player : p_gameState.getD_players()){
-            if(l_player.getD_coutriesOwned().size()==0 && !l_player.getPlayerName().equals("Neutral") && !p_gameState.getD_playersFailed().contains(l_player)){
-                this.setD_playerLog("Player: "+l_player.getPlayerName()+" has lost the game and is left with no countries!");
+    public void updatePlayersInGame(GameState p_gameState) {
+        for (Player l_player : p_gameState.getD_players()) {
+            if (l_player.getD_coutriesOwned().size() == 0 && !l_player.getPlayerName().equals("Neutral") && !p_gameState.getD_playersFailed().contains(l_player)) {
+                this.setD_playerLog("Player: " + l_player.getPlayerName() + " has lost the game and is left with no countries!");
                 p_gameState.removePlayer(l_player);
             }
         }
@@ -404,7 +412,7 @@ public class PlayerService implements Serializable {
      * Find Player By Name.
      *
      * @param p_playerName player name to be found
-     * @param p_gameState GameState Instance.
+     * @param p_gameState  GameState Instance.
      * @return p_player object
      */
     public Player findPlayerByName(String p_playerName, GameState p_gameState) {

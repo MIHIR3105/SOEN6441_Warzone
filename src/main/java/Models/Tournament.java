@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Constants.GameConstants;
-import Controller.GameEngine;
+import Controllers.GameEngine;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Services.MapService;
 import Utils.Command;
 
@@ -44,7 +46,7 @@ public class Tournament implements Serializable {
      * @throws Exception     Thrown if the map given in the command is invalid.
      */
     public boolean parseTournamentCommand(GameState p_gameState, String p_operation, String p_argument,
-                                          GameEngine p_gameEngine) throws  Exception {
+                                          GameEngine p_gameEngine) throws InvalidCommand, InvalidMap {
 
         // tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns
 
@@ -60,7 +62,7 @@ public class Tournament implements Serializable {
         if (p_operation.equalsIgnoreCase("D")) {
             return parseNoOfTurnsArguments(p_argument, p_gameEngine);
         }
-        throw new Exception(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
+        throw new InvalidCommand(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
     }
 
     /**
@@ -187,7 +189,7 @@ public class Tournament implements Serializable {
      * @return True if parsing is successful, false otherwise.
      * @throws Exception   Thrown if the map given in the command is invalid.
      */
-    private boolean parseNoOfGameArgument(String p_argument, GameEngine p_gameEngine) throws Exception {
+    private boolean parseNoOfGameArgument(String p_argument, GameEngine p_gameEngine) throws InvalidCommand, InvalidMap {
         int l_noOfGames = Integer.parseInt(p_argument.split(" ")[0]);
 
         if (l_noOfGames >= 1 && l_noOfGames <= 5) {
@@ -225,7 +227,7 @@ public class Tournament implements Serializable {
      * @return True if parsing of maps to the tournament object is successful, false otherwise.
      * @throws Exception   Thrown if the map given in the command is invalid.
      */
-    private boolean parseMapArguments(String p_argument, GameEngine p_gameEngine) throws Exception {
+    private boolean parseMapArguments(String p_argument, GameEngine p_gameEngine) throws InvalidCommand, InvalidMap {
         String[] l_listOfMapFiles = p_argument.split(" ");
         int l_mapFilesSize = l_listOfMapFiles.length;
 

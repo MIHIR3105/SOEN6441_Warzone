@@ -151,7 +151,7 @@ public class CheaterPlayer extends PlayerBehavior {
         l_playesList.add(p_targetCPlayer);
 
         PlayerService l_playerService = new PlayerService();
-        l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
+        l_playerService.doContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
     }
 
     /**

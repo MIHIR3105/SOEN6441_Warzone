@@ -107,7 +107,7 @@ public class BombTest {
         d_order_list.add(d_bombOrder1);
         d_order_list.add(d_bombOrder2);
 
-        d_player2.setD_orderList(d_order_list);
+        d_player2.setD_ordersToExecute(d_order_list);
 
     }
 
@@ -119,17 +119,17 @@ public class BombTest {
         // Test calculation of half armies.
         d_bombOrder1.execute(d_gameState);
         Country l_targetCountry = d_gameState.getD_map().getCountryByName("Japan");
-        assertEquals("2", l_targetCountry.getD_armies().toString());
+        assertEquals("2", String.valueOf(l_targetCountry.getD_armies()));
 
         // Test round down of armies calculation.
         d_bombOrder3.execute(d_gameState);
         Country l_targetCountry2 = d_gameState.getD_map().getCountryByName("India");
-        assertEquals("7", l_targetCountry2.getD_armies().toString());
+        assertEquals("7", String.valueOf(l_targetCountry2.getD_armies()));
 
         // Testing:- targeting a territory with 1 army will leave 0.
         d_bombOrder4.execute(d_gameState);
         Country l_targetCountry3 = d_gameState.getD_map().getCountryByName("Canada");
-        assertEquals("0", l_targetCountry3.getD_armies().toString());
+        assertEquals("0", String.valueOf(l_targetCountry3.getD_armies()));
 
     }
 

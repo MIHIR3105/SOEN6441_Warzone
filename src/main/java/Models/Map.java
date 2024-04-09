@@ -1,5 +1,7 @@
 package Models;
 
+import Exceptions.InvalidMap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,7 +166,7 @@ public class Map implements Serializable {
      *
      * @return true if map is successfully validated else false
      */
-    public Boolean Validate() {
+    public Boolean Validate() throws InvalidMap {
         return (checkNullObjects() && isContinentsConnected() && isCountriesConnected());
     }
 
@@ -196,7 +198,7 @@ public class Map implements Serializable {
      *
      * @return True if all continents are connected else false
      */
-    public boolean isContinentsConnected() {
+    public boolean isContinentsConnected() throws InvalidMap {
         boolean l_flagConnected = true;
         for (Continent continent : d_continents) {
             if (continent.getD_countries() == null || continent.getD_countries().isEmpty()) {
@@ -215,7 +217,7 @@ public class Map implements Serializable {
      * @param p_continent Continent to check
      * @return True if continents are connected else false
      */
-    private boolean continentsGraphConnected(Continent p_continent) {
+    private boolean continentsGraphConnected(Continent p_continent) throws InvalidMap {
         HashMap<Integer, Boolean> l_countriesInContinent = new HashMap<>();
 
         for (Country country : p_continent.getD_countries()) {
@@ -226,8 +228,8 @@ public class Map implements Serializable {
         for (java.util.Map.Entry<Integer, Boolean> entry : l_countriesInContinent.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = retrieveCountry(entry.getKey());
-                System.out.println(l_country.getD_countryName() + " is not connected");
-                return !l_countriesInContinent.containsValue(true);
+                String l_messageException = l_country.getD_countryName() + " in Continent " + p_continent.getD_continentName() + " is not reachable";
+                throw new InvalidMap(l_messageException);
             }
         }
         return !l_countriesInContinent.containsValue(false);

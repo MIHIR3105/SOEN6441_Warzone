@@ -1,7 +1,9 @@
 package Models;
 
 import Constants.GameConstants;
-import Controller.GameEngine;
+import Controllers.GameEngine;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Services.GamePlayService;
 import Utils.Command;
 import Utils.UncaughtExceptionHandler;
@@ -34,7 +36,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performValidateMap(Command p_command, Player p_player) throws Exception {
+    protected void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -45,7 +47,7 @@ public class IssueOrderPhase extends Phase {
      * @param p_player The player for whom the order is requested.
      * @throws Exception Indicates a failure
      */
-    public void askForOrder(Player p_player) throws Exception {
+    public void askForOrder(Player p_player) throws IOException, InvalidCommand, InvalidMap {
         String l_commandEntered = p_player.getPlayerOrder(d_gameState);
 
         if (l_commandEntered == null) return;
@@ -58,7 +60,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performEditNeighbour(Command p_command, Player p_player) throws Exception {
+    protected void doEditNeighbour(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -67,7 +69,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performEditCountry(Command p_command, Player p_player) throws Exception {
+    protected void doEditCountry(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -76,7 +78,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performLoadMap(Command p_command, Player p_player) throws Exception {
+    protected void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -85,7 +87,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performSaveMap(Command p_command, Player p_player) throws Exception {
+    protected void doSaveMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -94,7 +96,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performMapEdit(Command p_command, Player p_player) throws Exception {
+    protected void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -103,7 +105,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performEditContinent(Command p_command, Player p_player) throws Exception {
+    protected void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -112,7 +114,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void createPlayers(Command p_command, Player p_player) throws Exception {
+    protected void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -121,7 +123,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performCreateDeploy(String p_command, Player p_player) throws Exception {
+    protected void doCreateDeploy(String p_command, Player p_player) throws IOException {
         p_player.createDeployOrder(p_command);
         d_gameState.updateLog(p_player.getD_playerLog(), GameConstants.OUTCOME);
     }
@@ -130,7 +132,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performAdvance(String p_command, Player p_player) throws Exception {
+    protected void doAdvance(String p_command, Player p_player) throws IOException {
         p_player.createAdvanceOrder(p_command, d_gameState);
         d_gameState.updateLog(p_player.getD_playerLog(), GameConstants.OUTCOME);
     }
@@ -142,7 +144,7 @@ public class IssueOrderPhase extends Phase {
      * @throws Exception Exception
      */
     @Override
-    protected void tournamentGamePlay(Command p_command) throws Exception {
+    protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
 
@@ -154,7 +156,7 @@ public class IssueOrderPhase extends Phase {
      * @throws IOException indicates failure in I/O operation
      */
     @Override
-    protected void performLoadGame(Command p_command, Player p_player) throws Exception {
+    protected void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -167,13 +169,13 @@ public class IssueOrderPhase extends Phase {
      * @throws IOException indicates failure in I/O operation
      */
     @Override
-    protected void performSaveGame(Command p_command, Player p_player) throws Exception {
+    protected void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
         }
 
         for (java.util.Map<String, String> l_map : l_operations_list) {
@@ -183,7 +185,7 @@ public class IssueOrderPhase extends Phase {
                 d_gameEngine.setD_gameEngineLog("Game Saved Successfully to " + l_filename, "effect");
 
             } else {
-                throw new Exception(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
+                throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
             }
         }
     }
@@ -192,7 +194,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performCardHandle(String p_enteredCommand, Player p_player) throws Exception {
+    protected void doCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         if (p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
             p_player.handleCardCommands(p_enteredCommand, d_gameState);
         }
@@ -202,7 +204,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode, GameState p_gameState) throws Exception {
+    protected void doAssignCountries(Command p_command, Player p_player, boolean isTournamentMode, GameState p_gameState) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -211,7 +213,7 @@ public class IssueOrderPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performShowMap(Command p_command, Player p_player) throws Exception {
+    protected void doShowMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
 

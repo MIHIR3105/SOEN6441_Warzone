@@ -95,11 +95,11 @@ public class DeployTest {
     public void testDeployOrderExecution() {
         d_deployOrder1.execute(d_gameState);
         Country l_countryIndia = d_gameState.getD_map().getCountryByName("India");
-        assertEquals("10", l_countryIndia.getD_armies().toString());
+        assertEquals("10", String.valueOf(l_countryIndia.getD_armies()));
 
         d_deployOrder2.execute(d_gameState);
         Country l_countryCanada = d_gameState.getD_map().getCountryByName("Canada");
-        assertEquals("15", l_countryCanada.getD_armies().toString());
+        assertEquals("15", String.valueOf(l_countryCanada.getD_armies()));
     }
 
     /**
@@ -118,7 +118,7 @@ public class DeployTest {
         l_player.createDeployOrder("deploy Japan 4");
 
         assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
-        assertEquals(l_player.getD_orderList().size(), 1);
+        assertEquals(l_player.getD_ordersToExecute().size(), 1);
         Deploy l_order = (Deploy) l_player.d_orderList.get(0);
         assertEquals("Japan", l_order.d_targetCountryName);
         assertEquals("4", String.valueOf(l_order.d_numberOfArmiesToPlace));

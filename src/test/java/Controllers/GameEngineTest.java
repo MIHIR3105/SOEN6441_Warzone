@@ -63,7 +63,7 @@ public class GameEngineTest {
      * @throws InvalidMap     Exception
      */
     @Test
-    public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
+    public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_currentPhase.handleCommand("editcontinent");
         GameState l_state = d_currentPhase.getD_gameState();
 
@@ -111,7 +111,7 @@ public class GameEngineTest {
      * @throws InvalidMap     Exception
      */
     @Test
-    public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap, IOException {
+    public void testPerformSaveMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_currentPhase.handleCommand("savemap");
         GameState l_state = d_currentPhase.getD_gameState();
 
@@ -127,7 +127,7 @@ public class GameEngineTest {
      * @throws IOException    Exception
      */
     @Test(expected = InvalidCommand.class)
-    public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
+    public void testAssignCountriesInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_currentPhase.handleCommand("assigncountries -add india");
         ;
     }

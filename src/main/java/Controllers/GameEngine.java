@@ -1,4 +1,4 @@
-package Controller;
+package Controllers;
 
 import Constants.GameConstants;
 import Models.*;
@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game State.
+ *
+ * @author Prachi Patel
  */
 public class GameEngine implements Serializable {
 
@@ -141,7 +143,6 @@ public class GameEngine implements Serializable {
 
         l_game.getD_CurrentPhase().getD_gameState().updateLog(GameConstants.GAMESTART+System.lineSeparator(), GameConstants.STARTLOG);
         l_game.setD_gameEngineLog(GameConstants.GAMESTART, GameConstants.PHASE);
-        System.out.println(GameConstants.AVAILABLECOMMANDS);
         l_game.getD_CurrentPhase().initPhase(d_isTournamentMode);
     }
 }

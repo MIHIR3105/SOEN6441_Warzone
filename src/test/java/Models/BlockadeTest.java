@@ -105,7 +105,7 @@ public class BlockadeTest {
         d_order_list.add(d_blockadeOrder1);
         d_order_list.add(d_blockadeOrder2);
 
-        d_player2.setD_orderList(d_order_list);
+        d_player2.setD_ordersToExecute(d_order_list);
         d_blockadeOrder3 = new Blockade(d_player2, "India");
 
     }
@@ -117,7 +117,7 @@ public class BlockadeTest {
     public void testBlockadeExecution() {
         d_blockadeOrder1.execute(d_gameState);
         Country l_countryIndia = d_gameState.getD_map().getCountryByName("India");
-        assertEquals("15", l_countryIndia.getD_armies().toString());
+        assertEquals("15", String.valueOf(l_countryIndia.getD_armies()));
     }
 
     /**

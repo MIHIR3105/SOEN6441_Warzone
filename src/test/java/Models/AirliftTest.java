@@ -76,7 +76,7 @@ public class AirliftTest {
     public void testAirliftExecution() {
         d_airliftOrder.execute(d_gameState);
         Country l_countryIndia = d_gameState.getD_map().getCountryByName("Spain");
-        assertEquals("17", l_countryIndia.getD_armies().toString());
+        assertEquals("17", String.valueOf(l_countryIndia.getD_armies()));
     }
 
     /**

@@ -1,7 +1,9 @@
 package Models;
 
 import Constants.GameConstants;
-import Controller.GameEngine;
+import Controllers.GameEngine;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Services.MapService;
 import Services.PlayerService;
 import Utils.Command;
@@ -83,7 +85,7 @@ public abstract class Phase implements Serializable {
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
      * @throws Exception Indicates a failure
      */
-    public void handleCommand(String p_enteredCommand) throws Exception {
+    public void handleCommand(String p_enteredCommand) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, null);
     }
 
@@ -94,7 +96,7 @@ public abstract class Phase implements Serializable {
      * @param p_player         Player instance
      * @throws Exception Indicates a failure
      */
-    public void handleCommand(String p_enteredCommand, Player p_player) throws Exception {
+    public void handleCommand(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, p_player);
     }
 
@@ -105,7 +107,7 @@ public abstract class Phase implements Serializable {
      * @param p_player         Player instance
      * @throws Exception Indicates a failure
      */
-    private void commandHandler(String p_enteredCommand, Player p_player) throws Exception {
+    private void commandHandler(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         Command l_command = new Command(p_enteredCommand);
         String l_rootCommand = l_command.getMainCommand();
         l_isMapLoaded = d_gameState.getD_map() != null;
@@ -113,15 +115,15 @@ public abstract class Phase implements Serializable {
         d_gameState.updateLog(l_command.getcommand(), GameConstants.COMMAND);
         switch (l_rootCommand) {
             case "editmap": {
-                performMapEdit(l_command, p_player);
+                doMapEdit(l_command, p_player);
                 break;
             }
             case "editcontinent": {
-                performEditContinent(l_command, p_player);
+                doEditContinent(l_command, p_player);
                 break;
             }
             case "deploy": {
-                performCreateDeploy(p_enteredCommand, p_player);
+                doCreateDeploy(p_enteredCommand, p_player);
                 break;
             }
             case "gameplayer": {
@@ -129,56 +131,57 @@ public abstract class Phase implements Serializable {
                 break;
             }
             case "savemap": {
-                performSaveMap(l_command, p_player);
+                doSaveMap(l_command, p_player);
                 break;
             }
             case "loadmap": {
-                performLoadMap(l_command, p_player);
+                doLoadMap(l_command, p_player);
                 break;
             }
             case "validatemap": {
-                performValidateMap(l_command, p_player);
+                doValidateMap(l_command, p_player);
                 break;
             }
             case "advance": {
-                performAdvance(p_enteredCommand, p_player);
+                doAdvance(p_enteredCommand, p_player);
                 break;
             }
             case "editcountry": {
-                performEditCountry(l_command, p_player);
+                doEditCountry(l_command, p_player);
                 break;
             }
             case "editneighbor": {
-                performEditNeighbour(l_command, p_player);
+                doEditNeighbour(l_command, p_player);
+                break;
+            }
+            case "savegame": {
+                doSaveGame(l_command, p_player);
+                break;
+            }
+            case "loadgame": {
+                doLoadGame(l_command, p_player);
                 break;
             }
             case "airlift":
             case "blockade":
             case "negotiate":
             case "bomb": {
-                performCardHandle(p_enteredCommand, p_player);
+                doCardHandle(p_enteredCommand, p_player);
                 break;
             }
             case "assigncountries": {
-                performAssignCountries(l_command, p_player, false, d_gameState);
+                doAssignCountries(l_command, p_player, false, d_gameState);
                 break;
             }
             case "showmap": {
-                performShowMap(l_command, p_player);
+                doShowMap(l_command, p_player);
                 break;
             }
             case "tournament": {
                 tournamentGamePlay(l_command);
                 break;
             }
-            case "savegame": {
-                performSaveGame(l_command, p_player);
-                break;
-            }
-            case "loadgame": {
-                performLoadGame(l_command, p_player);
-                break;
-            }
+
             case "nocommand": {
                 break;
             }
@@ -202,17 +205,16 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performValidateMap(Command p_command, Player p_player) throws Exception;
+    protected abstract void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
-     * Basic validation of <strong>editneighbor</strong> command for checking
-     * required arguments and redirecting control to the model for actual processing.
+     * Method to validate map.
      *
      * @param p_command Command entered by the user in the CLI
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performEditNeighbour(Command p_command, Player p_player) throws Exception;
+    protected abstract void doEditNeighbour(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of <strong>editcountry</strong> command for checking
@@ -222,7 +224,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performEditCountry(Command p_command, Player p_player) throws Exception;
+    protected abstract void doEditCountry(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of <strong>loadmap</strong> command for checking required
@@ -232,7 +234,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performLoadMap(Command p_command, Player p_player) throws Exception;
+    protected abstract void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Basic validation of <strong>savemap</strong> command for checking required
@@ -242,7 +244,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performSaveMap(Command p_command, Player p_player) throws Exception;
+    protected abstract void doSaveMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
 
     /**
@@ -253,7 +255,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performMapEdit(Command p_command, Player p_player) throws Exception;
+    protected abstract void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of <strong>editcontinent</strong> command for checking
@@ -263,7 +265,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performEditContinent(Command p_command, Player p_player) throws Exception;
+    protected abstract void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of gameplayer command for checking required arguments and redirecting control to the model for adding or removing players.
@@ -272,7 +274,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void createPlayers(Command p_command, Player p_player) throws Exception;
+    protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles the deployment order in the gameplay.
@@ -281,7 +283,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of the player object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performCreateDeploy(String p_command, Player p_player) throws Exception;
+    protected abstract void doCreateDeploy(String p_command, Player p_player) throws IOException;
 
 
     /**
@@ -291,7 +293,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of the player object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performAdvance(String p_command, Player p_player) throws Exception;
+    protected abstract void doAdvance(String p_command, Player p_player) throws IOException;
 
     /**
      * Handels the tournament gameplay.
@@ -299,7 +301,7 @@ public abstract class Phase implements Serializable {
      * @param p_command Command entered by the user
      * @throws Exception Exception
      */
-    protected abstract void tournamentGamePlay(Command p_command) throws Exception;
+    protected abstract void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap;
 
     /**
      * Handles Game Load Feature.
@@ -308,7 +310,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  player instance
      * @throws Exception indicates failure in operation
      */
-    protected abstract void performLoadGame(Command p_command, Player p_player) throws Exception;
+    protected abstract void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles Game Save Feature.
@@ -317,7 +319,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  player instance
      * @throws Exception indicates failure in operation
      */
-    protected abstract void performSaveGame(Command p_command, Player p_player) throws Exception;
+    protected abstract void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
 
     /**
@@ -327,7 +329,7 @@ public abstract class Phase implements Serializable {
      * @param p_player         Player instance
      * @throws Exception Indicates a failure
      */
-    protected abstract void performCardHandle(String p_enteredCommand, Player p_player) throws Exception;
+    protected abstract void doCardHandle(String p_enteredCommand, Player p_player) throws IOException;
 
     /**
      * Basic validation of <strong>assigncountries</strong> to check for required
@@ -337,7 +339,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Instance of the Player Object
      * @throws Exception Indicates a failure
      */
-    protected abstract void performAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws Exception;
+    protected abstract void doAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles the 'show map' command.
@@ -346,7 +348,7 @@ public abstract class Phase implements Serializable {
      * @param p_player  Player object instance
      * @throws Exception Indicates a failure
      */
-    protected abstract void performShowMap(Command p_command, Player p_player) throws Exception;
+    protected abstract void doShowMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Method to log and print if the command can't be executed in the current phase.

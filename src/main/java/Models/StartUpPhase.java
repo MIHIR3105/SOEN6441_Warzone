@@ -1,7 +1,9 @@
 package Models;
 
 import Constants.GameConstants;
-import Controller.GameEngine;
+import Controllers.GameEngine;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Services.GamePlayService;
 import Utils.Command;
 import Utils.UncaughtExceptionHandler;
@@ -36,7 +38,7 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performValidateMap(Command p_command, Player p_player) throws Exception {
+    public void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("No map found to validate, Please `loadmap` & `editmap` first", GameConstants.OUTCOME);
             return;
@@ -48,7 +50,7 @@ public class StartUpPhase extends Phase {
         if (null == l_operations_list || l_operations_list.isEmpty()) {
             Models.Map l_currentMap = d_gameState.getD_map();
             if (l_currentMap == null) {
-                throw new Exception(GameConstants.INVALIDCOMMAND);
+                throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
             } else {
                 if (l_currentMap.Validate()) {
                     d_gameEngine.setD_gameEngineLog("The loaded map is valid!", GameConstants.OUTCOME);
@@ -57,7 +59,7 @@ public class StartUpPhase extends Phase {
                 }
             }
         } else {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
 
         }
     }
@@ -65,7 +67,7 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performEditNeighbour(Command p_command, Player p_player) throws Exception {
+    public void doEditNeighbour(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Neighbors, please perform `editmap` first", GameConstants.OUTCOME);
             return;
@@ -75,7 +77,7 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
@@ -83,7 +85,7 @@ public class StartUpPhase extends Phase {
                     d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.ARGUMENTS),
                             l_map.get(GameConstants.OPERATIONS), 3);
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -92,7 +94,7 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performEditCountry(Command p_command, Player p_player) throws Exception {
+    public void doEditCountry(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Country, please perform `editmap` first", GameConstants.OUTCOME);
             return;
@@ -102,7 +104,7 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
@@ -110,7 +112,7 @@ public class StartUpPhase extends Phase {
                     d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.ARGUMENTS),
                             l_map.get(GameConstants.OPERATIONS), 2);
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -119,13 +121,13 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performLoadMap(Command p_command, Player p_player) throws Exception {
+    public void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
         boolean l_flagValidate = false;
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
@@ -143,7 +145,7 @@ public class StartUpPhase extends Phase {
                         d_mapService.resetMap(d_gameState, l_map.get(GameConstants.ARGUMENTS));
                     }
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -152,7 +154,7 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performEditContinent(Command p_command, Player p_player) throws Exception {
+    public void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", GameConstants.OUTCOME);
             return;
@@ -162,7 +164,7 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidMap(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
@@ -170,7 +172,7 @@ public class StartUpPhase extends Phase {
                     d_mapService.editFunctions(d_gameState, l_map.get(GameConstants.ARGUMENTS),
                             l_map.get(GameConstants.OPERATIONS), 1);
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidMap(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -179,12 +181,12 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void createPlayers(Command p_command, Player p_player) throws Exception {
+    public void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
@@ -192,7 +194,7 @@ public class StartUpPhase extends Phase {
                     d_playerService.updatePlayers(d_gameState, l_map.get(GameConstants.OPERATIONS),
                             l_map.get(GameConstants.ARGUMENTS));
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -203,7 +205,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performCreateDeploy(String p_command, Player p_player) {
+    protected void doCreateDeploy(String p_command, Player p_player) {
         printInvalidCommandInState();
     }
 
@@ -211,7 +213,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performAdvance(String p_command, Player p_player) {
+    protected void doAdvance(String p_command, Player p_player) {
         printInvalidCommandInState();
     }
 
@@ -222,14 +224,14 @@ public class StartUpPhase extends Phase {
      * @throws Exception Exception
      */
     @Override
-    protected void tournamentGamePlay(Command p_command) throws Exception {
+    protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
         if (d_gameState.getD_players() != null && d_gameState.getD_players().size() > 1) {
             List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
             boolean l_parsingSuccessful = false;
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
             if ((l_operations_list == null || l_operations_list.isEmpty()) && !d_tournament.requiredTournamentArgPresent(l_operations_list, p_command)) {
-                throw new Exception(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
+                throw new InvalidCommand(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
             } else {
                 for (Map<String, String> l_map : l_operations_list) {
                     if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)
@@ -241,7 +243,7 @@ public class StartUpPhase extends Phase {
                             break;
 
                     } else {
-                        throw new Exception(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
+                        throw new InvalidCommand(GameConstants.INVALIDCOMMANDTOURNAMENTMODE);
                     }
                 }
             }
@@ -250,7 +252,7 @@ public class StartUpPhase extends Phase {
                     d_gameEngine.setD_gameEngineLog(
                             "\nStarting New Game on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
                             "effect");
-                    performAssignCountries(new Command("assigncountries"), null, true, l_gameState);
+                    doAssignCountries(new Command("assigncountries"), null, true, l_gameState);
 
                     d_gameEngine.setD_gameEngineLog(
                             "\nGame Completed on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
@@ -273,11 +275,11 @@ public class StartUpPhase extends Phase {
      * @throws IOException indicates failure in I/O operation
      */
     @Override
-    protected void performLoadGame(Command p_command, Player p_player) throws Exception {
+    protected void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMANDERRORLOADGAME);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORLOADGAME);
         }
 
         for (Map<String, String> l_map : l_operations_list) {
@@ -303,13 +305,13 @@ public class StartUpPhase extends Phase {
      * @throws IOException indicates failure in I/O operation
      */
     @Override
-    protected void performSaveGame(Command p_command, Player p_player) throws Exception {
+    protected void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
         }
 
         for (Map<String, String> l_map : l_operations_list) {
@@ -318,7 +320,7 @@ public class StartUpPhase extends Phase {
                 GamePlayService.saveGame(this, l_filename);
                 d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
             } else {
-                throw new Exception(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
+                throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORSAVEGAME);
             }
         }
     }
@@ -327,14 +329,14 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performCardHandle(String p_enteredCommand, Player p_player) {
+    protected void doCardHandle(String p_enteredCommand, Player p_player) {
         printInvalidCommandInState();
     }
 
     /**
      * {@inheritDoc}
      */
-    public void performAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws Exception {
+    public void doAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws InvalidCommand {
         if (p_gameState.getD_loadCommand()) {
             List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
@@ -345,7 +347,7 @@ public class StartUpPhase extends Phase {
                 d_playerService.assignArmies(p_gameState);
                 d_gameEngine.setIssueOrderPhase(p_isTournamentMode);
             } else {
-                throw new Exception(GameConstants.INVALIDCOMMANDERRORASSIGNCOUNTRIES);
+                throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORASSIGNCOUNTRIES);
             }
         } else {
             d_gameEngine.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
@@ -356,7 +358,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performShowMap(Command p_command, Player p_player) {
+    protected void doShowMap(Command p_command, Player p_player) {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
     }
@@ -381,19 +383,19 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performMapEdit(Command p_command, Player p_player) throws Exception {
+    public void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (java.util.Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
                     d_mapService.editMap(d_gameState, l_map.get(GameConstants.ARGUMENTS));
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidMap(GameConstants.INVALIDCOMMAND);
                 }
             }
         }
@@ -402,7 +404,7 @@ public class StartUpPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    public void performSaveMap(Command p_command, Player p_player) throws Exception {
+    public void doSaveMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("No map found to save, Please `editmap` first", GameConstants.OUTCOME);
             return;
@@ -412,7 +414,7 @@ public class StartUpPhase extends Phase {
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new Exception(GameConstants.INVALIDCOMMAND);
+            throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.checkRequiredKeysPresent(GameConstants.ARGUMENTS, l_map)) {
@@ -423,7 +425,7 @@ public class StartUpPhase extends Phase {
                     } else
                         System.out.println(d_gameState.getError());
                 } else {
-                    throw new Exception(GameConstants.INVALIDCOMMAND);
+                    throw new InvalidCommand(GameConstants.INVALIDCOMMAND);
                 }
             }
         }

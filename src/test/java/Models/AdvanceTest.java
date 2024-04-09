@@ -63,7 +63,7 @@ public class AdvanceTest {
 
         assertEquals(l_targetPlayer.getD_coutriesOwned().size(), 0);
         assertEquals(l_sourcePlayer.getD_coutriesOwned().size(), 2);
-        assertEquals(l_sourcePlayer.getD_coutriesOwned().get(1).getD_armies().toString(), "5");
+        assertEquals(String.valueOf(l_sourcePlayer.getD_coutriesOwned().get(1).getD_armies()), "5");
     }
 
     /**
@@ -91,8 +91,8 @@ public class AdvanceTest {
 
         assertEquals(l_targetPlayer.getD_coutriesOwned().size(), 1);
         assertEquals(l_sourcePlayer.getD_coutriesOwned().size(), 1);
-        assertEquals(l_sourcePlayer.getD_coutriesOwned().get(0).getD_armies().toString(), "5");
-        assertEquals(l_targetPlayer.getD_coutriesOwned().get(0).getD_armies().toString(), "2");
+        assertEquals(String.valueOf(l_sourcePlayer.getD_coutriesOwned().get(0).getD_armies()), "5");
+        assertEquals(String.valueOf(l_targetPlayer.getD_coutriesOwned().get(0).getD_armies()), "2");
     }
     /**
      * Checks if armies are deployed to target or not.
@@ -113,6 +113,6 @@ public class AdvanceTest {
 
         Advance l_advance = new Advance(l_sourcePlayer, "India", "Canada", 3);
         l_advance.deployArmiesToTarget(l_country2);
-        assertEquals(l_country2.getD_armies().toString(), "7");
+        assertEquals(String.valueOf(l_country2.getD_armies()), "7");
     }
 }

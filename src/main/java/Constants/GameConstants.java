@@ -15,6 +15,7 @@ public final class GameConstants {
     public static final String ARMIES = "Armies";
     public static final String CONNECTIVITY = "Connections";
     public static final String COMMAND = "command";
+    public static final String SRC_MAIN_RESOURCES = "src/main/resources";
 
     public static final String CONTINENTS = "[continents]";
     public static final String COUNTRIES = "[countries]";
