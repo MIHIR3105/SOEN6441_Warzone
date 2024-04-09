@@ -198,81 +198,49 @@ public abstract class Phase implements Serializable {
     }
 
     /**
-     * Basic validation of <strong>validatemap</strong> command for checking
-     * required arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Conducting essential validation of the 'validatemap' command to ensure necessary arguments are provided,
+     * and then transferring control to the model for actual processing.
      */
     protected abstract void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Method to validate map.
-     *
-     * @param p_command Command entered by the user in the CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
      */
     protected abstract void doEditNeighbour(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
-     * Basic validation of <strong>editcountry</strong> command for checking
-     * required arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Performing initial validation of the 'editcountry' command to confirm the presence of mandatory arguments,
+     * followed by transferring control to the model for execution.
      */
     protected abstract void doEditCountry(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
-     * Basic validation of <strong>loadmap</strong> command for checking required
-     * arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Conducting primary validation on the 'loadmap' command to ensure necessary arguments are present,
+     * and then transferring control to the model for processing.
      */
     protected abstract void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
-     * Basic validation of <strong>savemap</strong> command for checking required
-     * arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Performing fundamental validation on the 'savemap' command to verify essential arguments
+     * and then directing control to the model for processing.
      */
     protected abstract void doSaveMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
 
     /**
-     * Basic validation of <strong>editmap</strong> command for checking required
-     * arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Preliminary validation of the 'editmap' command to ensure necessary arguments are provided,
+     * followed by transferring control to the model for processing.
      */
     protected abstract void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
-     * Basic validation of <strong>editcontinent</strong> command for checking
-     * required arguments and redirecting control to the model for actual processing.
-     *
-     * @param p_command Command entered by the user on CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
+     * Initial validation of the 'editcontinent' command to verify the presence of essential arguments,
+     * followed by directing control to the model for processing.
      */
     protected abstract void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of gameplayer command for checking required arguments and redirecting control to the model for adding or removing players.
-     *
-     * @param p_command Command entered by the user in the CLI
-     * @param p_player  Instance of Player Object
-     * @throws Exception Indicates a failure
      */
     protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
@@ -288,65 +256,38 @@ public abstract class Phase implements Serializable {
 
     /**
      * Handles the advance order in the gameplay.
-     *
-     * @param p_command Command entered by the user
-     * @param p_player  Instance of the player object
-     * @throws Exception Indicates a failure
      */
     protected abstract void doAdvance(String p_command, Player p_player) throws IOException;
 
     /**
      * Handels the tournament gameplay.
-     *
-     * @param p_command Command entered by the user
-     * @throws Exception Exception
      */
     protected abstract void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap;
 
     /**
      * Handles Game Load Feature.
-     *
-     * @param p_command command entered by user
-     * @param p_player  player instance
-     * @throws Exception indicates failure in operation
      */
     protected abstract void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
-     * Handles Game Save Feature.
-     *
-     * @param p_command command entered by user
-     * @param p_player  player instance
-     * @throws Exception indicates failure in operation
+     * Handles Game Save Feature
      */
     protected abstract void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
 
     /**
      * Handles the card commands.
-     *
-     * @param p_enteredCommand String representing the entered command
-     * @param p_player         Player instance
-     * @throws Exception Indicates a failure
      */
     protected abstract void doCardHandle(String p_enteredCommand, Player p_player) throws IOException;
 
     /**
-     * Basic validation of <strong>assigncountries</strong> to check for required
-     * arguments and redirect control to the model for assigning countries to players.
-     *
-     * @param p_command Command entered by the user in the CLI
-     * @param p_player  Instance of the Player Object
-     * @throws Exception Indicates a failure
+     * Performing preliminary validation on the assigncountries function to ensure all necessary arguments are present,
+     * and then transferring control to the model responsible for allocating countries to players.
      */
     protected abstract void doAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles the 'show map' command.
-     *
-     * @param p_command Command entered by the user
-     * @param p_player  Player object instance
-     * @throws Exception Indicates a failure
      */
     protected abstract void doShowMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
