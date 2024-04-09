@@ -5,7 +5,7 @@
 
 package Models;
 
-import Controller.GameEngine;
+import Controllers.GameEngine;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
