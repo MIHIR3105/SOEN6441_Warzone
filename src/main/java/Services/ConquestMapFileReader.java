@@ -54,7 +54,7 @@ public class ConquestMapFileReader implements Serializable {
                 return l_continentLines;
             case "country":
                 List<String> l_countryLines = p_fileLines
-                        .subList(p_fileLines.indexOf(ApplicationConstants.CONQUEST_TERRITORIES) + 1, p_fileLines.size());
+                        .subList(p_fileLines.indexOf(GameConstants.CONQUEST_TERRITORIES) + 1, p_fileLines.size());
                 return l_countryLines;
             default:
                 return null;

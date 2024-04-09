@@ -13,7 +13,7 @@ public class GamePlayService {
 
 
     /**
-     * Save the current game phase to a designated file through serialization.
+     * Method to save the current game phase to a designated file through serialization.
      *
      * @param p_phase    Instance of the current game phase.
      * @param p_filename Name of the file.
@@ -32,7 +32,7 @@ public class GamePlayService {
 
 
     /**
-     * Deserialize the game phase stored in the specified file.
+     * Method to load the game phase stored in the specified file.
      *
      * @param p_filename Name of the file from which to load the game phase.
      * @return The game phase saved in the file.
