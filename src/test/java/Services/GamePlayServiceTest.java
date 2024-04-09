@@ -6,25 +6,39 @@ import Models.Phase;
 import Models.StartUpPhase;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests for GamePlayService
+ */
 class GamePlayServiceTest {
 
     @Test
+    /**
+     * Test to check if game is saved and loaded successfully
+     */
     void saveGame() {
         GameState l_gameState = new GameState();
         GameEngine l_gameEngine = new GameEngine();
-        Phase l_phase = new StartUpPhase(l_gameEngine,l_gameState);
-        boolean l_isExcep = false;
+        Phase phase = new StartUpPhase(l_gameEngine, l_gameState);
+        String filename = "check.txt";
+
         try {
-            l_phase.handleCommand("loadmap canada.map");
-            l_phase.handleCommand("gameplayer -add A -add B");
-            GamePlayService.saveGame(l_phase, "check.txt");
-            GamePlayService.loadGame("check.txt");
-            l_phase.handleCommand("validatemap");
-        } catch (Exception l_e){
-            l_isExcep=true;
+            phase.handleCommand("loadmap canada.map");
+            phase.handleCommand("gameplayer -add A -add B");
+            GamePlayService.saveGame(phase, filename);
+            Phase l_loadedPhase = GamePlayService.loadGame(filename);
+            phase.handleCommand("validatemap");
+
+            assertTrue(new File("src/main/resources/" + filename).exists());
+
+            assertEquals(phase.getClass(), l_loadedPhase.getClass());
+
+            assertTrue(l_gameState.getD_map().Validate());
+        } catch (Exception e) {
+            fail("Exception thrown during save and load: " + e.getMessage());
         }
-        assertFalse(l_isExcep);
     }
 }
