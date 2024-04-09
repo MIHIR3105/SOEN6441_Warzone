@@ -1,27 +1,27 @@
-/**
- * This class is used to test functionality of startup phase.
- * @author Mihir Panchal
- */
 package Models;
 
 import Controllers.GameEngine;
+import Utils.Command;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StartUpPhaseTest {
+/**
+ * Test class for GameState.java
+ */
+class GameStateTest {
 
+    /**
+     * Method to test get map file
+     * @throws Exception indicates Exception
+     */
     @Test
-    void performEditContinent() throws Exception {
+    void getD_mapTest() throws Exception {
         GameState l_gameState = new GameState();
         GameEngine l_gameEngine = new GameEngine();
         Phase l_phase = new StartUpPhase(l_gameEngine,l_gameState);
         l_phase.handleCommand("editmap canada.map");
         Map l_map = l_phase.getD_gameState().getD_map();
-        int l_initCount = l_map.getD_continents().size();
-        l_phase.handleCommand("editcontinent -add Asia 5");
-        int l_finalCount = l_map.getD_continents().size();
-
-        assertEquals(l_initCount+1,l_finalCount);
+        assertEquals("canada.map", l_phase.getD_gameState().getD_map().getD_mapFile());
     }
 }
