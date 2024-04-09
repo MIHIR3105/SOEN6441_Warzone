@@ -1,6 +1,6 @@
 package Models;
 
-import Controller.GameEngine;
+import Controllers.GameEngine;
 import Utils.Command;
 import org.junit.jupiter.api.Test;
 
