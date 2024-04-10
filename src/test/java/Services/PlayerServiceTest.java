@@ -1,22 +1,29 @@
 package Services;
 
-import Models.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import Exceptions.InvalidMap;
+import org.junit.Before;
+import org.junit.Test;
+
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Map;
+import Models.Player;
+import Utils.CommonUtil;
 
 /**
- * Test class for PlayerServices.java
- * @author Darshan Kansara
+ * This class is used to test functionality of PlayerService class functions.
  */
 public class PlayerServiceTest {
-
     /**
      * Player class reference.
      */
@@ -47,18 +54,21 @@ public class PlayerServiceTest {
      */
     List<Player> d_exisitingPlayerList = new ArrayList<>();
 
+    /**
+     * Byte Array Output Stream Object.
+     */
     private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
     /**
      * The setup is called before each test case of this class is executed.
      */
-    @BeforeEach
+    @Before
     public void setup() {
         d_playerInfo = new Player();
         d_playerService = new PlayerService();
         d_gameState = new GameState();
-        d_exisitingPlayerList.add(new Player("Darshan"));
-        d_exisitingPlayerList.add(new Player("Slade"));
+        d_exisitingPlayerList.add(new Player("Avneet"));
+        d_exisitingPlayerList.add(new Player("Zalak"));
 
     }
 
@@ -68,13 +78,13 @@ public class PlayerServiceTest {
      */
     @Test
     public void testAddPlayers() {
-        assertFalse(d_exisitingPlayerList.size()==0);
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Darshans");
-        assertEquals("Darshans", l_updatedPlayers.get(2).getPlayerName());
+        assertFalse(CommonUtil.isCollectionEmpty(d_exisitingPlayerList));
+        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Jhanvi");
+        assertEquals("Jhanvi", l_updatedPlayers.get(2).getPlayerName());
 
         System.setOut(new PrintStream(d_outContent));
-        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Slade");
-        assertEquals("Player with name : Slade already Exists. Changes are not made.", d_outContent.toString().trim());
+        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Avneet");
+        assertEquals("Player with name : Avneet already Exists. Changes are not made.", d_outContent.toString().trim());
     }
 
     /**
@@ -83,12 +93,12 @@ public class PlayerServiceTest {
      */
     @Test
     public void testRemovePlayers() {
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Darshan");
+        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Avneet");
         assertEquals(1, l_updatedPlayers.size());
 
         System.setOut(new PrintStream(d_outContent));
-        d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Ravi");
-        assertEquals("Player with name : Ravi does not Exist. Changes are not made.", d_outContent.toString().trim());
+        d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
+        assertEquals("Player with name : Bhoomi does not Exist. Changes are not made.", d_outContent.toString().trim());
     }
 
     /**
@@ -102,9 +112,11 @@ public class PlayerServiceTest {
 
     /**
      * Used for checking whether players have been assigned with countries
+     *
+     * @throws InvalidMap invalid map exception
      */
     @Test
-    public void testPlayerCountryAssignment() throws Exception {
+    public void testPlayerCountryAssignment() throws InvalidMap {
         d_mapservice = new MapService();
         d_map = new Map();
         d_map = d_mapservice.loadMap(d_gameState, "canada.map");
@@ -133,33 +145,13 @@ public class PlayerServiceTest {
         l_countryList.add(new Country("Fribourg"));
         l_countryList.add(new Country("Geneve"));
         l_playerInfo.setD_coutriesOwned(l_countryList);
-
         List<Continent> l_continentList = new ArrayList<Continent>();
         l_continentList.add(new Continent(1, "Asia", 5));
         l_playerInfo.setD_continentsOwned(l_continentList);
-
-        // Handle the case where D_noOfUnallocatedArmies is null
-        Integer unallocatedArmies = l_playerInfo.getD_noOfUnallocatedArmies();
-        if (unallocatedArmies == null) {
-            unallocatedArmies = 0; // Set a default value if it's null
-        }
-
-        // Calculate the expected result based on the number of countries and continents.
-        int expectedArmies = Math.max(3, (int) Math.ceil(l_countryList.size() / 3.0));
-        for (Continent continent : l_continentList) {
-            expectedArmies += continent.getD_continentValue();
-        }
-
-        // Make sure the player's unallocated armies are added to the result.
-        expectedArmies += unallocatedArmies;
-
-        // Calculate the expected result based on the formula and the player's properties.
-        Integer l_expectedResult = expectedArmies;
-
-        // Call the method you want to test.
+        l_playerInfo.setD_noOfUnallocatedArmies(10);
         Integer l_actualResult = d_playerService.calculateArmiesForPlayer(l_playerInfo);
-
-        // Use assertEquals to compare the expected and actual results.
-        assertEquals(l_expectedResult, l_actualResult);
+        Integer l_expectedresult = 8;
+        assertEquals(l_expectedresult, l_actualResult);
     }
+
 }
