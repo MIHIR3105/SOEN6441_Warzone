@@ -79,3 +79,35 @@ Log: 15 armies have been deployed successfully on country : Canada
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
