@@ -9,9 +9,7 @@ import Utils.Command;
 import Utils.UncaughtExceptionHandler;
 import Views.MapView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -170,7 +168,7 @@ public class IssueOrderPhase extends Phase {
      */
     @Override
     protected void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 

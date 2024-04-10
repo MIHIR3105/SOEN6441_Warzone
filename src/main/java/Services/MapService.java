@@ -118,13 +118,13 @@ public class MapService implements Serializable {
         if (!CommonUtil.isNull(l_mapToBeUpdated)) {
             switch (p_switchParameter) {
                 case 1:
-                    l_updatedMap = addOrRemoveContinents(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
+                    l_updatedMap = addOrRemoveContinents(p_gameState, l_mapToBeUpdated, p_argument, p_operation);
                     break;
                 case 2:
-                    l_updatedMap = addOrRemoveCountry(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
+                    l_updatedMap = addOrRemoveCountry(p_gameState, l_mapToBeUpdated, p_argument, p_operation);
                     break;
                 case 3:
-                    l_updatedMap = addOrRemoveNeighbour(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
+                    l_updatedMap = addOrRemoveNeighbour(p_gameState, l_mapToBeUpdated, p_argument, p_operation);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + p_switchParameter);

@@ -167,7 +167,7 @@ public class OrderExecutionPhase extends Phase {
      */
     @Override
     protected void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
