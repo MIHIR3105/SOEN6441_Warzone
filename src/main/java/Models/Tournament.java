@@ -43,7 +43,9 @@ public class Tournament implements Serializable {
      * @param p_argument     The argument values provided in the command.
      * @param p_gameEngine   The game engine responsible for managing the tournament.
      * @return True if parsing is successful, false otherwise.
-     * @throws Exception     Thrown if the map given in the command is invalid.
+     * @throws InvalidCommand     Thrown if the map given in the command is invalid.
+     * @throws InvalidMap Throws invalid map
+     *
      */
     public boolean parseTournamentCommand(GameState p_gameState, String p_operation, String p_argument,
                                           GameEngine p_gameEngine) throws InvalidCommand, InvalidMap {
