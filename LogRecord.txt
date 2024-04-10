@@ -80,6 +80,7 @@ Log: Negotiation with b approached by a successful !
 
  Command: editmap canada.map
 
+<<<<<<< HEAD
  Command: loadmap canada.map
 Log: canada.map has been loaded to start the game
 
@@ -117,6 +118,8 @@ Log: Negotiation with b approached by a successful !
 
  Command: editmap canada.map
 
+=======
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
  Command: editcontinent -add Asia 5
 
  Command: editcontinent -add Asia 5
@@ -125,9 +128,15 @@ Log: Negotiation with b approached by a successful !
 
  Command: editmap canada.map
 
+<<<<<<< HEAD
  Command: editcontinent -add Asia 5
 
  Command: editcontinent -add Asia 5
+=======
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
 
  Command: editmap canada.map
 
@@ -145,6 +154,7 @@ Log: Negotiation with b approached by a successful !
 
  Command: editcountry -remove New_Brunswick
 
+<<<<<<< HEAD
  Command: editcontinent
 Log: Can not Edit Continent, please perform `editmap` first
 
@@ -171,11 +181,17 @@ Log: 15 armies have been deployed successfully on country : Canada
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
+=======
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
 
  Command: editmap canada.map
 
  Command: editmap canada.map
 
+<<<<<<< HEAD
  Command: editcontinent -add Asia 5
 
  Command: editcontinent -add Asia 5
@@ -623,3 +639,8 @@ Log: Continent Northern-America added successfully!
 Log: Country Canada added successfully!
 Log: Country Alaska added successfully!
 Log: Neighbour Pair Canada Alaska added successfully!
+=======
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7

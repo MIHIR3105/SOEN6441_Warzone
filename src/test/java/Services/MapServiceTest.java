@@ -1,28 +1,19 @@
 package Services;
 
-import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
-import Models.Continent;
-import Models.Country;
-import Models.GameState;
-import Models.Map;
-import Utils.CommonUtil;
-import org.junit.Before;
-import org.junit.Test;
+import Controllers.GameEngine;
+import Models.*;
+import Utils.Command;
+import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This class is used to test functionality of MapService class functions.
+ * Test Class for MapService Class
  */
 public class MapServiceTest {
 
     /**
+<<<<<<< HEAD
      * MapService reference to store its object.
      */
     MapService d_mapservice;
@@ -55,12 +46,17 @@ public class MapServiceTest {
      *
      * @throws IOException throws IOException
      * @throws InvalidMap  Invalid map exception
+=======
+     * Test Method to test the editmap method
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
      */
     @Test
-    public void testEditMap() throws IOException, InvalidMap {
-        d_mapservice.editMap(d_state, "test.map");
-        File l_file = new File(CommonUtil.getMapFilePath("test.map"));
+    void editMapTest() {
+        GameState l_gameState = new GameState();
+        GameEngine l_gameEngine = new GameEngine();
+        Phase l_phase = new StartUpPhase(l_gameEngine,l_gameState);
 
+<<<<<<< HEAD
         assertTrue(l_file.exists());
     }
 
@@ -132,21 +128,33 @@ public class MapServiceTest {
         for (Continent l_continent : d_map.getD_continents()) {
             l_actualContinentIdList.add(l_continent.getD_continentID());
             l_actualContinentValueList.add(l_continent.getD_continentValue());
+=======
+        int l_initCount=0,l_finalCount=0;
+        boolean l_isExcep = false;
+        try {
+            l_phase.handleCommand("editmap canada.map");
+            Map l_map = l_phase.getD_gameState().getD_map();
+            l_initCount = l_map.getD_continents().size();
+            l_phase.handleCommand("editcontinent -add Asia 5");
+            l_finalCount = l_map.getD_continents().size();
+        } catch (Exception l_e){
+            l_isExcep=true;
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
         }
 
-        assertEquals(l_expectedContinentIdList, l_actualContinentIdList);
-        assertEquals(l_expectedContinentValueList, l_actualContinentValueList);
+        assertEquals(l_initCount+1,l_finalCount);
     }
 
     /**
-     * This test case is used to test functionality of Load map country Id and
-     * neighbors.
+     * Test Method to test the editcountry method
      */
     @Test
-    public void testCountryIdAndNeighbors() {
-        List<Integer> l_actualCountryIdList = new ArrayList<Integer>();
-        LinkedHashMap<Integer, List<Integer>> l_actualCountryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+    void removeCountryTest() {
+        GameState l_gameState = new GameState();
+        GameEngine l_gameEngine = new GameEngine();
+        Phase l_phase = new StartUpPhase(l_gameEngine,l_gameState);
 
+<<<<<<< HEAD
         List<Integer> l_expectedCountryIdList = new ArrayList<Integer>();
         l_expectedCountryIdList.addAll(Arrays.asList(1, 2, 3, 4, 5));
 
@@ -249,3 +257,20 @@ public class MapServiceTest {
         assertEquals("Log: No Such Neighbour Exists" + System.lineSeparator(), d_state.getRecentLog());
     }
 }
+=======
+        int l_initCount=0,l_finalCount=0;
+        boolean l_isExcep = false;
+        try {
+            l_phase.handleCommand("editmap canada.map");
+            Map l_map = l_phase.getD_gameState().getD_map();
+            l_initCount = l_map.getD_countries().size();
+            l_phase.handleCommand("editcountry -remove New_Brunswick");
+            l_finalCount = l_map.getD_countries().size();
+        } catch (Exception l_e){
+            l_isExcep=true;
+        }
+
+        assertEquals(l_initCount-1,l_finalCount);
+    }
+}
+>>>>>>> 632436d8b4a66a40ae3a7f0dcb51f98065caeab7
