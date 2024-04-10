@@ -111,3 +111,7 @@ Log: Negotiation with b approached by a successful !
  Command: editmap canada.map
 
  Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
