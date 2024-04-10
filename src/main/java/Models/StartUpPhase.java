@@ -44,7 +44,7 @@ public class StartUpPhase extends Phase {
             return;
         }
 
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -73,7 +73,7 @@ public class StartUpPhase extends Phase {
             return;
         }
 
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -100,7 +100,7 @@ public class StartUpPhase extends Phase {
             return;
         }
 
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -122,7 +122,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     public void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
         boolean l_flagValidate = false;
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
@@ -160,7 +160,7 @@ public class StartUpPhase extends Phase {
             return;
         }
 
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (l_operations_list == null || l_operations_list.isEmpty()) {
@@ -182,7 +182,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     public void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (l_operations_list == null || l_operations_list.isEmpty()) {
@@ -226,7 +226,7 @@ public class StartUpPhase extends Phase {
     @Override
     protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
         if (d_gameState.getD_players() != null && d_gameState.getD_players().size() > 1) {
-            List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+            List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
             boolean l_parsingSuccessful = false;
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
@@ -276,7 +276,7 @@ public class StartUpPhase extends Phase {
      */
     @Override
     protected void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
             throw new InvalidCommand(GameConstants.INVALIDCOMMANDERRORLOADGAME);
@@ -306,7 +306,7 @@ public class StartUpPhase extends Phase {
      */
     @Override
     protected void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
-        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
@@ -338,7 +338,7 @@ public class StartUpPhase extends Phase {
      */
     public void doAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws InvalidCommand {
         if (p_gameState.getD_loadCommand()) {
-            List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+            List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
             if ((l_operations_list == null || l_operations_list.isEmpty()) || p_isTournamentMode) {
                 d_gameEngine.setD_gameState(p_gameState);
@@ -384,7 +384,7 @@ public class StartUpPhase extends Phase {
      * {@inheritDoc}
      */
     public void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<java.util.Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
 
@@ -410,7 +410,7 @@ public class StartUpPhase extends Phase {
             return;
         }
 
-        List<Map<String, String>> l_operations_list = p_command.getTaskandArguments();
+        List<Map<String, String>> l_operations_list = p_command.getTaskAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(d_gameState));
         if (null == l_operations_list || l_operations_list.isEmpty()) {

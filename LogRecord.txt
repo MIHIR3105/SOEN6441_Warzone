@@ -1,3 +1,18 @@
+---------- Starting the game the Game ----------
+
+
+============---------- Starting the game the Game ----------============
+
+ Command: editmao canada.map
+Log: Invalid Command!!
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
 
  Command: editcontinent
 Log: Can not Edit Continent, please perform `editmap` first
@@ -16,10 +31,6 @@ Log: No map found to save, Please `editmap` first
  Command: editcontinent -add Europe 10 -add America 20
 
  Command: editcontinent -add Europe 10 -add America 20
-
- Command: editcontinent -remove Europe
-
- Command: editcontinent -remove Europe
 Log: 10 armies have been deployed successfully on country : India
 Log: 15 armies have been deployed successfully on country : Canada
 Log: Negotiation with b approached by a successful !
@@ -43,37 +54,6 @@ Log: No map found to save, Please `editmap` first
  Command: editcontinent -add Europe 10 -add America 20
 
  Command: editcontinent -add Europe 10 -add America 20
-
- Command: editcontinent -remove Europe
-
- Command: editcontinent -remove Europe
-Log: 10 armies have been deployed successfully on country : India
-Log: 15 armies have been deployed successfully on country : Canada
-Log: Negotiation with b approached by a successful !
-Log: Negotiation with b approached by a successful !
-Log: Negotiation with b approached by a successful !
-
- Command: editcontinent
-Log: Can not Edit Continent, please perform `editmap` first
-
- Command: savemap
-Log: No map found to save, Please `editmap` first
-
- Command: editmap
-
- Command: assigncountries -add india
-
- Command: assigncountries -add india
-
- Command: editcontinent -add Europe 10 -add America 20
-
- Command: editcontinent -add Europe 10 -add America 20
-
- Command: editcontinent -add Europe 10 -add America 20
-
- Command: editcontinent -remove Europe
-
- Command: editcontinent -remove Europe
 Log: 10 armies have been deployed successfully on country : India
 Log: 15 armies have been deployed successfully on country : Canada
 Log: Negotiation with b approached by a successful !

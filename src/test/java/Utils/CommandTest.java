@@ -64,7 +64,7 @@ public class CommandTest {
     @Test
     public void test_singleCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -remove continentID");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskandArguments();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
@@ -84,7 +84,7 @@ public class CommandTest {
     @Test
     public void test_singleCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent      -remove continentID");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskandArguments();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
@@ -104,7 +104,7 @@ public class CommandTest {
     @Test
     public void test_multiCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -add continentID continentValue  -remove continentID");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskandArguments();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
@@ -129,7 +129,7 @@ public class CommandTest {
     @Test
     public void test_noFlagCommand_getOperationsAndArguments(){
         Command l_command = new Command("loadmap abc.txt");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskandArguments();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
@@ -149,7 +149,7 @@ public class CommandTest {
     @Test
     public void test_noFlagCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("loadmap         abc.txt");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskandArguments();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getTaskAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();

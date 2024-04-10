@@ -33,7 +33,7 @@ public class Command {
      * Retrieves the Tasks to be performed under the Main Activity.
      * @return List of Map of Operations and Arguments for the command
      */
-    public List<Map<String , String>>  getTaskandArguments(){
+    public List<Map<String , String>> getTaskAndArguments(){
         String l_baseCommand = getMainCommand();
         String l_tasks = d_command.replace(l_baseCommand,"").trim();
         List<Map<String , String>> l_taskList  = new ArrayList<Map<String,String>>();
