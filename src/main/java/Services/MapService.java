@@ -118,7 +118,7 @@ public class MapService implements Serializable {
         if (!CommonUtil.isNull(l_mapToBeUpdated)) {
             switch (p_switchParameter) {
                 case 1:
-                    l_updatedMap = addOrRemoveContinents(p_gameState, l_mapToBeUpdated, p_argument, p_operation);
+                    l_updatedMap = addOrRemoveContinents(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
                     break;
                 case 2:
                     l_updatedMap = addOrRemoveCountry(p_gameState, l_mapToBeUpdated, p_argument, p_operation);
@@ -256,7 +256,7 @@ public class MapService implements Serializable {
                 }
             }
             return true;
-        } catch (IOException l_e) {
+        } catch (IOException | InvalidMap l_e) {
             this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
             p_gameState.updateLog("Couldn't save the changes in map file!", "effect");
             p_gameState.setError("Error in saving map file");

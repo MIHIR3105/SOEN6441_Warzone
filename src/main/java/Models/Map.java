@@ -175,19 +175,17 @@ public class Map implements Serializable {
      *
      * @return False if there is no null objects else true
      */
-    public Boolean checkNullObjects() {
+    public Boolean checkNullObjects() throws InvalidMap {
         if(d_continents==null || d_continents.isEmpty()){
-            System.out.println("Map must contain at least one continent!");
-            return false;
+            throw new InvalidMap("Map must possess atleast one continent!");
+
         }
         if(d_countries==null || d_countries.isEmpty()){
-            System.out.println("Map must contain at least one country!");
-            return false;
+            throw new InvalidMap("Map must possess atleast one continent!");
         }
         for(Country c: d_countries){
             if(c.getD_neighbourCountryId().isEmpty()){
-                System.out.println(c.getD_countryName()+" does not possess any neighbour, hence isn't reachable!");
-                return false;
+                throw new InvalidMap(c.getD_countryName()+" does not possess any neighbour, hence isn't reachable!");
             }
         }
         return true;
@@ -202,7 +200,7 @@ public class Map implements Serializable {
         boolean l_flagConnected = true;
         for (Continent continent : d_continents) {
             if (continent.getD_countries() == null || continent.getD_countries().isEmpty()) {
-                System.out.println("Continent " + continent.getD_continentName() + " has no countries");
+                throw new InvalidMap(continent.getD_continentName() + " has no countries, it must possess atleast 1 country");
             }
             if (!continentsGraphConnected(continent)) {
                 l_flagConnected = false;
@@ -292,7 +290,7 @@ public class Map implements Serializable {
      *
      * @return Return true if all the countries are connected else return false
      */
-    public boolean isCountriesConnected() {
+    public boolean isCountriesConnected() throws InvalidMap {
         for (Country country : d_countries) {
             d_countryConnectedStatus.put(country.getD_countryId(), false);
         }
@@ -300,8 +298,8 @@ public class Map implements Serializable {
 
         for (java.util.Map.Entry<Integer, Boolean> entry : d_countryConnectedStatus.entrySet()) {
             if (!entry.getValue()) {
-                System.out.println(retrieveCountry(entry.getKey()).getD_countryName() + " country is not accessible");
-                return !d_countryConnectedStatus.containsValue(true);
+                String l_exceptionMessage = retrieveCountry(entry.getKey()).getD_countryName() + " country is not reachable";
+                throw new InvalidMap(l_exceptionMessage);
             }
         }
         return !d_countryConnectedStatus.containsValue(false);
@@ -379,7 +377,7 @@ public class Map implements Serializable {
      *
      * @param p_countryName Name of country to be removed
      */
-    public void removeCountry(String p_countryName) {
+    public void removeCountry(String p_countryName) throws InvalidMap {
         if(d_countries!=null && getCountryByName(p_countryName)!=null) {
             for(Continent continent: d_continents){
                 if(continent.getD_continentID().equals(getCountryByName(p_countryName).getD_continentId())){
@@ -391,7 +389,7 @@ public class Map implements Serializable {
             d_countries.remove(getCountryByName(p_countryName));
 
         }else{
-            System.out.println(p_countryName+" Country"+" does not exist!");
+            throw new InvalidMap("Country: "+ p_countryName+" does not exist!");
         }
     }
     /**
@@ -461,7 +459,7 @@ public class Map implements Serializable {
      *
      * @param p_continentName Continent to remove
      */
-    public void removeContinent(String p_continentName) {
+    public void removeContinent(String p_continentName) throws InvalidMap {
         if (d_continents != null) {
             if (retrieveContinent(p_continentName) != null) {
                 if (retrieveContinent(p_continentName).getD_countries() != null) {
@@ -485,7 +483,7 @@ public class Map implements Serializable {
      *
      * @param p_countryID Country to remove
      */
-    private void removeNeighboursFromContinents(int p_countryID) {
+    private void removeNeighboursFromContinents(int p_countryID) throws InvalidMap {
         for (Continent l_continent : d_continents) {
             l_continent.removeCountryForAllNeighbours(p_countryID);
         }
@@ -496,7 +494,7 @@ public class Map implements Serializable {
      *
      * @param p_countryID Country to remove
      */
-    private void removeAllNeighbours(int p_countryID) {
+    private void removeAllNeighbours(int p_countryID) throws InvalidMap {
         for (Country l_country : d_countries) {
             if (l_country.getD_neighbourCountryId() != null) {
                 if (l_country.getD_neighbourCountryId().contains(p_countryID)) {
@@ -528,7 +526,7 @@ public class Map implements Serializable {
      * @param p_countryName update neighbour of the country
      * @param p_neighbourName neighbour country to be removed
      */
-    public void removeCountryNeighbour(String p_countryName, String p_neighbourName) {
+    public void removeCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap {
         if(d_countries!=null){
             if(getCountryByName(p_countryName)!=null && getCountryByName(p_neighbourName)!=null) {
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbourFromCountry(getCountryByName(p_neighbourName).getD_countryId());

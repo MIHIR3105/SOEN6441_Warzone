@@ -1,19 +1,25 @@
 package Controllers;
 
-import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
-import Models.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+import Models.Continent;
+import Models.GameState;
+import Models.Map;
+import Models.Phase;
+import Models.StartUpPhase;
 
 /**
- * Test class for GameEngine.java
+ * This class is used to test functionality of GameEngineController class
+ * functions.
  *
  * @author Prachi Patel
  */
@@ -49,6 +55,7 @@ public class GameEngineTest {
      *
      * @throws IOException    Exception
      * @throws InvalidCommand Exception
+     * @throws InvalidMap Exception
      */
     @Test(expected = InvalidCommand.class)
     public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
@@ -63,7 +70,7 @@ public class GameEngineTest {
      * @throws InvalidMap     Exception
      */
     @Test
-    public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+    public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
         d_currentPhase.handleCommand("editcontinent");
         GameState l_state = d_currentPhase.getD_gameState();
 
@@ -109,9 +116,10 @@ public class GameEngineTest {
      *
      * @throws InvalidCommand Exception
      * @throws InvalidMap     Exception
+     * @throws IOException Exception
      */
     @Test
-    public void testPerformSaveMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+    public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap, IOException {
         d_currentPhase.handleCommand("savemap");
         GameState l_state = d_currentPhase.getD_gameState();
 
@@ -121,13 +129,32 @@ public class GameEngineTest {
     }
 
     /**
+     * Tests savegame command.
+     *
+     * @throws InvalidCommand Exception
+     * @throws InvalidMap     Exception
+     * @throws IOException Exception
+     */
+    @Test
+    public void testPerformSaveGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
+        d_currentPhase.handleCommand("savegame hello.txt");
+        GameState l_state = d_currentPhase.getD_gameState();
+
+        assertEquals("Log: Game Saved Successfully to hello.txt" + System.lineSeparator(),
+                l_state.getRecentLog());
+
+    }
+
+    /**
      * Tests if the assigned country is valid of not.
      *
      * @throws InvalidCommand Exception
      * @throws IOException    Exception
+     * @throws InvalidMap Exception
      */
     @Test(expected = InvalidCommand.class)
-    public void testAssignCountriesInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+    public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
+        d_currentPhase.getD_gameState().setD_loadCommand();
         d_currentPhase.handleCommand("assigncountries -add india");
         ;
     }
@@ -139,5 +166,4 @@ public class GameEngineTest {
     public void testCorrectStartupPhase() {
         assertTrue(d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase);
     }
-
 }

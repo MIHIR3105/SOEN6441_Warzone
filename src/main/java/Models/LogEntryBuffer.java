@@ -53,7 +53,7 @@ public class LogEntryBuffer extends Observable implements Serializable {
                 d_logInput = GameConstants.LOG + p_log + System.lineSeparator();
                 break;
             case GameConstants.ERROR:
-                d_logInput = GameConstants.ERRORLOG + p_log + System.lineSeparator();
+                d_logInput = GameConstants.LOG + p_log + System.lineSeparator();
                 break;
             case GameConstants.STARTLOG:
             case GameConstants.ENDLOG:

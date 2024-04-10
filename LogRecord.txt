@@ -59,3 +59,567 @@ Log: 15 armies have been deployed successfully on country : Canada
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
 Log: Negotiation with b approached by a successful !
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: loadmap canada.map
+Log: canada.map has been loaded to start the game
+
+ Command: gameplayer -add A -add B
+Log: Player with name : A and strategy: Human has been added successfully.
+Log: Player with name : B and strategy: Random has been added successfully.
+
+ Command: validatemap
+Log: The loaded map is valid!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+
+ Command: assigncountries -add india
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+
+ Command: assigncountries -add india
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -remove Europe
+
+ Command: editcontinent -remove Europe
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcontinent -add Asia 5
+
+ Command: editcontinent -add Asia 5
+
+ Command: editmap canada.map
+
+ Command: editmap canada.map
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcountry -remove New_Brunswick
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+
+ Command: assigncountries -add india
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -add Europe 10 -add America 20
+
+ Command: editcontinent -remove Europe
+
+ Command: editcontinent -remove Europe
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Error: Country China added successfully!
+Error: Validating Map......
+Error: East_Europe has no countries, it must possess atleast 1 country
+Error: Couldn't save the changes in map file!
+Error: Continent Asia removed successfully!
+Error: testedit.map already exists and is loaded for editing
+Error: Continent Asia added successfully!
+Error: Country Maldives added successfully!
+Error: Country Singapore added successfully!
+Error: Neighbour Pair Singapore Maldives added successfully!
+Error: Neighbour Pair Maldives Singapore removed successfully!
+Error: Continent Asia added successfully!
+Error: Country Ukraine removed successfully!
+Error: test.map already exists and is loaded for editing
+Error: Continent add couldn't be added/removed. Changes are not made due to Invalid Command Passed.
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: Neighbour Pair Maldives Singapore removed successfully!
+Log: Continent Asia added successfully!
+Log: Country Ukraine removed successfully!
+Log: test.map already exists and is loaded for editing
+Log: Continent add couldn't be added/removed. Changes are not made due to Invalid Command Passed.
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: Neighbour Pair Maldives Singapore removed successfully!
+Log: Continent Asia added successfully!
+Log: Country Ukraine removed successfully!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country Ukraine removed successfully!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+Log: Country Ukraine removed successfully!
+Log: Country: Ukraine does not exist!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+Log: Please load a valid map first via loadmap command!
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Advance Order : advance India France 15 is not executed as armies given in advance order exceeds armies of source country : India
+Log: Advance Order : advance Canada France 10 is not executed as source country : Canada has 10 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
+Log: Advance Order : advance Italy France 10 is not executed since Source country : Italy given in advance command does not belongs to the player : Prachi
+Log: Airlift Operation from France to Spain successful!
+Log: Invalid Target Country! Doesn't exist on the map!
+Log: 
+Player : Prachi is executing defensive blockade on Country :  India with armies :  15
+Log: Blockade card order : blockade USA is not executed since Target country : USA given in blockade command does not owned to the player : Prachi The card will have no affect and you don't get the card back.
+Log: 
+Player : Prime is executing Bomb card on country :  Japan with armies :  4. New armies: 2
+Log: 
+Player : Prime is executing Bomb card on country :  India with armies :  15. New armies: 7
+Log: 
+Player : Prime is executing Bomb card on country :  Canada with armies :  1. New armies: 0
+Log: Bomb card order : bomb Norway is not executed since Target country : Norway given in bomb command is owned by the player : Prime VALIDATES:- You cannot bomb your own territory!
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+Log: Please load a valid map first via loadmap command!
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Advance Order : advance India France 15 is not executed as armies given in advance order exceeds armies of source country : India
+Log: Advance Order : advance Canada France 10 is not executed as source country : Canada has 10 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
+Log: Advance Order : advance Italy France 10 is not executed since Source country : Italy given in advance command does not belongs to the player : Prachi
+Log: Airlift Operation from France to Spain successful!
+Log: Invalid Target Country! Doesn't exist on the map!
+Log: 
+Player : Prachi is executing defensive blockade on Country :  India with armies :  15
+Log: Blockade card order : blockade USA is not executed since Target country : USA given in blockade command does not owned to the player : Prachi The card will have no affect and you don't get the card back.
+Log: 
+Player : Prime is executing Bomb card on country :  Japan with armies :  4. New armies: 2
+Log: 
+Player : Prime is executing Bomb card on country :  India with armies :  15. New armies: 7
+Log: 
+Player : Prime is executing Bomb card on country :  Canada with armies :  1. New armies: 0
+Log: Bomb card order : bomb Norway is not executed since Target country : Norway given in bomb command is owned by the player : Prime VALIDATES:- You cannot bomb your own territory!
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+Log: Please load a valid map first via loadmap command!
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Advance Order : advance India France 15 is not executed as armies given in advance order exceeds armies of source country : India
+Log: Advance Order : advance Canada France 10 is not executed as source country : Canada has 10 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
+Log: Advance Order : advance Italy France 10 is not executed since Source country : Italy given in advance command does not belongs to the player : Prachi
+Log: Airlift Operation from France to Spain successful!
+Log: Invalid Target Country! Doesn't exist on the map!
+Log: 
+Player : Prachi is executing defensive blockade on Country :  India with armies :  15
+Log: Blockade card order : blockade USA is not executed since Target country : USA given in blockade command does not owned to the player : Prachi The card will have no affect and you don't get the card back.
+Log: 
+Player : Prime is executing Bomb card on country :  Japan with armies :  4. New armies: 2
+Log: 
+Player : Prime is executing Bomb card on country :  India with armies :  15. New armies: 7
+Log: 
+Player : Prime is executing Bomb card on country :  Canada with armies :  1. New armies: 0
+Log: Bomb card order : bomb Norway is not executed since Target country : Norway given in bomb command is owned by the player : Prime VALIDATES:- You cannot bomb your own territory!
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+Player : a has won the Game by conquering maximum countries. Exiting the Game .....
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: editmap
+
+ Command: assigncountries -add india
+Log: Please load a valid map first via loadmap command!
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+Player : a has won the Game by conquering maximum countries. Exiting the Game .....
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Advance Order : advance India France 15 is not executed as armies given in advance order exceeds armies of source country : India
+Log: Advance Order : advance Canada France 10 is not executed as source country : Canada has 10 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
+Log: Advance Order : advance Italy France 10 is not executed since Source country : Italy given in advance command does not belongs to the player : Prachi
+Log: Airlift Operation from France to Spain successful!
+Log: Invalid Target Country! Doesn't exist on the map!
+Log: 
+Player : Prachi is executing defensive blockade on Country :  India with armies :  15
+Log: Blockade card order : blockade USA is not executed since Target country : USA given in blockade command does not owned to the player : Prachi The card will have no affect and you don't get the card back.
+Log: 
+Player : Prime is executing Bomb card on country :  Japan with armies :  4. New armies: 2
+Log: 
+Player : Prime is executing Bomb card on country :  India with armies :  15. New armies: 7
+Log: 
+Player : Prime is executing Bomb card on country :  Canada with armies :  1. New armies: 0
+Log: Bomb card order : bomb Norway is not executed since Target country : Norway given in bomb command is owned by the player : Prime VALIDATES:- You cannot bomb your own territory!
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: savegame hello.txt
+Log: Game Saved Successfully to hello.txt
+
+ Command: editmap
+
+ Command: assigncountries -add india
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+
+ Command: editcontinent
+Log: Can not Edit Continent, please perform `editmap` first
+
+ Command: savemap
+Log: No map found to save, Please `editmap` first
+
+ Command: savegame hello.txt
+Log: Game Saved Successfully to hello.txt
+
+ Command: editmap
+
+ Command: assigncountries -add india
+
+ Command: editcontinent -add Europe 10 -add America 20
+Log: Continent Europe added successfully!
+Log: Continent America added successfully!
+
+ Command: editcontinent -remove Europe
+Log: Continent Europe removed successfully!
+Player : a has won the Game by conquering maximum countries. Exiting the Game .....
+Log: 10 armies have been deployed successfully on country : India
+Log: 15 armies have been deployed successfully on country : Canada
+Log: Advance Order : advance India France 15 is not executed as armies given in advance order exceeds armies of source country : India
+Log: Advance Order : advance Canada France 10 is not executed as source country : Canada has 10 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
+Log: Advance Order : advance Italy France 10 is not executed since Source country : Italy given in advance command does not belongs to the player : Prachi
+Log: Airlift Operation from France to Spain successful!
+Log: Invalid Target Country! Doesn't exist on the map!
+Log: 
+Player : Prachi is executing defensive blockade on Country :  India with armies :  15
+Log: Blockade card order : blockade USA is not executed since Target country : USA given in blockade command does not owned to the player : Prachi The card will have no affect and you don't get the card back.
+Log: 
+Player : Prime is executing Bomb card on country :  Japan with armies :  4. New armies: 2
+Log: 
+Player : Prime is executing Bomb card on country :  India with armies :  15. New armies: 7
+Log: 
+Player : Prime is executing Bomb card on country :  Canada with armies :  1. New armies: 0
+Log: Bomb card order : bomb Norway is not executed since Target country : Norway given in bomb command is owned by the player : Prime VALIDATES:- You cannot bomb your own territory!
+Log: Negotiation with b approached by a successful !
+Log: Negotiation with b approached by a successful !
+Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!
+Log: Country China added successfully!
+Log: Validating Map......
+Log: East_Europe has no countries, it must possess atleast 1 country
+Log: Couldn't save the changes in map file!
+Log: Continent Asia removed successfully!
+Log: testedit.map already exists and is loaded for editing
+Log: Continent Asia added successfully!
+Log: Country Maldives added successfully!
+Log: Country Singapore added successfully!
+Log: Neighbour Pair Singapore Maldives added successfully!
+Log: No Such Neighbour Exists
+Log: Continent Asia added successfully!
+Log: Country: Ukraine does not exist!
+Log: test.map already exists and is loaded for editing
+Log: Continent Northern-America added successfully!
+Log: Country Canada added successfully!
+Log: Country Alaska added successfully!
+Log: Neighbour Pair Canada Alaska added successfully!

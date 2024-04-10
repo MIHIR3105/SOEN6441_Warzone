@@ -1,5 +1,7 @@
 package Models;
 
+import Exceptions.InvalidMap;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
@@ -163,7 +165,7 @@ public class Continent implements Serializable {
      *
      * @param p_countryID ID of the country to remove
      */
-    public void removeCountryForAllNeighbours(Integer p_countryID) {
+    public void removeCountryForAllNeighbours(Integer p_countryID) throws InvalidMap {
         if (d_countries != null && !d_countries.isEmpty()) {
             for (Country country : d_countries) {
                 if (country.d_neighbourCountryId != null) {

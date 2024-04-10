@@ -1,4 +1,6 @@
 package Models;
+import Exceptions.InvalidMap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +104,7 @@ public class Country implements Serializable {
      * getter method to get country ID
      * @return country ID
      */
-    public int getD_countryId() {
+    public Integer getD_countryId() {
         return d_countryId;
     }
     /**
@@ -162,12 +164,12 @@ public class Country implements Serializable {
      *
      * @param p_countryId country Id which is to be removed
      */
-    public void removeNeighbourFromCountry(Integer p_countryId){
-        if(!d_neighbourCountryId.contains(p_countryId)){
-            System.out.println("Neighbour does not Exists");
+    public void removeNeighbourFromCountry(Integer p_countryId) throws InvalidMap {
+        if(d_neighbourCountryId.contains(p_countryId)){
+            d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
 
         }else{
-            d_neighbourCountryId.remove(d_neighbourCountryId.indexOf(p_countryId));
+            throw new InvalidMap("No Such Neighbour Exists");
         }
     }
     /**

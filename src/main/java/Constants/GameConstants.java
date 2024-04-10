@@ -23,7 +23,7 @@ public final class GameConstants {
     public static final String ORDER = "order";
     public static final String PHASE = "phase";
     public static final String OUTCOME = "outcome";
-    public static final String ERROR = "error";
+    public static final String ERROR = "effect";
     public static final String STARTLOG = "start";
     public static final String ENDLOG = "end";
     public static final String COMMANDLOG = " Command: ";

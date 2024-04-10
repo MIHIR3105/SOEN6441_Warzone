@@ -54,7 +54,7 @@ public class MapServiceTest {
      * This test case is used to test the functionality of EditMap function.
      *
      * @throws IOException throws IOException
-     * @throws InvalidMap Invalid map exception
+     * @throws InvalidMap  Invalid map exception
      */
     @Test
     public void testEditMap() throws IOException, InvalidMap {
@@ -66,8 +66,9 @@ public class MapServiceTest {
 
     /**
      * tests addition of continent via editcontinent operation
-     * @throws IOException Exceptions
-     * @throws InvalidMap Exception
+     *
+     * @throws IOException    Exceptions
+     * @throws InvalidMap     Exception
      * @throws InvalidCommand Exception
      */
     @Test
@@ -83,8 +84,8 @@ public class MapServiceTest {
     /**
      * tests removal of continent via editcontinent operation
      *
-     * @throws IOException Exceptions
-     * @throws InvalidMap Exception
+     * @throws IOException    Exceptions
+     * @throws InvalidMap     Exception
      * @throws InvalidCommand Exception
      */
     @Test
@@ -164,11 +165,8 @@ public class MapServiceTest {
             l_actualCountryIdList.add(l_country.getD_countryId());
             l_neighbours.addAll(l_country.getD_neighbourCountryId());
             l_actualCountryNeighbors.put(l_country.getD_countryId(), l_neighbours);
-            System.out.println(l_actualCountryIdList);
         }
-        System.out.println(l_actualCountryIdList+" "+l_expectedCountryIdList);
-
-
+        System.out.println(l_actualCountryIdList + " " + l_expectedCountryIdList);
         assertEquals(l_expectedCountryIdList, l_actualCountryIdList);
         assertEquals(l_expectedCountryNeighbors, l_actualCountryNeighbors);
     }
@@ -176,74 +174,78 @@ public class MapServiceTest {
     /**
      * Tests the savemap operation on an Invalid Map
      *
-     *  @throws InvalidMap Exception
+     * @throws InvalidMap Exception
      */
     @Test
     public void testSaveInvalidMap() throws InvalidMap {
         d_map.setD_mapFile("europe.map");
         d_state.setD_map(d_map);
         d_mapservice.saveMap(d_state, "europe.map");
-        assertEquals("Log: Couldn't save the changes in map file!"+System.lineSeparator(), d_state.getRecentLog());
+        assertEquals("Log: Couldn't save the changes in map file!" + System.lineSeparator(), d_state.getRecentLog());
     }
 
     /**
      * Tests the add country operation via editCountry
-     * @throws IOException Exception
-     * @throws InvalidMap Exception
+     *
+     * @throws IOException    Exception
+     * @throws InvalidMap     Exception
      * @throws InvalidCommand Exception
      */
     @Test
     public void testEditCountryAdd() throws IOException, InvalidMap, InvalidCommand {
         d_mapservice.loadMap(d_state, "test.map");
-        d_mapservice.editFunctions(d_state, "add", "China Asia", 2);
+        d_mapservice.editFunctions(d_state, "China Asia", "add", 2);
 
         assertEquals(d_state.getD_map().getCountryByName("China").getD_countryName(), "China");
     }
 
     /**
      * Tests the Remove Country Operation via editcountry
-     * @throws InvalidMap Exception
+     *
+     * @throws InvalidMap     Exception
      * @throws InvalidCommand Exception
-     * @throws IOException handles input output exception
+     * @throws IOException    handles input output exception
      */
     @Test
     public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
         d_mapservice.loadMap(d_state, "test.map");
-        d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
-        assertEquals("Log: Country: Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
+        d_mapservice.editFunctions(d_state, "Ukraine", "remove", 2);
+        assertEquals("Log: Country: Ukraine does not exist!" + System.lineSeparator(), d_state.getRecentLog());
     }
 
     /**
      * Tests the add neighbor operation via editneighbor
-     * @throws InvalidMap Exception
-     * @throws IOException Exception
+     *
+     * @throws InvalidMap     Exception
+     * @throws IOException    Exception
      * @throws InvalidCommand Exception
      */
     @Test
     public void testEditNeighborAdd() throws InvalidMap, IOException, InvalidCommand {
         d_mapservice.loadMap(d_state, "test.map");
-        d_mapservice.editFunctions(d_state, "Northern-America 10", "add", 1 );
-        d_mapservice.editFunctions(d_state, "add", "Canada Northern-America",  2);
-        d_mapservice.editFunctions(d_state, "add","Alaska Northern-America", 2);
-        d_mapservice.editFunctions(d_state, "add", "Canada Alaska", 3);
+        d_mapservice.editFunctions(d_state, "Northern-America 10","add",  1);
+        d_mapservice.editFunctions(d_state, "Canada Northern-America", "add", 2);
+        d_mapservice.editFunctions(d_state, "Alaska Northern-America", "add", 2);
+        d_mapservice.editFunctions(d_state, "Canada Alaska", "add", 3);
 
-        assertEquals(Optional.ofNullable(d_state.getD_map().getCountryByName("Canada").getD_neighbourCountryId().get(0)), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
+        assertEquals(d_state.getD_map().getCountryByName("Canada").getD_neighbourCountryId().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
     }
 
     /**
      * Tests the remove neighbor operation via editneighbor
-     * @throws InvalidMap Exception
-     * @throws IOException Exception
+     *
+     * @throws InvalidMap     Exception
+     * @throws IOException    Exception
      * @throws InvalidCommand Exception
      */
     @Test
-    public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand{
+    public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand {
         d_mapservice.editMap(d_state, "testedit.map");
-        d_mapservice.editFunctions(d_state, "Asia 9", "add",   1);
-        d_mapservice.editFunctions(d_state, "add", "Maldives Asia", 2);
-        d_mapservice.editFunctions(d_state, "add", "Singapore Asia", 2);
-        d_mapservice.editFunctions(d_state, "add", "Singapore Maldives", 3);
-        d_mapservice.editFunctions(d_state, "remove", "Maldives Singapore", 3);
-        assertEquals("Log: No Such Neighbour Exists"+System.lineSeparator(), d_state.getRecentLog());
+        d_mapservice.editFunctions(d_state, "Asia 9", "add", 1);
+        d_mapservice.editFunctions(d_state, "Maldives Asia","add",  2);
+        d_mapservice.editFunctions(d_state, "Singapore Asia","add",  2);
+        d_mapservice.editFunctions(d_state, "Singapore Maldives","add",  3);
+        d_mapservice.editFunctions(d_state, "Maldives Singapore","remove",  3);
+        assertEquals("Log: No Such Neighbour Exists" + System.lineSeparator(), d_state.getRecentLog());
     }
 }
