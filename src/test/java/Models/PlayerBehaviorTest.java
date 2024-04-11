@@ -8,7 +8,11 @@ import Controllers.GameEngine;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class is used to test functionality of PlayerBehavior class functions.
+ *
+ * @author Mihir Panchal
+ */
 class PlayerBehaviorTest {
 
     @Test
