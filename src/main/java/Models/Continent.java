@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 /**
  * This class contains the functions for managing continents
+ *
+ * @author Aashvi Zala
  */
 public class Continent implements Serializable {
 

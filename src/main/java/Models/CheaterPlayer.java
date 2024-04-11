@@ -10,6 +10,8 @@ import Services.PlayerService;
  * The CheaterPlayer class represents a player in a game who employs a cheating strategy during the issue order phase.
  * This strategy involves directly attacking neighboring enemy countries and doubling the number of armies on the player's
  * own countries that have enemy neighbors.
+ *
+ * @author Aashvi Zala
  */
 public class CheaterPlayer extends PlayerBehavior {
 
