@@ -13,6 +13,8 @@ import Utils.Command;
 
 /**
  * Implements the tournament mode in the gameplay
+ *
+ * @author Aashvi Zala
  */
 public class Tournament implements Serializable {
     /**
