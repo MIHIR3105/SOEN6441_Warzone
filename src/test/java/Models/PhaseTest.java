@@ -8,7 +8,11 @@ import Controllers.GameEngine;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class is used to test functionality of Phase class functions.
+ *
+ * @author Mihir Panchal
+ */
 class PhaseTest {
 
     @Test
