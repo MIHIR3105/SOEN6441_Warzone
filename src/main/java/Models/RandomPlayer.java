@@ -50,7 +50,7 @@ public class RandomPlayer extends PlayerBehavior{
      * @param p_gameState Object of GameState class
      *
      * @return Order object of Order class
-     * @throws IOException
+     * @throws IOException IOException is thrown
      */
     @Override
     public String createOrder(Player p_player, GameState p_gameState) throws IOException {

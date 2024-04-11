@@ -296,9 +296,6 @@ public abstract class Phase implements Serializable {
      * @param p_command Command entered by the user
      * @param p_player  Instance of the player object
      * @throws IOException Indicates a failure
-     * @param p_command command parameter
-     * @param p_player player parameter
-
      */
     protected abstract void doCreateDeploy(String p_command, Player p_player) throws IOException;
 
@@ -344,6 +341,7 @@ public abstract class Phase implements Serializable {
      * Handles the card commands.
      * @throws IOException Indicates a failure
      * @param p_player player parameter
+     * @param p_enteredCommand param for enteredcommand
      */
     protected abstract void doCardHandle(String p_enteredCommand, Player p_player) throws IOException;
 
@@ -377,6 +375,7 @@ public abstract class Phase implements Serializable {
 
     /**
      * This method signifies the main functionality executed on phase change.
+     * @param p_isTournamentMode param for tournament mode
      */
     public abstract void initPhase(boolean p_isTournamentMode);
 

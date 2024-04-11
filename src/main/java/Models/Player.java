@@ -473,6 +473,7 @@ public class Player implements Serializable {
      * orders pool.
      *
      * @throws IOException exception in reading inputs from user
+     * @param p_issueOrderPhase param for issueorderphase
      */
     public void issue_order(IssueOrderPhase p_issueOrderPhase) throws Exception {
         p_issueOrderPhase.askForOrder(this);

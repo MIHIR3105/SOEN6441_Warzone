@@ -165,6 +165,7 @@ public class Map implements Serializable {
      * Validate if map is correct
      *
      * @return true if map is successfully validated else false
+     * @throws InvalidMap throws invalid map exception
      */
     public Boolean Validate() throws InvalidMap {
         return (checkNullObjects() && isContinentsConnected() && isCountriesConnected());
@@ -174,6 +175,7 @@ public class Map implements Serializable {
      * Checks if objects in map are null
      *
      * @return False if there is no null objects else true
+     * @throws InvalidMap throws invalid map exception
      */
     public Boolean checkNullObjects() throws InvalidMap {
         if(d_continents==null || d_continents.isEmpty()){
@@ -195,6 +197,7 @@ public class Map implements Serializable {
      * Check if all continents are connected
      *
      * @return True if all continents are connected else false
+     * @throws InvalidMap throws invalid map exception
      */
     public boolean isContinentsConnected() throws InvalidMap {
         boolean l_flagConnected = true;
@@ -289,6 +292,7 @@ public class Map implements Serializable {
      * connectivity of country is checked.
      *
      * @return Return true if all the countries are connected else return false
+     * @throws InvalidMap throws invalid map exception
      */
     public boolean isCountriesConnected() throws InvalidMap {
         for (Country country : d_countries) {
@@ -376,6 +380,7 @@ public class Map implements Serializable {
      * Remove country function which removes countries from the map.
      *
      * @param p_countryName Name of country to be removed
+     * @throws InvalidMap throws invalid map exception
      */
     public void removeCountry(String p_countryName) throws InvalidMap {
         if(d_countries!=null && getCountryByName(p_countryName)!=null) {
@@ -525,6 +530,7 @@ public class Map implements Serializable {
      *
      * @param p_countryName update neighbour of the country
      * @param p_neighbourName neighbour country to be removed
+     * @throws InvalidMap throws invalid map exception
      */
     public void removeCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap {
         if(d_countries!=null){
