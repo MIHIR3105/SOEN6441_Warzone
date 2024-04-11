@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class is used to test functionality of HumanPlayer class functions.
+ *
+ * @author Mihir Panchal
+ */
 class HumanPlayerTest {
 
     @Test
