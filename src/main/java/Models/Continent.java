@@ -164,6 +164,7 @@ public class Continent implements Serializable {
      * Removes the country ID from the list of neighbours for all the countries in the continent
      *
      * @param p_countryID ID of the country to remove
+     * @throws InvalidMap Throws invalidmap exception
      */
     public void removeCountryForAllNeighbours(Integer p_countryID) throws InvalidMap {
         if (d_countries != null && !d_countries.isEmpty()) {
