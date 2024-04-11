@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * This is the class of Random Player, that deploys armies randomly,
  * attacks random neighboring countries and moves armies on their own territories randomly.
+ *
+ * @author Aashvi Zala
  */
 public class RandomPlayer extends PlayerBehavior{
 
