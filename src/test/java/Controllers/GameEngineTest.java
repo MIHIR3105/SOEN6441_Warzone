@@ -55,7 +55,7 @@ public class GameEngineTest {
      *
      * @throws IOException    Exception
      * @throws InvalidCommand Exception
-     * @throws InvalidMap Exception
+     * @throws InvalidMap     Exception
      */
     @Test(expected = InvalidCommand.class)
     public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
@@ -116,7 +116,7 @@ public class GameEngineTest {
      *
      * @throws InvalidCommand Exception
      * @throws InvalidMap     Exception
-     * @throws IOException Exception
+     * @throws IOException    Exception
      */
     @Test
     public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap, IOException {
@@ -133,7 +133,7 @@ public class GameEngineTest {
      *
      * @throws InvalidCommand Exception
      * @throws InvalidMap     Exception
-     * @throws IOException Exception
+     * @throws IOException    Exception
      */
     @Test
     public void testPerformSaveGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
@@ -150,7 +150,7 @@ public class GameEngineTest {
      *
      * @throws InvalidCommand Exception
      * @throws IOException    Exception
-     * @throws InvalidMap Exception
+     * @throws InvalidMap     Exception
      */
     @Test(expected = InvalidCommand.class)
     public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
