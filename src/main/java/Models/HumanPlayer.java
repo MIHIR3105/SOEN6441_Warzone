@@ -8,11 +8,11 @@ import java.io.InputStreamReader;
  * Class for human player who will be played by the user
  *
  * @author Aashvi Zala
- *
  */
 public class HumanPlayer extends PlayerBehavior {
     /**
      * Method to get player behaviour
+     *
      * @return String
      */
     @Override
@@ -22,7 +22,8 @@ public class HumanPlayer extends PlayerBehavior {
 
     /**
      * Method to create order
-     * @param p_Player Object of Player class
+     *
+     * @param p_Player    Object of Player class
      * @param p_gameState Object of GameState class
      * @return String
      * @throws IOException It throws IO Exception
@@ -38,7 +39,8 @@ public class HumanPlayer extends PlayerBehavior {
 
     /**
      * Method to create deploy order
-     * @param p_Player Object of Player class
+     *
+     * @param p_Player    Object of Player class
      * @param p_gameState Object of GameState class
      * @return String
      */
@@ -49,7 +51,8 @@ public class HumanPlayer extends PlayerBehavior {
 
     /**
      * Method to create advance order
-     * @param p_Player Object of Player class
+     *
+     * @param p_Player    Object of Player class
      * @param p_gameState Object of GameState class
      * @return String
      */
@@ -60,9 +63,10 @@ public class HumanPlayer extends PlayerBehavior {
 
     /**
      * Method to create card order
-     * @param p_Player Object of Player class
+     *
+     * @param p_Player    Object of Player class
      * @param p_gameState Object of GameState class
-     * @param p_cardName Card name for created Order
+     * @param p_cardName  Card name for created Order
      * @return String
      */
     @Override

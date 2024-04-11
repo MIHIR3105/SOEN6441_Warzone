@@ -49,7 +49,7 @@ public class ConquestMapFileWriter implements Serializable {
         p_writer.write(System.lineSeparator() + GameConstants.CONQUEST_TERRITORIES + System.lineSeparator());
         for (Country l_country : p_gameState.getD_map().getD_countries()) {
             l_countryMetaData = new String();
-            l_countryMetaData = l_country.getD_countryName().concat(",dummy1,dummy2,")
+            l_countryMetaData = l_country.getD_countryName().concat(",t1,t2,")
                     .concat(p_gameState.getD_map().retrieveContinentById(l_country.getD_continentId()).getD_continentName());
 
             if (null != l_country.getD_neighbourCountryId() && !l_country.getD_neighbourCountryId().isEmpty()) {

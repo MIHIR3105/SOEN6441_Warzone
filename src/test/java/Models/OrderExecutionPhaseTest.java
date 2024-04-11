@@ -50,7 +50,7 @@ public class OrderExecutionPhaseTest {
         l_country.setD_armies(9);
         l_countryList.add(l_country);
 
-        Country l_countryNeighbour = new Country(1, "Belgium", 1);
+        Country l_countryNeighbour = new Country(1, "Ukraine", 1);
         l_countryNeighbour.addNeighbourToCountry(0);
         l_country.addNeighbourToCountry(1);
         l_countryNeighbour.setD_armies(10);

@@ -83,9 +83,9 @@ public abstract class Phase implements Serializable {
      * Handles the commands specific to the state entered by the user.
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
-     * @throws IOException Indicates a failure
+     * @throws IOException    Indicates a failure
      * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     public void handleCommand(String p_enteredCommand) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, null);
@@ -96,9 +96,9 @@ public abstract class Phase implements Serializable {
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
      * @param p_player         Player instance
-     * @throws IOException Indicates a failure
+     * @throws IOException    Indicates a failure
      * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     public void handleCommand(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, p_player);
@@ -109,9 +109,9 @@ public abstract class Phase implements Serializable {
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
      * @param p_player         Player instance
-     * @throws IOException Indicates a failure
+     * @throws IOException    Indicates a failure
      * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     private void commandHandler(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         Command l_command = new Command(p_enteredCommand);
@@ -206,54 +206,59 @@ public abstract class Phase implements Serializable {
     /**
      * Conducting essential validation of the 'validatemap' command to ensure necessary arguments are provided,
      * and then transferring control to the model for actual processing.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Method to validate map.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doEditNeighbour(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Performing initial validation of the 'editcountry' command to confirm the presence of mandatory arguments,
      * followed by transferring control to the model for execution.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a
      */
     protected abstract void doEditCountry(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Conducting primary validation on the 'loadmap' command to ensure necessary arguments are present,
      * and then transferring control to the model for processing.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Performing fundamental validation on the 'savemap' command to verify essential arguments
      * and then directing control to the model for processing.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doSaveMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
@@ -261,32 +266,35 @@ public abstract class Phase implements Serializable {
     /**
      * Preliminary validation of the 'editmap' command to ensure necessary arguments are provided,
      * followed by transferring control to the model for processing.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Initial validation of the 'editcontinent' command to verify the presence of essential arguments,
      * followed by directing control to the model for processing.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
     /**
      * Basic validation of gameplayer command for checking required arguments and redirecting control to the model for adding or removing players.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
@@ -302,69 +310,76 @@ public abstract class Phase implements Serializable {
 
     /**
      * Handles the advance order in the gameplay.
-     * @throws IOException Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException Indicates a failure
      */
     protected abstract void doAdvance(String p_command, Player p_player) throws IOException;
 
     /**
      * Handels the tournament gameplay.
-     * @throws InvalidMap Indicates a failure
-     * @throws InvalidCommand Indicates a failure
+     *
      * @param p_command command parameter
+     * @throws InvalidMap     Indicates a failure
+     * @throws InvalidCommand Indicates a failure
      */
     protected abstract void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap;
 
     /**
      * Handles Game Load Feature.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles Game Save Feature
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command command parameter
-     * @param p_player player parameter
+     * @param p_player  player parameter
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
 
     /**
      * Handles the card commands.
-     * @throws IOException Indicates a failure
-     * @param p_player player parameter
+     *
+     * @param p_player         player parameter
      * @param p_enteredCommand param for enteredcommand
+     * @throws IOException Indicates a failure
      */
     protected abstract void doCardHandle(String p_enteredCommand, Player p_player) throws IOException;
 
     /**
      * Performing preliminary validation on the assigncountries function to ensure all necessary arguments are present,
      * and then transferring control to the model responsible for allocating countries to players.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
-     * @param p_player param for player
-     * @param p_command param for command
+     *
+     * @param p_player           param for player
+     * @param p_command          param for command
      * @param p_isTournamentMode param for tournament mode
-     * @param p_gameState param for game state
+     * @param p_gameState        param for game state
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles the 'show map' command.
-     * @throws IOException Indicates a failure
-     * @throws InvalidCommand Indicates a failure
-     * @throws InvalidMap Indicates a failure
+     *
      * @param p_command param for command
-     * @param p_player param for player
+     * @param p_player  param for player
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     protected abstract void doShowMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
@@ -377,6 +392,7 @@ public abstract class Phase implements Serializable {
 
     /**
      * This method signifies the main functionality executed on phase change.
+     *
      * @param p_isTournamentMode param for tournament mode
      */
     public abstract void initPhase(boolean p_isTournamentMode);

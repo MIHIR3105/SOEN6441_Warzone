@@ -67,7 +67,7 @@ public class PlayerServiceTest {
         d_playerInfo = new Player();
         d_playerService = new PlayerService();
         d_gameState = new GameState();
-        d_exisitingPlayerList.add(new Player("Avneet"));
+        d_exisitingPlayerList.add(new Player("Prachi"));
         d_exisitingPlayerList.add(new Player("Zalak"));
 
     }
@@ -79,12 +79,12 @@ public class PlayerServiceTest {
     @Test
     public void testAddPlayers() {
         assertFalse(CommonUtil.isCollectionEmpty(d_exisitingPlayerList));
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Jhanvi");
-        assertEquals("Jhanvi", l_updatedPlayers.get(2).getPlayerName());
+        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Ashvi");
+        assertEquals("Ashvi", l_updatedPlayers.get(2).getPlayerName());
 
         System.setOut(new PrintStream(d_outContent));
-        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Avneet");
-        assertEquals("Player with name : Avneet already Exists. Changes are not made.", d_outContent.toString().trim());
+        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Prachi");
+        assertEquals("Player with name : Prachi already Exists. Changes are not made.", d_outContent.toString().trim());
     }
 
     /**
@@ -93,12 +93,12 @@ public class PlayerServiceTest {
      */
     @Test
     public void testRemovePlayers() {
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Avneet");
+        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Prachi");
         assertEquals(1, l_updatedPlayers.size());
 
         System.setOut(new PrintStream(d_outContent));
-        d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
-        assertEquals("Player with name : Bhoomi does not Exist. Changes are not made.", d_outContent.toString().trim());
+        d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Mihir");
+        assertEquals("Player with name : Mihir does not Exist. Changes are not made.", d_outContent.toString().trim());
     }
 
     /**
