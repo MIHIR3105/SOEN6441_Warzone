@@ -221,7 +221,8 @@ public class StartUpPhase extends Phase {
      * Handels the tournament gameplay.
      *
      * @param p_command Command entered by the user
-     * @throws Exception Exception
+     * @throws InvalidCommand     Thrown if the map given in the command is invalid.
+     * @throws InvalidMap Throws invalid map
      */
     @Override
     protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {

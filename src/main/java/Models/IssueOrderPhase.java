@@ -43,7 +43,9 @@ public class IssueOrderPhase extends Phase {
      * Asks the specified player for an order command and processes it.
      *
      * @param p_player The player for whom the order is requested.
-     * @throws Exception Indicates a failure
+     * @throws IOException Indicates a failure
+     * @throws InvalidMap throws invalid map exception
+     * @throws InvalidCommand invalid command
      */
     public void askForOrder(Player p_player) throws IOException, InvalidCommand, InvalidMap {
         String l_commandEntered = p_player.getPlayerOrder(d_gameState);
@@ -139,7 +141,8 @@ public class IssueOrderPhase extends Phase {
      * Handles the tournament gameplay.
      *
      * @param p_command Command entered by the user
-     * @throws Exception Exception
+     * @throws InvalidMap Exception
+     * @throws InvalidCommand InvalidCommand
      */
     @Override
     protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {

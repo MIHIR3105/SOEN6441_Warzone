@@ -124,7 +124,8 @@ public class OrderExecutionPhase extends Phase {
      * Handels the tournament gameplay.
      *
      * @param p_command Command entered by the user
-     * @throws Exception
+     * @throws InvalidCommand exception is thrown
+     * @throws InvalidMap invalid map exception is thrown
      */
     @Override
     protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
