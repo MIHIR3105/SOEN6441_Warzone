@@ -9,7 +9,11 @@ import java.util.List;
 
 import static java.util.Collections.addAll;
 import static org.junit.Assert.assertEquals;
-
+/**
+ * This class is used to test functionality of Diplomacy class functions.
+ *
+ * @author Vaibhav
+ */
 public class DiplomacyTest {
     /**
      * First Player.
