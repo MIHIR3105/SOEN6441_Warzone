@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class is used to test functionality of Cheater class functions.
+ *
+ * @author Mihir Panchal
+ */
 class CheaterPlayerTest {
 
     @Test
