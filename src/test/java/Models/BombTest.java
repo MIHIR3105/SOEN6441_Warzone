@@ -10,6 +10,8 @@ import org.junit.Test;
 
 /**
  * This class is used to test functionality of Bomb class functions.
+ *
+ * @author Mihir Panchal
  */
 public class BombTest {
 
