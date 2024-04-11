@@ -13,6 +13,7 @@ target/
 *.ipr
 /bin/
 LogFile.txt
+LogRecord.txt
 
 
 ### Eclipse ###
