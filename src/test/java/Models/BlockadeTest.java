@@ -120,5 +120,18 @@ public class BlockadeTest {
         assertEquals("15", String.valueOf(l_countryIndia.getD_armies()));
     }
 
-    
+    /**
+     * Test Validation of Blockade Order.
+     */
+    @Test
+    public void testValidBlockadeOrder() {
+
+        boolean l_actualBoolean = d_blockadeOrder1.valid(d_gameState);
+        assertTrue(l_actualBoolean);
+
+        boolean l_actualBoolean2 = d_blockadeOrder2.valid(d_gameState);
+        assertFalse(l_actualBoolean2);
+
+    }
+
 }
