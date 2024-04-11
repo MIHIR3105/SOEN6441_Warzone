@@ -463,6 +463,7 @@ public class Map implements Serializable {
      * Remove Continent from map
      *
      * @param p_continentName Continent to remove
+     * @throws InvalidMap throws invalid map exception
      */
     public void removeContinent(String p_continentName) throws InvalidMap {
         if (d_continents != null) {

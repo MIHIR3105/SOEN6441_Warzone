@@ -363,6 +363,8 @@ public abstract class Phase implements Serializable {
      * @throws IOException Indicates a failure
      * @throws InvalidCommand Indicates a failure
      * @throws InvalidMap Indicates a failure
+     * @param p_command param for command
+     * @param p_player param for player
      */
     protected abstract void doShowMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
