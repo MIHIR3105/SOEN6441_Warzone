@@ -163,6 +163,7 @@ public class Country implements Serializable {
      * remove Neighbour method removes country Id from  neighbour Country Id list.
      *
      * @param p_countryId country Id which is to be removed
+     * @throws InvalidMap throws invalid map exception
      */
     public void removeNeighbourFromCountry(Integer p_countryId) throws InvalidMap {
         if(d_neighbourCountryId.contains(p_countryId)){

@@ -25,7 +25,7 @@ public class HumanPlayer extends PlayerBehavior {
      * @param p_Player Object of Player class
      * @param p_gameState Object of GameState class
      * @return String
-     * @throws IOException
+     * @throws IOException throws IOException
      */
     @Override
     public String createOrder(Player p_Player, GameState p_gameState) throws IOException {
@@ -63,7 +63,7 @@ public class HumanPlayer extends PlayerBehavior {
      * @param p_Player Object of Player class
      * @param p_gameState Object of GameState class
      * @param p_cardName Card name for created Order
-     * @return
+     * @return String
      */
     @Override
     public String createCardOrder(Player p_Player, GameState p_gameState, String p_cardName) {

@@ -22,7 +22,7 @@ public class GameEngine implements Serializable {
      *
      * @return current Phase of Game Context
      */
-    public Phase getD_CurrentPhase(){
+    public Phase getD_CurrentPhase() {
         return d_currentPhase;
     }
 
@@ -45,7 +45,7 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     *	It is the current game play phase as per state pattern.
+     * It is the current game play phase as per state pattern.
      */
     Phase d_currentPhase = new StartUpPhase(this, d_gameState);
 
@@ -73,10 +73,9 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     *
      * @param p_phase new Phase to set in Game context
      */
-    public void setD_CurrentPhase(Phase p_phase){
+    public void setD_CurrentPhase(Phase p_phase) {
         d_currentPhase = p_phase;
     }
 
@@ -85,7 +84,7 @@ public class GameEngine implements Serializable {
      *
      * @param p_phase to set new Phase
      */
-    public void loadPhase(Phase p_phase){
+    public void loadPhase(Phase p_phase) {
         d_currentPhase = p_phase;
         d_gameState = p_phase.getD_gameState();
         getD_CurrentPhase().initPhase(d_isTournamentMode);
@@ -94,7 +93,7 @@ public class GameEngine implements Serializable {
     /**
      * These methods update the current phase to StartUp Phase as per State Pattern.
      */
-    public void setStartUpPhase(){
+    public void setStartUpPhase() {
         this.setD_gameEngineLog("Start Up Phase", "phase");
         setD_CurrentPhase(new StartUpPhase(this, d_gameState));
         getD_CurrentPhase().initPhase(d_isTournamentMode);
@@ -102,17 +101,19 @@ public class GameEngine implements Serializable {
 
     /**
      * These methods update the current phase to Issue Order Phase as per State Pattern.
+     *
+     * @param p_isTournamentMode true if tournament is being played or else false
      */
-    public void setIssueOrderPhase(boolean p_isTournamentMode){
+    public void setIssueOrderPhase(boolean p_isTournamentMode) {
         this.setD_gameEngineLog("Issue Order Phase", GameConstants.PHASE);
         setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
-        getD_CurrentPhase().initPhase(d_isTournamentMode);
+        getD_CurrentPhase().initPhase(p_isTournamentMode);
     }
 
     /**
      * These methods update the current phase to Order Execution Phase as per State Pattern.
      */
-    public void setOrderExecutionPhase(){
+    public void setOrderExecutionPhase() {
         this.setD_gameEngineLog("Order Execution Phase", GameConstants.PHASE);
         setD_CurrentPhase(new OrderExecutionPhase(this, d_gameState));
         getD_CurrentPhase().initPhase(d_isTournamentMode);
@@ -122,7 +123,7 @@ public class GameEngine implements Serializable {
      * Shows and Writes GameEngine Logs.
      *
      * @param p_gameEngineLog String of Log message.
-     * @param p_logType Type of Log.
+     * @param p_logType       Type of Log.
      */
     public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
         d_currentPhase.getD_gameState().updateLog(p_gameEngineLog, p_logType);
@@ -141,7 +142,7 @@ public class GameEngine implements Serializable {
     public static void main(String[] p_args) {
         GameEngine l_game = new GameEngine();
 
-        l_game.getD_CurrentPhase().getD_gameState().updateLog(GameConstants.GAMESTART+System.lineSeparator(), GameConstants.STARTLOG);
+        l_game.getD_CurrentPhase().getD_gameState().updateLog(GameConstants.GAMESTART + System.lineSeparator(), GameConstants.STARTLOG);
         l_game.setD_gameEngineLog(GameConstants.GAMESTART, GameConstants.PHASE);
         l_game.getD_CurrentPhase().initPhase(d_isTournamentMode);
     }

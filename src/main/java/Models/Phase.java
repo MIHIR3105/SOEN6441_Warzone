@@ -83,7 +83,9 @@ public abstract class Phase implements Serializable {
      * Handles the commands specific to the state entered by the user.
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
-     * @throws Exception Indicates a failure
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     public void handleCommand(String p_enteredCommand) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, null);
@@ -94,7 +96,9 @@ public abstract class Phase implements Serializable {
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
      * @param p_player         Player instance
-     * @throws Exception Indicates a failure
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     public void handleCommand(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         commandHandler(p_enteredCommand, p_player);
@@ -105,7 +109,9 @@ public abstract class Phase implements Serializable {
      *
      * @param p_enteredCommand Command entered by the user in the Command Line Interface (CLI)
      * @param p_player         Player instance
-     * @throws Exception Indicates a failure
+     * @throws IOException    Indicates a failure
+     * @throws InvalidCommand Indicates a failure
+     * @throws InvalidMap     Indicates a failure
      */
     private void commandHandler(String p_enteredCommand, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         Command l_command = new Command(p_enteredCommand);
@@ -200,6 +206,7 @@ public abstract class Phase implements Serializable {
     /**
      * Conducting essential validation of the 'validatemap' command to ensure necessary arguments are provided,
      * and then transferring control to the model for actual processing.
+     *
      */
     protected abstract void doValidateMap(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
@@ -249,7 +256,7 @@ public abstract class Phase implements Serializable {
      *
      * @param p_command Command entered by the user
      * @param p_player  Instance of the player object
-     * @throws Exception Indicates a failure
+     * @throws IOException Indicates a failure
      */
     protected abstract void doCreateDeploy(String p_command, Player p_player) throws IOException;
 
